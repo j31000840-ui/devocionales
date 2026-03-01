@@ -967,7 +967,13 @@ body::before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
   ✦ Iglesia Pentecostal <span style="color:var(--gold)">Éfeso</span> · Devocionales Jóvenes · Hecho con ❤️ para la gloria de Dios
 </footer>
 
+
+<footer style="background:var(--ink2);border-top:1px solid var(--ink4);padding:1.5rem;text-align:center;color:var(--muted);font-size:.78rem;position:relative;z-index:2">
+  ✦ Iglesia Pentecostal <span style="color:var(--gold)">Éfeso</span> · Devocionales Jóvenes · Hecho con ❤️ para la gloria de Dios
+</footer>
+
 <script>
+
 const WORKER_URL = 'https://winter-snowflake-6c0cmilo-proxy.j31000840.workers.dev';
 
 (()=>{
@@ -984,7 +990,7 @@ const WORKER_URL = 'https://winter-snowflake-6c0cmilo-proxy.j31000840.workers.de
 // ══ URLs DE LOS DOS SCRIPTS ══════════════════════════════
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLTzPGR0ADHUGHtF83oTEE66irG8wG_OKoarnSJ1tzkRrmUvBAlD-CfLDRqW5Mdvvm/exec';
 const PERFIL_URL  = 'https://script.google.com/macros/s/AKfycbxOwfUCtI5Ctr2f2pKD85cQzgDs2ImUZUruilj543w6tHjqPiAH8bItCDcWkmP2M5wefA/exec';
-const DEV_URL     = 'https://script.google.com/macros/s/AKfycbwM6bFGlq3PFfPE25cd9R8uMKnmUlpC-cofevRh2LPEGgDjHtEKb7Nzi0PVxcdoirZQ/exec';
+const DEV_URL     = 'https://script.google.com/macros/s/AKfycbzNZakIMYMDrjckQrGfmiSP86SQm8j8ym8TixaAQq1jW-Q0Ut155TBIt7V9gP_22Fti/exec';
 // ══════════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════════
 
@@ -1049,11 +1055,7 @@ function loadData(){
       // Restore images from separate keys
       (d.meses||[]).forEach((m,mi)=>{
         (m.sems||[]).forEach((s2,si)=>{
-          const semImg=localStorage.getItem('efeso_img_s_'+mi+'_'+si);
-          if(semImg)s2.img=semImg;
           (s2.dias||[]).forEach((dia,di)=>{
-            const diaImg=localStorage.getItem('efeso_img_d_'+mi+'_'+si+'_'+di);
-            if(diaImg)dia.img=diaImg;
           });
         });
       });
@@ -1076,40 +1078,38 @@ async function syncDevToSheets(){
         }))
       }))
     }))};
-    const params=new URLSearchParams({accion:'guardar',datos:JSON.stringify(datos)});
-    const r=await fetch(DEV_URL+'?'+params,{mode:'cors'});
-    const j=await r.json();
-    if(j.status==='OK') console.log('✅ Devocionales sincronizados con Sheets');
-    else console.log('⚠️ Error sync:', j.msg);
+    const r=await fetch(DEV_URL, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({accion:'guardar', meses:datos.meses})
+    });
+    console.log('✅ Devocionales enviados a Sheets');
   }catch(err){console.log('⚠️ No se pudo sincronizar con Sheets:',err);}
 }
 
-async function loadDevFromSheets(){
-  try{
-    const r=await fetch(DEV_URL+'?accion=leer',{mode:'cors'});
-    const j=await r.json();
-    if(j.status==='OK' && j.meses && j.meses.length>0){
-      // Fusionar: mantener imágenes del localStorage
-      const local=localStorage.getItem('efeso_v3');
-      const localData=local?JSON.parse(local):null;
-      j.meses.forEach((m,mi)=>{
-        (m.sems||[]).forEach((s,si)=>{
-          // Recuperar img de semana desde localStorage
-          const imgS=localStorage.getItem('efeso_img_s_'+mi+'_'+si);
-          if(imgS) s.img=imgS;
-          (s.dias||[]).forEach((d,di)=>{
-            const imgD=localStorage.getItem('efeso_img_d_'+mi+'_'+si+'_'+di);
-            if(imgD) d.img=imgD;
-          });
-        });
-      });
-      DATA.meses=j.meses;
-      console.log('✅ Devocionales cargados desde Sheets');
-      // Refrescar vista si ya está inicializada
-      if(typeof devBc==='function') devBc();
-      if(typeof buildAdmMeses==='function' && document.getElementById('admMeses')) buildAdmMeses();
-    }
-  }catch(err){console.log('⚠️ No se pudo cargar desde Sheets, usando local:',err);}
+function loadDevFromSheets(){
+  return new Promise((resolve)=>{
+    const cbName='_devCb'+Date.now();
+    const script=document.createElement('script');
+    window[cbName]=function(j){
+      try{
+        if(j.status==='OK'&&j.meses&&j.meses.length>0){
+          DATA.meses=j.meses;
+          save();
+          if(typeof devBc==='function') devBc();
+          if(typeof buildAdmMeses==='function'&&document.getElementById('admMeses')) buildAdmMeses();
+        }
+      }catch(e){}
+      delete window[cbName];
+      document.head.removeChild(script);
+      resolve();
+    };
+    script.onerror=()=>{ delete window[cbName]; try{document.head.removeChild(script);}catch(e){} resolve(); };
+    script.src=DEV_URL+'?accion=leer&callback='+cbName;
+    document.head.appendChild(script);
+    setTimeout(()=>{ if(window[cbName]){ delete window[cbName]; resolve(); } }, 8000);
+  });
 }
 
 function save(){
@@ -1120,12 +1120,10 @@ function save(){
       (m.sems||[]).forEach((s,si)=>{
         if(s.img){
           // Save sem image separately
-          try{localStorage.setItem('efeso_img_s_'+mi+'_'+si, s.img);}catch(e){}
           s.img=null; // remove from main data
         }
         (s.dias||[]).forEach((d,di)=>{
           if(d.img){
-            try{localStorage.setItem('efeso_img_d_'+mi+'_'+si+'_'+di, d.img);}catch(e){}
             d.img=null;
           }
         });
@@ -1599,9 +1597,9 @@ function loadSemImgFile(file,mi,si){
   const reader=new FileReader();
   reader.onload=ev=>{
     comprimirImagen(ev.target.result, 900, 0.72, b64=>{
-      DATA.meses[mi].sems[si].img=b64;
+      
       try{
-        localStorage.setItem('efeso_img_s_'+mi+'_'+si, b64);
+        
       }catch(e){
         toast('⚠️ Imagen demasiado grande incluso comprimida');
         return;
@@ -1614,8 +1612,7 @@ function loadSemImgFile(file,mi,si){
   reader.readAsDataURL(file);
 }
 function clearSemImg(mi,si){
-  DATA.meses[mi].sems[si].img=null;
-  localStorage.removeItem('efeso_img_s_'+mi+'_'+si);
+  
   save();
   document.getElementById('simgprev-'+mi+'-'+si).innerHTML='';
   toast('✅ Portada eliminada');
@@ -2289,6 +2286,8 @@ addEventListener('DOMContentLoaded',()=>{
   initMiloHome();
   console.log('✅ Rachas conectadas a:', SCRIPT_URL);
 });
+
 </script>
+
 </body>
 </html>
