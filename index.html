@@ -1,0 +1,2239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devocionales Jóvenes · Éfeso</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0a0a0e;--ink2:#12121a;--ink3:#1c1c28;--ink4:#26263a;
+  --dim:#3a3a52;--muted:#6b6b88;--light:#e8e8f0;--white:#f8f8fc;
+  --gold:#f0b429;--gold2:#f7d070;--ember:#ff5e1a;--ember2:#ff8c4a;
+  --violet2:#a78bfa;--green:#16a34a;--cyan:#06b6d4;--r:16px;
+  --f-d:'Syne',sans-serif;--f-s:'Instrument Serif',serif;--f-b:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--light);font-family:var(--f-b);line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--f-b);cursor:pointer;border:none;outline:none}
+input,textarea,select{font-family:var(--f-b);outline:none;border:none}
+#cvs{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4}
+body::before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");opacity:.5}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(10,10,14,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(240,180,41,.12)}
+.nav-brand{display:flex;align-items:center;gap:.6rem;font-family:var(--f-d);font-weight:800;font-size:1rem;color:var(--gold)}
+.nav-cross{animation:glow 3s ease-in-out infinite}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 6px var(--gold))}50%{filter:drop-shadow(0 0 14px var(--gold))}}
+.nav-links{display:flex;gap:.15rem}
+.nb{background:none;color:var(--muted);font-size:.82rem;font-weight:700;padding:.4rem .85rem;border-radius:8px;transition:.2s}
+.nb:hover{color:var(--white);background:var(--ink4)}
+.nb.on{color:var(--gold);background:rgba(240,180,41,.1)}
+.nav-ham{display:none;background:var(--ink4);border-radius:8px;color:var(--white);font-size:1.2rem;width:38px;height:38px;align-items:center;justify-content:center}
+.mob{display:none;position:fixed;top:60px;left:0;right:0;background:var(--ink2);border-bottom:2px solid var(--gold);z-index:99;flex-direction:column}
+.mob.open{display:flex}
+.mob button{background:none;color:var(--light);font-size:.95rem;font-weight:700;padding:1rem 1.5rem;border-bottom:1px solid var(--ink4);text-align:left;transition:.15s}
+.mob button:hover{color:var(--gold);background:var(--ink3)}
+@media(max-width:640px){.nav-links{display:none}.nav-ham{display:flex}}
+
+.pg{display:none;min-height:100vh;padding-top:60px;position:relative;z-index:2}
+.pg.on{display:block}
+
+.hero{min-height:calc(100vh - 60px);display:flex;align-items:center;padding:3rem 1.5rem 4rem;position:relative;overflow:hidden}
+.hg{position:absolute;border-radius:50%;pointer-events:none;animation:pulse 7s ease-in-out infinite}
+.hg1{width:700px;height:700px;background:radial-gradient(ellipse,rgba(124,58,237,.18),transparent 65%);top:-150px;right:-200px}
+.hg2{width:500px;height:500px;background:radial-gradient(ellipse,rgba(240,180,41,.1),transparent 65%);bottom:-100px;left:-100px;animation-delay:2s}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.hero-in{max-width:700px;position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);padding:.4rem 1rem;border-radius:20px}
+.hero-h1{font-family:var(--f-d);font-weight:800;font-size:clamp(3rem,10vw,7rem);line-height:.92;letter-spacing:-2px;color:var(--white);margin-bottom:1.2rem}
+.hero-h1 em{font-family:var(--f-s);font-style:italic;color:var(--gold);display:block}
+.hero-p{color:var(--muted);font-size:.95rem;line-height:1.75;max-width:420px;margin-bottom:2.5rem;font-style:italic}
+.ctas{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-p{background:var(--gold);color:var(--ink);font-weight:800;font-size:.88rem;padding:.85rem 1.75rem;border-radius:50px;transition:.25s}
+.btn-p:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-g{background:var(--ink4);color:var(--light);font-weight:700;font-size:.88rem;padding:.85rem 1.75rem;border-radius:50px;transition:.25s;border:1px solid var(--dim)}
+.btn-g:hover{border-color:var(--gold);color:var(--gold)}
+.lider-wrap{padding:0 1.5rem 3.5rem;position:relative;z-index:2}
+.lider-c{max-width:540px;margin:0 auto;background:linear-gradient(135deg,#3b0764,#4c1d95 50%,#1e1b4b);border:1px solid rgba(167,139,250,.25);border-radius:var(--r);padding:2.5rem 2rem;text-align:center;box-shadow:0 24px 60px rgba(124,58,237,.3)}
+.lider-pill{font-size:.62rem;font-weight:800;letter-spacing:3.5px;text-transform:uppercase;color:rgba(167,139,250,.75);margin-bottom:.6rem}
+.lider-nm{font-family:var(--f-d);font-size:3rem;font-weight:800;color:var(--white);min-height:3.6rem;display:flex;align-items:center;justify-content:center}
+.spin{width:28px;height:28px;border:3px solid rgba(255,255,255,.12);border-top-color:rgba(167,139,250,.8);border-radius:50%;animation:spin .8s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lider-vs{font-size:.85rem;color:rgba(255,255,255,.55);font-style:italic}
+.lider-dt{font-size:.7rem;color:rgba(255,255,255,.25);margin-top:.4rem}
+.qa-sec{padding:0 1.5rem 3.5rem;position:relative;z-index:2}
+.sec-lbl{font-family:var(--f-d);font-size:.63rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
+.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.75rem}
+.qa{background:var(--ink2);border:1px solid var(--ink4);border-radius:var(--r);padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.qa::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(var(--qr),.04),transparent);opacity:0;transition:.25s}
+.qa:hover{transform:translateY(-3px);border-color:rgba(var(--qr),1);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.qa:hover::before{opacity:1}
+.qa[data-c="gold"]{--qr:240,180,41}.qa[data-c="fire"]{--qr:255,94,26}.qa[data-c="green"]{--qr:22,163,74}.qa[data-c="violet"]{--qr:167,139,250}
+.qa-ico{font-size:1.7rem;flex-shrink:0}
+.qa strong{display:block;font-weight:800;font-size:.92rem;color:var(--white)}
+.qa span{font-size:.75rem;color:var(--muted)}
+.promo-r{margin-top:.75rem;color:var(--gold);font-style:italic;font-size:.85rem;line-height:1.7;max-height:0;overflow:hidden;transition:max-height .5s,opacity .4s;opacity:0}
+.promo-r.show{max-height:200px;opacity:1}
+.milo-home-wrap{padding:0 1.5rem 5rem;position:relative;z-index:2}
+.milo-home-card{max-width:620px;margin:0 auto;background:linear-gradient(135deg,rgba(13,148,136,.15),rgba(6,78,59,.2));border:1px solid rgba(20,184,166,.3);border-radius:28px;padding:2.5rem 2rem 2rem;display:flex;align-items:center;gap:1.5rem;box-shadow:0 20px 50px rgba(13,148,136,.2)}
+@media(max-width:540px){.milo-home-card{flex-direction:column;text-align:center}}
+.milo-bubble-wrap{flex:1;min-width:0}
+.milo-bubble-label{font-size:.6rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#2dd4bf;margin-bottom:.7rem}
+.milo-verse-text{font-family:var(--f-s);font-size:1.05rem;font-style:italic;color:var(--white);line-height:1.7;margin-bottom:.35rem;min-height:2.5rem}
+.milo-verse-ref{font-size:.78rem;font-weight:700;color:#2dd4bf;letter-spacing:.5px;margin-bottom:1.1rem}
+.milo-bubble-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+.milo-btn-nuevo,.milo-btn-promesa{font-size:.78rem;font-weight:700;padding:.5rem 1.1rem;border-radius:50px;cursor:pointer;transition:.2s;border:none}
+.milo-btn-nuevo{background:rgba(13,148,136,.25);color:#5eead4;border:1px solid rgba(20,184,166,.4)}
+.milo-btn-nuevo:hover{background:rgba(13,148,136,.4);transform:scale(1.03)}
+.milo-btn-promesa{background:linear-gradient(135deg,var(--ember),var(--ember2));color:white}
+.milo-btn-promesa:hover{transform:scale(1.03)}
+
+.dev-pg{padding:2rem 1.5rem 6rem;max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.dev-bc{display:flex;align-items:center;flex-wrap:wrap;gap:.3rem;font-size:.8rem;color:var(--dim);margin-bottom:2rem}
+.dev-bc span{cursor:pointer;padding:.25rem .5rem;border-radius:6px;transition:.2s}
+.dev-bc span:hover{color:var(--gold);background:rgba(240,180,41,.08)}
+.dev-bc .sep{cursor:default;color:var(--dim);padding:0}
+.dev-bc .cur{color:var(--muted);cursor:default;background:none}
+.dev-bc span:first-child{color:var(--gold)}
+
+.meses-hd{font-family:var(--f-d);font-weight:800;font-size:clamp(2rem,5vw,3.5rem);color:var(--white);letter-spacing:-1px;margin-bottom:.4rem}
+.meses-sub{color:var(--muted);font-size:.88rem;margin-bottom:2rem}
+.mes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem}
+.mc{border-radius:var(--r);overflow:hidden;border:2px solid transparent;cursor:pointer;transition:.3s;background:var(--ink2);animation:fadeUp .35s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.mc:hover{transform:translateY(-6px);border-color:var(--mc);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.mc.pr{opacity:.35;cursor:default}.mc.pr:hover{transform:none;border-color:transparent;box-shadow:none}
+.mc-th{height:120px;display:flex;align-items:center;justify-content:center;position:relative}
+.mc-txt{font-family:var(--f-d);font-size:2.2rem;font-weight:800;color:rgba(255,255,255,.14)}
+.mc-ov{position:absolute;inset:0;background:rgba(0,0,0,.52);display:flex;align-items:center;justify-content:center;font-family:var(--f-d);font-size:.72rem;letter-spacing:3px;color:var(--gold)}
+.mc-ft{padding:.6rem 1rem;font-family:var(--f-d);font-size:.85rem;letter-spacing:2px;font-weight:800;color:rgba(255,255,255,.9);text-align:center}
+
+.sems-hd{font-family:var(--f-d);font-weight:800;font-size:clamp(1.8rem,4vw,3rem);color:var(--white);letter-spacing:-1px;margin-bottom:.3rem}
+.sems-sub{color:var(--muted);font-size:.88rem;margin-bottom:2rem}
+.sem-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.sem-card{background:var(--ink2);border:1px solid var(--ink4);border-radius:var(--r);cursor:pointer;transition:.25s;animation:fadeUp .3s ease both;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.sem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--mc2,var(--gold));opacity:0;transition:.25s;z-index:2}
+.sem-card:hover{transform:translateY(-5px);border-color:var(--dim);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.sem-card:hover::before{opacity:1}
+.sem-card-img{width:100%;height:130px;object-fit:cover;display:block;border-radius:var(--r) var(--r) 0 0}
+.sem-card-img-ph{height:80px;background:linear-gradient(135deg,var(--ink3),var(--ink4));display:flex;align-items:center;justify-content:center;font-size:2rem}
+.sem-card-body{padding:1rem 1.2rem 1.2rem;flex:1;display:flex;flex-direction:column}
+.sem-card-ico{font-size:2rem;margin-bottom:.7rem}
+.sem-card-nm{font-family:var(--f-d);font-weight:800;font-size:1.1rem;color:var(--white);margin-bottom:.2rem}
+.sem-card-cnt{font-size:.75rem;color:var(--muted)}
+
+.dias-hd{font-family:var(--f-d);font-weight:800;font-size:clamp(1.5rem,4vw,2.5rem);color:var(--white);letter-spacing:-1px;margin-bottom:.3rem}
+.dias-sub{color:var(--muted);font-size:.88rem;margin-bottom:2rem}
+.dias-list{display:flex;flex-direction:column;gap:.65rem}
+.dia-row{background:var(--ink2);border:1px solid var(--ink4);border-radius:14px;padding:1.1rem 1.4rem;cursor:pointer;transition:.25s;display:flex;align-items:center;gap:1rem;animation:fadeUp .25s ease both}
+.dia-row:hover{border-color:var(--gold);transform:translateX(4px);background:var(--ink3)}
+.dia-row-num{font-family:var(--f-d);font-size:1.4rem;font-weight:800;color:var(--gold);min-width:32px}
+.dia-row-info{flex:1}
+.dia-row-nm{font-weight:800;font-size:.95rem;color:var(--white)}
+.dia-row-s{font-size:.74rem;color:var(--muted);margin-top:.1rem}
+.dia-row-arr{color:var(--dim);font-size:.8rem}
+
+.art-wrap{max-width:720px}
+.dev-chip{display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;padding:3px 12px;border-radius:20px;color:white;margin-bottom:.9rem}
+.dev-h{font-family:var(--f-d);font-weight:800;font-size:clamp(2.2rem,5vw,4rem);letter-spacing:-1.5px;color:var(--white);line-height:.93;margin-bottom:.5rem}
+.dev-meta{color:var(--dim);font-size:.8rem;margin-bottom:1.75rem}
+.dev-body{font-size:1.04rem;line-height:1.88;color:rgba(248,248,252,.8)}
+.dev-body p{margin-bottom:1.3rem}
+.dev-body p:first-child::first-letter{font-family:var(--f-s);font-size:3.5rem;float:left;margin:.05em .12em 0 0;line-height:.8;color:var(--gold)}
+.esbox{margin:2.5rem 0;background:rgba(240,180,41,.05);border:1px solid rgba(240,180,41,.15);border-left:4px solid var(--gold);border-radius:8px;padding:1.5rem}
+.eslbl{font-size:.62rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+.esref{font-size:.86rem;color:var(--muted);padding:.18rem 0;display:flex;align-items:center;gap:.4rem}
+.esref::before{content:'→';color:var(--gold);font-size:.68rem}
+.orbox{margin:2.5rem 0;background:rgba(124,58,237,.07);border:1px solid rgba(167,139,250,.15);border-radius:var(--r);padding:2rem;position:relative;overflow:hidden}
+.orbox::before{content:'"';font-family:var(--f-s);font-size:9rem;color:rgba(167,139,250,.07);position:absolute;top:-1.5rem;left:.5rem;line-height:1;pointer-events:none}
+.orlbl{font-size:.62rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--violet2);margin-bottom:.7rem}
+.ortxt{font-style:italic;color:rgba(248,248,252,.72);line-height:1.8;font-size:.96rem}
+.dnav{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--ink4)}
+.dn{padding:.6rem 1.05rem;border-radius:8px;font-weight:800;font-size:.8rem;transition:.2s;cursor:pointer}
+.dn-bk{background:var(--ink4);color:var(--muted)}.dn-bk:hover{color:var(--white)}
+.dn-pv{background:var(--ink3);color:var(--light);border:1px solid var(--ink4)}.dn-pv:hover{border-color:var(--dim)}
+.dn-pd{background:rgba(124,58,237,.14);color:var(--violet2);border:1px solid rgba(124,58,237,.25)}.dn-pd:hover{background:rgba(124,58,237,.25)}
+.dn-fr{background:rgba(255,94,26,.11);color:var(--ember2);border:1px solid rgba(255,94,26,.25)}.dn-fr:hover{background:rgba(255,94,26,.25)}
+.dn-nx{background:var(--gold);color:var(--ink);font-weight:900}.dn-nx:hover{background:var(--gold2)}
+
+.ra-pg{padding:0 1.5rem 5rem;position:relative;z-index:2}
+.ra-hero{text-align:center;padding:4rem 0 2.5rem;position:relative}
+.ra-hg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(255,94,26,.15),transparent 70%);pointer-events:none}
+.ra-h1{font-family:var(--f-d);font-weight:800;font-size:clamp(2.8rem,7vw,5rem);color:var(--white);text-shadow:0 0 60px rgba(255,94,26,.35);margin-bottom:.4rem;position:relative}
+.ra-vs{color:var(--muted);font-style:italic;font-size:.88rem;position:relative}
+.ra-hero-badge{display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--ember2);margin-bottom:.75rem;background:rgba(255,94,26,.1);border:1px solid rgba(255,94,26,.25);padding:.35rem 1rem;border-radius:20px}
+.ra-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;max-width:960px;margin:0 auto}
+@media(max-width:680px){.ra-grid{grid-template-columns:1fr}}
+.panel{background:var(--ink2);border:1px solid var(--ink4);border-radius:var(--r);padding:1.75rem}
+.p-title{font-family:var(--f-d);font-size:1.25rem;font-weight:800;color:var(--white);margin-bottom:.25rem}
+.p-sub{font-size:.78rem;color:var(--muted);margin-bottom:1.2rem}
+.srch-w{position:relative;margin-bottom:.2rem}
+.srch-i{width:100%;background:var(--ink3);border:2px solid var(--ink4);border-radius:10px;color:var(--white);padding:.78rem 1rem;font-size:.92rem;transition:.2s}
+.srch-i:focus{border-color:var(--ember)}.srch-i::placeholder{color:var(--dim)}
+.srch-d{position:absolute;top:calc(100%+4px);left:0;right:0;background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;z-index:50;max-height:200px;overflow-y:auto;display:none}
+.si{padding:.68rem 1rem;font-size:.86rem;cursor:pointer;transition:.15s}
+.si:hover{background:var(--ink4);color:var(--gold)}
+.my-r{display:none;margin-top:1.2rem;background:linear-gradient(135deg,var(--ink3),var(--ink4));border:1px solid var(--ink4);border-radius:var(--r);padding:1.5rem}
+.mr-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.2rem;gap:.5rem;flex-wrap:wrap}
+.mr-nm{font-family:var(--f-d);font-size:1.45rem;font-weight:800;color:var(--white)}
+.mr-nv{font-size:.68rem;font-weight:700;background:var(--ink);padding:3px 10px;border-radius:20px;color:var(--muted)}
+.racha-flame{display:flex;align-items:center;gap:.3rem;background:rgba(255,94,26,.1);border:1px solid rgba(255,94,26,.25);border-radius:14px;padding:.5rem .9rem}
+.rfb-fire{font-size:1.6rem;animation:shk .4s ease-in-out infinite alternate}
+@keyframes shk{from{transform:rotate(-10deg) scale(1)}to{transform:rotate(10deg) scale(1.12)}}
+.rfb-num{font-family:var(--f-d);font-size:1.9rem;font-weight:800;color:var(--ember2);line-height:1}
+.stats{display:flex;gap:.65rem;margin-bottom:1.2rem}
+.st{flex:1;background:var(--ink);border-radius:10px;padding:.8rem .4rem;text-align:center;border:1px solid var(--ink4)}
+.st-v{font-family:var(--f-d);font-size:1.9rem;font-weight:800;color:var(--gold);line-height:1}
+.st-l{font-size:.62rem;color:var(--muted);font-weight:700;margin-top:.2rem}
+.prog-r{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:.35rem}
+.prog-b{height:7px;background:var(--ink);border-radius:4px;overflow:hidden;margin-bottom:1rem}
+.prog-f{height:100%;background:linear-gradient(90deg,var(--ember),var(--ember2));border-radius:4px;transition:width .6s}
+.dlbl{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:.55rem}
+.drow{display:flex;gap:.35rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.dw{display:flex;flex-direction:column;align-items:center;gap:.18rem}
+.dd{width:35px;height:35px;border-radius:50%;background:var(--ink);border:2px solid var(--ink4);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.dd.mk{background:rgba(255,94,26,.14);border-color:var(--ember)}
+.dd.td{border-color:var(--gold)}
+.dl{font-size:.6rem;color:var(--dim);font-weight:700}
+.milestone-track{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap}
+.ms-dot{display:flex;flex-direction:column;align-items:center;gap:.25rem;flex:1;min-width:42px}
+.ms-circle{width:38px;height:38px;border-radius:50%;background:var(--ink);border:2px solid var(--dim);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--muted);font-weight:800}
+.ms-circle.reached{background:linear-gradient(135deg,var(--ember),var(--ember2));border-color:var(--ember);color:white;box-shadow:0 0 14px rgba(255,94,26,.45)}
+.ms-circle.next{border-color:var(--gold);color:var(--gold);animation:msG 1.5s ease-in-out infinite}
+@keyframes msG{0%,100%{box-shadow:0 0 4px rgba(240,180,41,.2)}50%{box-shadow:0 0 16px rgba(240,180,41,.5)}}
+.btn-mk{width:100%;background:linear-gradient(135deg,#5b21b6,#7c3aed);color:white;font-weight:900;font-size:.92rem;padding:.92rem;border-radius:10px;transition:.25s;margin-bottom:.5rem}
+.btn-mk:hover:not(:disabled){background:linear-gradient(135deg,#6d28d9,#8b5cf6);transform:translateY(-1px)}
+.btn-mk:disabled{opacity:.42;cursor:not-allowed}.btn-mk.done{background:linear-gradient(135deg,#166534,#15803d)}
+.rmsg{min-height:1.1rem;font-size:.82rem;font-weight:700;text-align:center}
+.ok{color:var(--green)}.warn{color:var(--gold)}.info{color:var(--cyan)}
+.lb-panel{background:var(--ink2);border:1px solid var(--ink4);border-radius:var(--r);overflow:hidden}
+.lb-hd{padding:1.2rem 1.4rem;border-bottom:1px solid var(--ink4);font-family:var(--f-d);font-size:1.2rem;font-weight:800;color:var(--white)}
+.lb-load{padding:2rem;text-align:center;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:.7rem}
+.sp{width:15px;height:15px;border:2px solid var(--ink4);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+.lb-row{display:flex;align-items:center;gap:.8rem;padding:.85rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.03);transition:.15s;cursor:pointer}
+.lb-row:hover{background:rgba(255,255,255,.06);border-bottom-color:rgba(200,160,0,.2)}
+.lb-row:active{opacity:.85}
+.lb-row:last-child{border-bottom:none}.lb-row:hover{background:var(--ink3)}
+.lb-g{background:rgba(240,180,41,.05)}.lb-s{background:rgba(192,192,200,.025)}.lb-b{background:rgba(205,127,50,.025)}
+.lb-me{background:rgba(240,180,41,.07)!important;border-left:3px solid var(--gold)}
+.lb-pos{font-size:1.15rem;min-width:30px;text-align:center}
+.lb-inf{flex:1}.lb-nm{font-weight:800;font-size:.88rem}.lb-bdg{font-size:.66rem;color:var(--muted)}
+.lb-me-t{font-size:.62rem;color:var(--gold);font-weight:700;margin-left:4px}
+.lb-fire{font-family:var(--f-d);font-size:1.25rem;color:var(--ember2)}
+.shop-panel{background:var(--ink2);border:1px solid var(--ink4);border-radius:var(--r);padding:1.75rem}
+.shop-hd-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;gap:1rem}
+.shop-wallet{display:flex;align-items:center;gap:.35rem;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.25);border-radius:20px;padding:.38rem .9rem}
+#walletCoins{font-family:var(--f-d);font-size:1.25rem;font-weight:800;color:var(--gold)}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.shop-card{background:linear-gradient(150deg,var(--ink3),var(--ink4));border:1px solid var(--ink4);border-radius:14px;padding:1rem .9rem;display:flex;flex-direction:column;gap:.4rem;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.shop-card:not(.lock):hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 14px 40px rgba(240,180,41,.12)}
+.shop-card.lock{opacity:.4;cursor:default}
+.shop-card-ico{font-size:2.2rem;text-align:center}
+.shop-card-name{font-family:var(--f-d);font-size:.88rem;font-weight:800;color:var(--white)}
+.shop-card-desc{font-size:.7rem;color:var(--muted);flex:1}
+.shop-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.3rem}
+.shop-price{font-family:var(--f-d);font-size:1rem;color:var(--gold);font-weight:800}
+.shop-btn{background:var(--gold);color:var(--ink);font-weight:900;font-size:.7rem;padding:.35rem .8rem;border-radius:16px;border:none;cursor:pointer;font-family:var(--f-b);transition:.2s}
+.shop-btn:hover:not(:disabled){background:var(--gold2)}
+.como-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.75rem;margin-top:1rem}
+.ci{background:var(--ink2);border:1px solid var(--ink4);border-radius:var(--r);padding:1.4rem;text-align:center}
+.ci-ico{font-size:1.9rem;margin-bottom:.65rem}
+.ci strong{display:block;font-weight:800;font-size:.88rem;margin-bottom:.35rem}
+.ci p{font-size:.78rem;color:var(--muted)}
+
+.cal-pg-wrap{padding:2rem 1.5rem 6rem;max-width:960px;margin:0 auto;position:relative;z-index:2}
+.cal-hero{text-align:center;padding:2rem 0 2.5rem}
+.cal-hero h1{font-family:var(--f-d);font-weight:800;font-size:clamp(2rem,6vw,3.5rem);color:var(--white);letter-spacing:-1px;margin-bottom:.4rem}
+.cal-hero p{color:var(--muted);font-size:.88rem}
+.cal-mes-tabs{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-bottom:1.5rem}
+.cal-mes-tab{padding:.5rem 1rem;border-radius:8px;font-size:.78rem;font-weight:800;background:var(--ink3);border:1px solid var(--ink4);color:var(--muted);cursor:pointer;transition:.2s}
+.cal-mes-tab:hover{color:var(--white);border-color:var(--dim)}
+.cal-mes-tab.on{color:var(--gold);background:rgba(240,180,41,.1);border-color:rgba(240,180,41,.3)}
+.cal-w{background:var(--ink2);border:1px solid var(--ink4);border-radius:var(--r);overflow:hidden;margin-bottom:1.4rem}
+.cal-hdr{display:grid;grid-template-columns:repeat(7,1fr);background:var(--gold)}
+.cal-hdr div{text-align:center;padding:.62rem .2rem;font-weight:900;font-size:.73rem;color:var(--ink)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.cc{min-height:70px;border:1px solid rgba(255,255,255,.04);padding:.38rem .45rem;display:flex;flex-direction:column;gap:.18rem;transition:.15s}
+.cc.emp{background:rgba(0,0,0,.15)}.cc.hd{background:rgba(22,163,74,.04)}
+.cc.td{background:rgba(240,180,41,.08);outline:2px solid var(--gold);outline-offset:-2px}
+.cc-n{font-weight:900;font-size:.78rem;color:var(--dim)}
+.cc.hd .cc-n,.cc.td .cc-n{color:var(--white)}.cc.td .cc-n{color:var(--gold)}
+.cc-l{font-size:.58rem;color:var(--green);font-weight:700;line-height:1.25}
+.cal-notes{background:var(--ink2);border:1px solid var(--ink4);border-left:4px solid var(--gold);border-radius:8px;padding:1.75rem}
+.cal-notes h3{font-weight:800;color:var(--gold);margin-bottom:.9rem}
+.cal-notes ul{list-style:none;margin-bottom:1.1rem}
+.cal-notes li{padding:.28rem 0;font-size:.85rem;color:rgba(248,248,252,.8)}
+.cal-notes blockquote{font-style:italic;color:var(--muted);font-size:.85rem;line-height:1.7;border-top:1px solid var(--ink4);padding-top:.9rem;margin-top:.9rem}
+
+.adm-lock{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.97);backdrop-filter:blur(30px);display:flex;align-items:center;justify-content:center;padding:2rem}
+.adm-lock-box{background:var(--ink2);border:2px solid var(--ember);border-radius:24px;padding:3rem 2.5rem;text-align:center;max-width:380px;width:100%;animation:popIn .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.adm-lock-ico{font-size:4rem;margin-bottom:.5rem}
+.adm-lock-h{font-family:var(--f-d);font-size:2rem;font-weight:800;color:var(--white);margin-bottom:.2rem}
+.adm-lock-p{color:var(--muted);font-size:.84rem;margin-bottom:1.5rem}
+.adm-users{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.5rem}
+.adm-user-btn{background:var(--ink3);border:2px solid var(--ink4);border-radius:12px;padding:.6rem 1.1rem;cursor:pointer;transition:.2s;text-align:center;min-width:90px}
+.adm-user-btn:hover{border-color:var(--gold)}
+.adm-user-btn.sel{border-color:var(--gold);background:rgba(240,180,41,.08)}
+.adm-user-btn .avi{font-size:1.8rem;display:block;margin-bottom:.2rem}
+.adm-user-btn .unm{font-size:.75rem;font-weight:800;color:var(--white)}
+.adm-pw{width:100%;background:var(--ink3);border:2px solid var(--ink4);border-radius:10px;color:var(--white);padding:.9rem 1rem;font-size:1.1rem;letter-spacing:3px;text-align:center;transition:.2s;margin-bottom:.75rem}
+.adm-pw:focus{border-color:var(--gold)}
+.adm-pw-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);font-weight:900;font-size:.95rem;padding:.9rem;border-radius:10px;transition:.2s}
+.adm-pw-btn:hover{transform:translateY(-2px)}
+.adm-pw-err{color:#f87171;font-size:.8rem;margin-top:.5rem;min-height:1rem}
+.adm-whoami{display:flex;align-items:center;gap:.5rem;background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);border-radius:20px;padding:.3rem .8rem;font-size:.78rem;font-weight:700;color:var(--gold)}
+
+.adm-pg{padding:1.5rem 1.5rem 6rem;max-width:920px;margin:0 auto;position:relative;z-index:2}
+.adm-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.adm-title{font-family:var(--f-d);font-weight:800;font-size:clamp(1.6rem,4vw,2.5rem);color:var(--white);letter-spacing:-1px}
+.adm-title span{color:var(--gold)}
+.adm-topbtns{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.btn-s{display:inline-flex;align-items:center;gap:.35rem;padding:.5rem 1rem;border-radius:8px;font-weight:800;font-size:.78rem;transition:.2s;cursor:pointer}
+.btn-s-gold{background:var(--gold);color:var(--ink)}.btn-s-gold:hover{background:var(--gold2)}
+.btn-s-dim{background:var(--ink4);color:var(--light);border:1px solid var(--dim)}.btn-s-dim:hover{border-color:var(--gold);color:var(--gold)}
+.btn-s-red{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25)}.btn-s-red:hover{background:rgba(239,68,68,.22)}
+.btn-s-blue{background:rgba(6,182,212,.1);color:var(--cyan);border:1px solid rgba(6,182,212,.2)}.btn-s-blue:hover{background:rgba(6,182,212,.2)}
+.btn-s-green{background:rgba(22,163,74,.1);color:#4ade80;border:1px solid rgba(22,163,74,.2)}.btn-s-green:hover{background:rgba(22,163,74,.2)}
+
+.adm-extras{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:2rem}
+@media(max-width:500px){.adm-extras{grid-template-columns:1fr}}
+.adm-extra-card{background:var(--ink2);border:1px solid var(--ink4);border-radius:var(--r);padding:1.1rem;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:.8rem}
+.adm-extra-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.adm-extra-ico{font-size:1.8rem}
+.adm-extra-info strong{display:block;font-weight:800;font-size:.88rem;color:var(--white)}
+.adm-extra-info span{font-size:.7rem;color:var(--muted)}
+
+.adm-mes{background:var(--ink2);border:1px solid var(--ink4);border-radius:var(--r);margin-bottom:.75rem;overflow:hidden}
+.adm-mes-hd{display:flex;align-items:center;gap:.8rem;padding:.95rem 1.2rem;cursor:pointer;user-select:none}
+.adm-mes-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.adm-mes-nm{font-family:var(--f-d);font-weight:800;font-size:.98rem;color:var(--white);flex:1}
+.adm-mes-badge{font-size:.58rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border-radius:20px}
+.badge-on{background:rgba(22,163,74,.15);color:#4ade80}
+.badge-pr{background:rgba(107,114,128,.12);color:var(--muted)}
+.adm-mes-arr{font-size:.65rem;color:var(--dim);transition:transform .25s;margin-left:.3rem}
+.adm-mes-arr.open{transform:rotate(90deg)}
+.adm-mes-body{display:none;border-top:1px solid var(--ink4);padding:1.2rem}
+.adm-mes-body.open{display:block}
+.fi{display:flex;flex-direction:column;gap:.3rem;flex:1}
+.fi label{font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.fi input,.fi select,.fi textarea{background:var(--ink3);border:2px solid var(--ink4);border-radius:8px;color:var(--white);padding:.55rem .75rem;font-size:.88rem;transition:.2s;width:100%}
+.fi input:focus,.fi select:focus,.fi textarea:focus{border-color:var(--gold)}
+.fi textarea{resize:vertical;line-height:1.6}
+.mes-meta-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem;align-items:flex-end;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.adm-sem{background:var(--ink3);border:1px solid var(--ink4);border-radius:12px;margin-bottom:.6rem;overflow:hidden}
+.adm-sem-hd{display:flex;align-items:center;gap:.7rem;padding:.72rem 1rem;cursor:pointer;user-select:none}
+.adm-sem-ico{font-size:.9rem}
+.adm-sem-nm{font-weight:800;font-size:.87rem;color:var(--light);flex:1}
+.adm-sem-cnt{font-size:.65rem;color:var(--muted);background:var(--ink4);padding:2px 8px;border-radius:10px}
+.adm-sem-arr{font-size:.6rem;color:var(--dim);transition:transform .2s}
+.adm-sem-arr.open{transform:rotate(90deg)}
+.adm-sem-body{display:none;border-top:1px solid rgba(255,255,255,.05);padding:.9rem 1rem 1rem}
+.adm-sem-body.open{display:block}
+.adm-dia{background:var(--ink4);border:1px solid rgba(255,255,255,.05);border-radius:10px;margin-bottom:.5rem;overflow:hidden}
+.adm-dia-hd{display:flex;align-items:center;gap:.6rem;padding:.62rem .9rem;cursor:pointer;user-select:none}
+.adm-dia-n{font-weight:800;font-size:.84rem;color:var(--white);flex:1}
+.adm-dia-s{font-size:.67rem;color:var(--muted)}
+.adm-dia-arr{font-size:.58rem;color:var(--dim);transition:transform .2s}
+.adm-dia-arr.open{transform:rotate(90deg)}
+.adm-dia-body{display:none;border-top:1px solid rgba(255,255,255,.04);padding:.9rem}
+.adm-dia-body.open{display:block}
+.devo-form{display:flex;flex-direction:column;gap:.75rem}
+.devo-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+@media(max-width:500px){.devo-row{grid-template-columns:1fr}}
+.refs-list{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.4rem}
+.ref-row{display:flex;gap:.35rem;align-items:center}
+.ref-row input{flex:1;background:var(--ink3);border:2px solid var(--ink4);border-radius:7px;color:var(--white);padding:.48rem .7rem;font-size:.83rem}
+.ref-row input:focus{border-color:var(--gold);outline:none}
+.ref-row button{background:rgba(239,68,68,.12);color:#f87171;border:none;border-radius:6px;padding:.38rem .6rem;font-size:.8rem;cursor:pointer;flex-shrink:0}
+.devo-acts{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.2rem}
+
+.side-modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.88);backdrop-filter:blur(14px);display:none;align-items:flex-start;justify-content:center;padding:80px 1rem 2rem;overflow-y:auto}
+.side-modal.open{display:flex}
+.side-modal-box{background:var(--ink2);border:1px solid var(--ink4);border-radius:20px;width:100%;max-width:680px;overflow:hidden}
+.side-modal-hd{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--ink4)}
+.side-modal-title{font-family:var(--f-d);font-size:1.2rem;font-weight:800;color:var(--white)}
+.side-modal-x{background:var(--ink4);border-radius:8px;color:var(--muted);font-size:1rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.side-modal-x:hover{color:var(--white)}
+.side-modal-body{padding:1.5rem;overflow-y:auto;max-height:75vh}
+.fi-inline{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
+.fi-inline input{flex:1;min-width:130px;background:var(--ink3);border:2px solid var(--ink4);border-radius:8px;color:var(--white);padding:.58rem .8rem;font-size:.88rem}
+.fi-inline input:focus{border-color:var(--gold);outline:none}
+.slist-item{display:flex;align-items:center;gap:.7rem;padding:.7rem .9rem;background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;margin-bottom:.45rem}
+.slist-nm{flex:1;font-weight:800;font-size:.85rem;color:var(--white)}
+.slist-sub{font-size:.7rem;color:var(--muted)}
+
+.cal-edit-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin:1rem 0}
+.cal-edit-cell{background:var(--ink3);border:1px solid var(--ink4);border-radius:6px;padding:.3rem;text-align:center;cursor:pointer;transition:.2s;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.12rem}
+.cal-edit-cell:hover{border-color:var(--gold)}
+.cal-edit-cell.emp{opacity:.22;cursor:default}
+.cal-edit-cell.hasl{background:rgba(22,163,74,.08);border-color:rgba(22,163,74,.3)}
+.cal-edit-n{font-weight:900;font-size:.72rem;color:var(--white)}
+.cal-edit-l{font-size:.54rem;color:var(--green);font-weight:700;line-height:1.2}
+.inline-day-edit{background:rgba(240,180,41,.05);border:1px solid rgba(240,180,41,.2);border-radius:10px;padding:1rem;margin-top:.75rem}
+
+.toast{position:fixed;bottom:2rem;right:1.5rem;z-index:9999;background:var(--ink3);border:1px solid var(--green);border-radius:12px;padding:.8rem 1.3rem;font-weight:700;font-size:.84rem;color:#4ade80;box-shadow:0 8px 30px rgba(0,0,0,.5);transform:translateY(20px);opacity:0;transition:.3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.err{border-color:#f87171;color:#f87171}
+
+.cel-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);align-items:center;justify-content:center;padding:1.5rem}
+.cel-modal.open,.cel-modal[style*='flex']{display:flex!important}
+
+.cord-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:200;width:64px;height:64px;border-radius:50%;background:linear-gradient(160deg,#042f2e,#0d9488);border:2.5px solid rgba(45,212,191,.5);box-shadow:0 8px 30px rgba(20,184,166,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s;animation:cordPulse 3s ease-in-out infinite;overflow:hidden;padding:2px}
+@keyframes cordPulse{0%,100%{box-shadow:0 8px 30px rgba(20,184,166,.5)}50%{box-shadow:0 8px 50px rgba(20,184,166,.8),0 0 0 8px rgba(20,184,166,.12)}}
+.cord-fab:hover{transform:scale(1.1)}
+.cord-fab .cord-notif{position:absolute;top:-2px;right:-2px;width:16px;height:16px;background:var(--ember);border-radius:50%;border:2px solid var(--ink);font-size:.55rem;display:flex;align-items:center;justify-content:center;color:white;font-weight:900}
+.cord-win{position:fixed;bottom:5.5rem;right:1.75rem;z-index:200;width:370px;max-height:580px;background:var(--ink2);border:1px solid rgba(45,212,191,.2);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px rgba(20,184,166,.12);display:none;flex-direction:column;overflow:hidden;animation:cordSlideUp .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cordSlideUp{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.cord-win.open{display:flex}
+
+@media(max-width:640px){
+  .cord-win{position:fixed;bottom:0;right:0;left:0;width:100%;max-height:88vh;border-radius:22px 22px 0 0;box-shadow:0 -10px 50px rgba(0,0,0,.7);z-index:999;}
+  .cord-fab{bottom:1.2rem;right:1.2rem;width:60px;height:60px;}
+  .cord-msgs{max-height:42vh;padding:.7rem .85rem;}
+  .cord-chips{padding:.45rem .8rem .6rem;gap:.35rem;}
+  .cord-chip{font-size:.7rem;padding:.35rem .7rem;min-height:32px;display:flex;align-items:center;border-radius:16px;}
+  .cord-inp-row{padding:.65rem .85rem;padding-bottom:max(.65rem,env(safe-area-inset-bottom));}
+  .cord-hd{padding:.85rem 1rem;}
+  .cord-win::before{content:'';display:block;width:40px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin:.6rem auto .2rem;flex-shrink:0;}
+}
+@media(max-width:420px){.cord-win{left:0;right:0;width:100%}}
+
+.cord-hd{background:linear-gradient(135deg,#042f2e,#064e4e);padding:1rem 1.2rem;display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.cord-av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#0d9488,#2dd4bf);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 14px rgba(45,212,191,.55);overflow:hidden}
+.cord-inf{flex:1}
+.cord-nm{font-family:var(--f-d);font-weight:800;font-size:.92rem;color:var(--white)}
+.cord-st{font-size:.65rem;color:rgba(45,212,191,.8);display:flex;align-items:center;gap:.3rem}
+.cord-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:cordBlink 2s ease-in-out infinite}
+@keyframes cordBlink{0%,100%{opacity:1}50%{opacity:.3}}
+.cord-cls{background:rgba(255,255,255,.08);border-radius:8px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.6);font-size:.9rem;transition:.15s}
+.cord-cls:hover{background:rgba(255,255,255,.18);color:white}
+.cord-status{font-size:.58rem;padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:.5px}
+.cord-status.ai{background:rgba(74,222,128,.15);color:#4ade80;border:1px solid rgba(74,222,128,.25)}
+.cord-status.local{background:rgba(240,180,41,.1);color:var(--gold);border:1px solid rgba(240,180,41,.2)}
+.cord-msgs{flex:1;overflow-y:auto;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.6rem;scrollbar-width:thin;scrollbar-color:var(--dim) transparent}
+.cord-msg{max-width:90%;animation:fadeUp .2s ease}
+.cord-msg.bot{align-self:flex-start}
+.cord-msg.usr{align-self:flex-end}
+.cord-bubble{padding:.65rem .9rem;border-radius:14px;font-size:.84rem;line-height:1.6}
+.cord-msg.bot .cord-bubble{background:var(--ink3);border:1px solid var(--ink4);color:var(--light);border-bottom-left-radius:4px}
+.cord-msg.usr .cord-bubble{background:linear-gradient(135deg,#065f5f,#0d9488);color:white;border-bottom-right-radius:4px}
+.cord-typing{display:flex;align-items:center;gap:.3rem;padding:.6rem .9rem;background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;border-bottom-left-radius:4px;align-self:flex-start}
+.cord-typing span{width:6px;height:6px;border-radius:50%;background:#2dd4bf;animation:cordDot 1.2s ease-in-out infinite}
+.cord-typing span:nth-child(2){animation-delay:.2s}
+.cord-typing span:nth-child(3){animation-delay:.4s}
+@keyframes cordDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.cord-chips{display:flex;flex-wrap:wrap;gap:.35rem;padding:.5rem 1rem .7rem;flex-shrink:0;border-top:1px solid rgba(255,255,255,.04);max-height:120px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--dim) transparent}
+.cord-chip{background:var(--ink3);border:1px solid rgba(45,212,191,.2);border-radius:20px;padding:.32rem .75rem;font-size:.72rem;color:#2dd4bf;cursor:pointer;transition:.2s;font-weight:700;-webkit-tap-highlight-color:transparent}
+.cord-chip:hover,.cord-chip:active{background:rgba(20,184,166,.12);border-color:#2dd4bf;transform:scale(1.02)}
+.cord-inp-row{display:flex;gap:.5rem;padding:.8rem 1rem;border-top:1px solid var(--ink4);flex-shrink:0;align-items:flex-end}
+.cord-inp{flex:1;background:var(--ink3);border:2px solid var(--ink4);border-radius:10px;color:var(--white);padding:.6rem .85rem;font-size:.85rem;resize:none;line-height:1.4;max-height:90px;transition:.2s;overflow-y:auto}
+.cord-inp:focus{border-color:#2dd4bf}
+.cord-inp::placeholder{color:var(--dim)}
+.cord-send{background:linear-gradient(135deg,#065f5f,#0d9488);color:white;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:.9rem;cursor:pointer;flex-shrink:0;transition:.2s}
+.cord-send:hover{transform:scale(1.08)}
+.cord-send:disabled{opacity:.4;cursor:default;transform:none}
+.cord-bubble strong{color:var(--gold);font-weight:800}
+.cord-bubble em{color:rgba(255,255,255,.7);font-style:italic}
+.cord-bubble ul{margin:.4rem 0 .4rem 1rem;display:flex;flex-direction:column;gap:.15rem}
+.cord-bubble li{font-size:.82rem}
+.cord-bubble code{background:rgba(255,255,255,.08);border-radius:4px;padding:1px 5px;font-family:monospace;font-size:.78rem;color:#2dd4bf}
+
+.img-drop{border:2px dashed var(--dim);border-radius:12px;padding:1.5rem;text-align:center;cursor:pointer;transition:.25s;position:relative;background:var(--ink3);min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem}
+.img-drop:hover,.img-drop.over{border-color:var(--gold);background:rgba(240,180,41,.05)}
+.img-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.img-drop-ico{font-size:1.8rem}
+.img-drop-txt{font-size:.75rem;color:var(--muted);font-weight:700}
+.img-drop-sub{font-size:.65rem;color:var(--dim)}
+.img-preview{width:100%;max-height:180px;object-fit:cover;border-radius:10px;display:block;margin-top:.5rem}
+.img-clear{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25);border-radius:6px;padding:.28rem .7rem;font-size:.72rem;cursor:pointer;margin-top:.4rem;font-family:var(--f-b)}
+.img-clear:hover{background:rgba(239,68,68,.25)}
+
+/* ── PERFILES ──────────────────────────────────────────── */
+.pg-perfil{padding:1.5rem;max-width:480px;margin:0 auto;min-height:60vh}
+.perfil-card{background:linear-gradient(160deg,#0e0e1a 0%,#141428 60%,#0e1520 100%);border:1px solid rgba(200,160,0,.18);border-radius:24px;padding:0;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;position:relative;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+.perfil-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(200,160,0,.13) 0%,transparent 70%);pointer-events:none;z-index:0}
+.perfil-header-band{position:relative;z-index:1;padding:2rem 1.5rem 3.5rem;display:flex;flex-direction:column;align-items:center;gap:.6rem;background:linear-gradient(180deg,rgba(200,160,0,.08) 0%,transparent 100%);border-bottom:1px solid rgba(200,160,0,.1)}
+.perfil-avatar-big{width:100px;height:100px;border-radius:50%;border:3px solid var(--gold);overflow:hidden;cursor:pointer;transition:.3s;position:relative;box-shadow:0 0 0 6px rgba(200,160,0,.1),0 0 30px rgba(200,160,0,.2)}
+.perfil-avatar-big:hover{transform:scale(1.08);box-shadow:0 0 0 8px rgba(200,160,0,.2),0 0 40px rgba(200,160,0,.35)}
+.perfil-avatar-big svg{width:100%;height:100%}
+.perfil-nm{font-family:var(--f-d);font-size:1.5rem;font-weight:900;color:var(--white);letter-spacing:.02em;text-shadow:0 2px 12px rgba(200,160,0,.3)}
+.perfil-nivel{font-size:.72rem;color:#000;font-weight:800;background:linear-gradient(90deg,var(--gold),#ffe066);border-radius:20px;padding:.25rem .85rem;letter-spacing:.06em;text-transform:uppercase}
+.perfil-stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);margin:-1.8rem 1.2rem 0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.perfil-stat{text-align:center;padding:.9rem .5rem;border-right:1px solid rgba(255,255,255,.07)}
+.perfil-stat:last-child{border-right:none}
+.perfil-stat-n{font-family:var(--f-d);font-size:1.5rem;font-weight:900;color:var(--white);line-height:1}
+.perfil-stat-l{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:.25rem}
+.perfil-form{position:relative;z-index:1;padding:1.4rem 1.4rem 1rem;display:flex;flex-direction:column;gap:.8rem}
+.perfil-field-label{font-size:.68rem;color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
+.perfil-field-wrap{position:relative}
+.perfil-field-ico{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.95rem;pointer-events:none}
+.perfil-form input{width:100%;padding:.7rem 1rem .7rem 2.5rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:var(--white);font-family:var(--f-b);font-size:.88rem;transition:.2s;box-sizing:border-box}
+.perfil-form input:focus{outline:none;border-color:rgba(200,160,0,.5);background:rgba(200,160,0,.05);box-shadow:0 0 0 3px rgba(200,160,0,.1)}
+.perfil-form input::placeholder{color:rgba(255,255,255,.25)}
+.perfil-save{background:linear-gradient(135deg,#c8a000,#f0d060,#c8a000);background-size:200% 100%;color:#000;border:none;border-radius:14px;padding:.85rem 1.5rem;font-weight:900;cursor:pointer;font-family:var(--f-d);font-size:.95rem;letter-spacing:.04em;transition:.35s;width:100%;box-shadow:0 4px 20px rgba(200,160,0,.3);position:relative;overflow:hidden}
+.perfil-save:hover{background-position:100% 0;box-shadow:0 6px 28px rgba(200,160,0,.5);transform:translateY(-1px)}
+.perfil-save:active{transform:translateY(0)}
+.perfil-save-sec{background:transparent;color:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.6rem;font-size:.78rem;cursor:pointer;font-family:var(--f-b);transition:.2s;width:100%}
+.perfil-save-sec:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.6)}
+.perfil-saved-banner{position:absolute;inset:0;z-index:20;background:rgba(10,10,20,.93);border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;opacity:0;pointer-events:none;transition:opacity .35s;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.perfil-saved-banner.show{opacity:1;pointer-events:auto}
+.perfil-saved-banner .sb-emoji{font-size:3.5rem;animation:sbPop .5s cubic-bezier(.34,1.56,.64,1)}
+.perfil-saved-banner .sb-txt{font-family:var(--f-d);font-size:1.3rem;font-weight:900;color:var(--white);text-align:center}
+.perfil-saved-banner .sb-sub{font-size:.8rem;color:var(--gold);text-align:center;padding:0 1rem}
+@keyframes sbPop{0%{transform:scale(0) rotate(-15deg)}100%{transform:scale(1) rotate(0)}}
+.perfil-hint{font-size:.68rem;color:rgba(255,255,255,.25);text-align:center}
+
+/* Avatar picker modal */
+.av-modal{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.85);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1rem}
+.av-modal.open{display:flex}
+/* Modal ver perfil de otro */
+.perfil-view-modal{display:none;position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.85);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);align-items:flex-end;justify-content:center;padding:0}
+.perfil-view-modal.open{display:flex}
+.perfil-view-box{background:linear-gradient(160deg,#0e0e1a,#141428 60%,#0e1520);border:1px solid rgba(200,160,0,.2);border-radius:24px 24px 0 0;width:100%;max-width:480px;padding:0 0 2rem;overflow:hidden;animation:slideUp .35s cubic-bezier(.34,1.2,.64,1);position:relative}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.pv-handle{width:40px;height:4px;background:rgba(255,255,255,.15);border-radius:4px;margin:12px auto 0}
+.pv-close{position:absolute;top:12px;right:16px;background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.5);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.pv-header{padding:1.5rem 1.5rem 3rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;background:linear-gradient(180deg,rgba(200,160,0,.07),transparent);border-bottom:1px solid rgba(200,160,0,.1)}
+.pv-av{width:84px;height:84px;border-radius:50%;border:3px solid var(--gold);overflow:hidden;box-shadow:0 0 0 5px rgba(200,160,0,.12),0 0 24px rgba(200,160,0,.2)}
+.pv-av svg{width:100%;height:100%}
+.pv-name{font-family:var(--f-d);font-size:1.35rem;font-weight:900;color:var(--white)}
+.pv-nivel{font-size:.7rem;background:linear-gradient(90deg,var(--gold),#ffe066);color:#000;font-weight:800;border-radius:20px;padding:.2rem .8rem;letter-spacing:.06em}
+.pv-stats{display:grid;grid-template-columns:repeat(3,1fr);margin:-1.5rem 1.2rem 0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden}
+.pv-stat{text-align:center;padding:.8rem .4rem;border-right:1px solid rgba(255,255,255,.07)}
+.pv-stat:last-child{border-right:none}
+.pv-stat-n{font-family:var(--f-d);font-size:1.3rem;font-weight:900;color:var(--white)}
+.pv-stat-l{font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:.2rem}
+.pv-body{padding:1.2rem 1.4rem 0;display:flex;flex-direction:column;gap:.8rem}
+.pv-verse{background:linear-gradient(135deg,rgba(200,160,0,.08),rgba(100,80,0,.05));border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:.8rem 1rem}
+.pv-verse-txt{font-size:.82rem;color:rgba(255,255,255,.75);font-style:italic;line-height:1.5}
+.pv-verse-ref{font-size:.68rem;color:var(--gold);font-weight:700;margin-top:.3rem}
+.pv-bio{font-size:.82rem;color:rgba(255,255,255,.5);text-align:center;font-style:italic}
+.av-box{background:var(--ink2);border:1px solid var(--ink4);border-radius:20px;padding:1.5rem;max-width:420px;width:100%}
+.av-title{font-family:var(--f-d);font-size:1.1rem;font-weight:900;color:var(--white);margin-bottom:1rem;text-align:center}
+.av-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+.av-item{width:100%;aspect-ratio:1;border-radius:50%;cursor:pointer;border:3px solid transparent;overflow:hidden;transition:.2s}
+.av-item:hover{border-color:var(--gold);transform:scale(1.08)}
+.av-item.sel{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,180,41,.3)}
+.av-item svg{width:100%;height:100%}
+.av-close{margin-top:1rem;width:100%;background:var(--ink3);border:1px solid var(--ink4);color:var(--white);border-radius:10px;padding:.6rem;cursor:pointer;font-family:var(--f-b);font-weight:700}
+
+/* Perfil en ranking */
+.lb-av{width:38px;height:38px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--ink4)}
+.lb-av svg{width:100%;height:100%}
+.lb-bio{font-size:.67rem;color:var(--dim);margin-top:.1rem;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-row{gap:.6rem}
+</style>
+</head>
+<body>
+<canvas id="cvs"></canvas>
+
+<nav class="nav">
+  <div class="nav-brand"><span class="nav-cross">✦</span> Éfeso Jóvenes</div>
+  <div class="nav-links">
+    <button class="nb on" onclick="go('home')">Inicio</button>
+    <button class="nb" onclick="go('dev')">📖 Devocionales</button>
+    <button class="nb" onclick="go('rachas')">🔥 Rachas</button>
+    <button class="nb" id="nb-perfil" onclick="go('perfil')">👤 Perfil</button>
+    <button class="nb" onclick="go('cal')">📅 Calendario</button>
+    <button class="nb" onclick="go('admin')" style="color:var(--ember2)">⚙️ Admin</button>
+  </div>
+  <button class="nav-ham" onclick="tmob()">☰</button>
+</nav>
+<div class="mob" id="mob">
+  <button onclick="go('home')">🏠 Inicio</button>
+  <button onclick="go('dev')">📖 Devocionales</button>
+  <button onclick="go('rachas')">🔥 Rachas</button>
+  <button onclick="go('perfil')">👤 Perfil</button>
+  <button onclick="go('cal')">📅 Calendario</button>
+  <button onclick="go('admin')" style="color:var(--ember2)">⚙️ Admin</button>
+</div>
+
+<!-- HOME -->
+<div class="pg on" id="pg-home">
+  <section class="hero">
+    <div class="hg hg1"></div><div class="hg hg2"></div>
+    <div class="hero-in">
+      <div class="eyebrow">✦ Iglesia Pentecostal Éfeso</div>
+      <h1 class="hero-h1">DEVOCIONALES<em>Jóvenes</em></h1>
+      <p class="hero-p">"Mi corazón te ha oído decir: 'Ven y habla conmigo'. Y mi corazón responde: 'Aquí vengo, Señor'." — Salmos 27:8</p>
+      <div class="ctas">
+        <button class="btn-p" onclick="go('dev')">Ir al devocional →</button>
+        <button class="btn-g" onclick="go('rachas')">🔥 Ver mi racha</button>
+      </div>
+    </div>
+  </section>
+  <div class="lider-wrap">
+    <div class="lider-c">
+      <div class="lider-pill">✦ HOY LIDERA EL DEVOCIONAL</div>
+      <div class="lider-nm" id="lNm"><span class="spin"></span></div>
+      <div class="lider-vs" id="lVs">&nbsp;</div>
+      <div class="lider-dt" id="lDt"></div>
+    </div>
+  </div>
+  <div class="qa-sec">
+    <div class="sec-lbl">¿Qué quieres hacer hoy?</div>
+    <div class="qa-grid">
+      <div class="qa" data-c="gold" onclick="go('dev')"><div class="qa-ico">📖</div><div><strong>Leer Devocional</strong><span>Reflexión del día</span></div></div>
+      <div class="qa" data-c="fire" onclick="go('rachas')"><div class="qa-ico">🔥</div><div><strong>Mi Racha</strong><span>Marcar asistencia</span></div></div>
+      <div class="qa" data-c="green" onclick="go('cal')"><div class="qa-ico">📅</div><div><strong>Calendario</strong><span>Ver turnos del mes</span></div></div>
+      <div class="qa" data-c="violet" onclick="go('admin')"><div class="qa-ico">⚙️</div><div><strong>Administrar</strong><span>Panel de control</span></div></div>
+    </div>
+  </div>
+  <div class="milo-home-wrap" id="miloHomeWrap">
+    <div class="milo-home-card">
+      <div class="milo-bubble-wrap">
+        <div class="milo-bubble-label">✦ VERSÍCULO DEL DÍA</div>
+        <div class="milo-verse-text" id="miloVerseText"><span class="spin" style="width:18px;height:18px;border-width:2px"></span></div>
+        <div class="milo-verse-ref" id="miloVerseRef"></div>
+        <div class="milo-bubble-actions">
+          <button class="milo-btn-nuevo" onclick="miloNuevoVersiculo()">🔄 Nuevo versículo</button>
+          <button class="milo-btn-promesa" onclick="openPromesa()">🎁 Mi promesa</button>
+        </div>
+        <div class="promo-r" id="promoR"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEVOCIONALES -->
+<div class="pg" id="pg-dev">
+  <div class="dev-pg">
+    <div class="dev-bc" id="devBc"></div>
+    <div id="devVista"></div>
+  </div>
+</div>
+
+<!-- Celebración -->
+<div class="cel-modal" id="celModal">
+  <div style="position:relative;width:100%;max-width:370px;background:linear-gradient(160deg,#150a2e,#2d1462 55%,#150a2e);border:1px solid rgba(167,139,250,.35);border-radius:24px;overflow:hidden;box-shadow:0 0 80px rgba(124,58,237,.45);animation:popIn .45s cubic-bezier(.34,1.56,.64,1)" onclick="event.stopPropagation()">
+    <canvas id="celCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;border-radius:24px"></canvas>
+    <div style="position:relative;z-index:2;text-align:center;padding:2.5rem 2rem 2rem">
+      <div style="font-size:3.8rem;display:inline-block;margin-bottom:.3rem;animation:shk .35s ease-in-out infinite alternate" id="celEmoji">🔥</div>
+      <div style="font-family:var(--f-d);font-size:6.5rem;font-weight:800;line-height:1;color:var(--white)" id="celNum">3</div>
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(167,139,250,.7);margin-bottom:.6rem">DÍAS DE RACHA</div>
+      <div style="font-family:var(--f-d);font-size:2.2rem;font-weight:800;color:var(--gold);margin-bottom:.4rem" id="celTitle">¡EN LLAMAS!</div>
+      <div style="color:rgba(255,255,255,.75);font-size:.9rem;margin-bottom:.7rem" id="celMsg"></div>
+      <div style="font-style:italic;color:rgba(167,139,250,.65);font-size:.78rem;line-height:1.6;background:rgba(255,255,255,.04);border-left:2px solid rgba(167,139,250,.3);border-radius:0 8px 8px 0;padding:.65rem .8rem;margin-bottom:1.4rem;text-align:left" id="celVerse"></div>
+      <button style="width:100%;background:linear-gradient(135deg,var(--ember),var(--ember2));color:white;font-weight:900;font-size:1rem;padding:.95rem 2rem;border-radius:50px;border:none;cursor:pointer;font-family:var(--f-b)" onclick="closeCel()">¡Seguir adelante! →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Shop modal -->
+<div id="shopModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);backdrop-filter:blur(14px);align-items:center;justify-content:center;padding:1.5rem" onclick="closeShopModal()">
+  <div style="background:linear-gradient(160deg,#0a1628,#0e2040,#0a1628);border:1px solid rgba(6,182,212,.3);border-radius:24px;padding:2.5rem 2rem;text-align:center;max-width:340px;width:100%;animation:popIn .4s cubic-bezier(.34,1.56,.64,1)" onclick="event.stopPropagation()">
+    <div style="font-size:4rem;margin-bottom:.75rem">❄️</div>
+    <div style="font-family:var(--f-d);font-size:1.8rem;font-weight:800;color:var(--cyan);margin-bottom:.6rem">¡Protector Comprado!</div>
+    <div style="color:rgba(255,255,255,.7);font-size:.88rem;line-height:1.6;margin-bottom:.4rem">Tu racha está protegida por un día.</div>
+    <div style="color:var(--gold);font-weight:700;font-size:.82rem" id="shopModalSub"></div>
+    <button style="width:100%;background:linear-gradient(135deg,var(--ember),var(--ember2));color:white;font-weight:900;font-size:1rem;padding:.95rem 2rem;border-radius:50px;border:none;cursor:pointer;font-family:var(--f-b);margin-top:1.25rem" onclick="closeShopModal()">¡Perfecto! →</button>
+  </div>
+</div>
+
+<!-- RACHAS -->
+<div class="pg" id="pg-rachas">
+  <div class="ra-pg">
+    <div class="ra-hero">
+      <div class="ra-hg"></div>
+      <div class="ra-hero-badge">🔥 SISTEMA DE RACHAS</div>
+      <h1 class="ra-h1">MI RACHA</h1>
+      <p class="ra-vs">"Los que esperan en el Señor tendrán nuevas fuerzas." — Is 40:31</p>
+    </div>
+    <div class="ra-grid">
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="panel">
+          <div class="p-title">¡Identifícate!</div>
+          <div class="p-sub">Escribe tu nombre para ver tu racha</div>
+          <div class="srch-w">
+            <input class="srch-i" id="sI" type="text" placeholder="Tu nombre..." oninput="onSI()" autocomplete="off">
+            <div class="srch-d" id="sD"></div>
+          </div>
+          <div class="my-r" id="myR">
+            <div class="mr-top">
+              <div><div class="mr-nm" id="mrN">—</div><div class="mr-nv" id="mrNv">Novato 🌱</div></div>
+              <div class="racha-flame"><span class="rfb-fire">🔥</span><span class="rfb-num" id="rfbNum">0</span></div>
+            </div>
+            <div class="stats">
+              <div class="st"><div class="st-v" id="mrD">0</div><div class="st-l">🔥 Días</div></div>
+              <div class="st"><div class="st-v" id="mrM">0</div><div class="st-l">🪙 Monedas</div></div>
+              <div class="st"><div class="st-v" id="mrE">0</div><div class="st-l">❄️ Escudos</div></div>
+            </div>
+            <div class="prog-r"><span>Próximo nivel</span><span id="mrPT">0/7</span></div>
+            <div class="prog-b"><div class="prog-f" id="mrPF" style="width:0%"></div></div>
+            <div class="milestone-track" id="milestoneTrack"></div>
+            <div class="dlbl">Últimos 7 días</div>
+            <div class="drow" id="mrDts"></div>
+            <button class="btn-mk" id="btnMk" onclick="marcar()">✨ Marcar asistencia hoy</button>
+            <div class="rmsg" id="rMsg"></div>
+          </div>
+        </div>
+        <div class="shop-panel">
+          <div class="shop-hd-row">
+            <div><div class="p-title" style="margin-bottom:.1rem">🛒 Tienda</div><div class="p-sub" style="margin-bottom:0">Gasta tus monedas</div></div>
+            <div class="shop-wallet"><span>🪙</span><span id="walletCoins">0</span></div>
+          </div>
+          <div class="shop-grid">
+            <div class="shop-card" onclick="comprar('escudo')">
+              <div style="font-size:.54rem;font-weight:900;background:var(--gold);color:var(--ink);display:inline-block;padding:2px 7px;border-radius:10px">⭐ POPULAR</div>
+              <div class="shop-card-ico">❄️</div>
+              <div class="shop-card-name">Protector de Racha</div>
+              <div class="shop-card-desc">Si fallas un día tu racha no se rompe.</div>
+              <div class="shop-card-footer"><div class="shop-price">🪙 10</div><button class="shop-btn" id="btnEscudo">Comprar</button></div>
+            </div>
+            <div class="shop-card lock">
+              <div style="font-size:.54rem;font-weight:900;background:var(--dim);color:var(--muted);display:inline-block;padding:2px 7px;border-radius:10px">🔒 PRONTO</div>
+              <div class="shop-card-ico" style="opacity:.4">👑</div>
+              <div class="shop-card-name" style="color:var(--muted)">Corona de Oro</div>
+              <div class="shop-card-desc" style="opacity:.5">Badge especial en el leaderboard</div>
+              <div class="shop-card-footer"><div class="shop-price" style="color:var(--dim)">🪙 20</div><button class="shop-btn" style="background:var(--dim);color:var(--muted);cursor:default" disabled>Pronto</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="lb-panel">
+          <div class="lb-hd">🏆 Tabla de Honor</div>
+          <div id="lb"><div class="lb-load"><span class="sp"></span> Cargando...</div></div>
+        </div>
+        <div style="border-top:1px solid var(--ink4);padding-top:1.25rem">
+          <div class="sec-lbl" style="margin-bottom:.9rem">¿Cómo funcionan?</div>
+          <div class="como-g">
+            <div class="ci"><div class="ci-ico">🔥</div><strong>Marca cada día</strong><p>Tu racha sube +1</p></div>
+            <div class="ci"><div class="ci-ico">🪙</div><strong>Gana Monedas</strong><p>Cada 3 días recibes 2</p></div>
+            <div class="ci"><div class="ci-ico">❄️</div><strong>Compra Escudos</strong><p>10 monedas = protección</p></div>
+            <div class="ci"><div class="ci-ico">🎉</div><strong>Hitos</strong><p>3, 7, 14, 21, 30 días</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CALENDARIO -->
+<div class="pg" id="pg-cal">
+  <div class="cal-pg-wrap">
+    <div class="cal-hero">
+      <h1 id="calMainTitle">Calendario 2026</h1>
+      <p>Turnos de devocionales — selecciona el mes</p>
+    </div>
+    <div class="cal-mes-tabs" id="calMesTabs"></div>
+    <div class="cal-w">
+      <div class="cal-hdr"><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div><div>Dom</div></div>
+      <div class="cal-grid" id="calG"></div>
+    </div>
+    <div class="cal-notes">
+      <h3>📝 Recordatorios</h3>
+      <ul>
+        <li>✅ Recuerda leer la Palabra cada día</li>
+        <li>🙏 Orar</li>
+        <li>💬 Dejar reflexión en el Padlet <strong>(8:00pm – 10:00pm)</strong></li>
+      </ul>
+      <blockquote id="calVerse">"Mi corazón te ha oído decir: 'Ven y conversa conmigo'. — Salmo 27:8</blockquote>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<!-- AVATAR PICKER MODAL -->
+<!-- Modal ver perfil de otro -->
+<div class="perfil-view-modal" id="perfilViewModal" onclick="if(event.target===this)closePerfilView()">
+  <div class="perfil-view-box">
+    <div class="pv-handle"></div>
+    <button class="pv-close" onclick="closePerfilView()">✕</button>
+    <div class="pv-header">
+      <div class="pv-av" id="pvAvatar"></div>
+      <div class="pv-name" id="pvNombre"></div>
+      <div class="pv-nivel" id="pvNivel"></div>
+    </div>
+    <div class="pv-stats">
+      <div class="pv-stat"><div class="pv-stat-n" id="pvDias">0</div><div class="pv-stat-l">🔥 Racha</div></div>
+      <div class="pv-stat"><div class="pv-stat-n" id="pvMonedas">0</div><div class="pv-stat-l">🪙 Monedas</div></div>
+      <div class="pv-stat"><div class="pv-stat-n" id="pvEscudos">0</div><div class="pv-stat-l">❄️ Escudos</div></div>
+    </div>
+    <div class="pv-body">
+      <div class="pv-verse" id="pvVerseBox" style="display:none">
+        <div class="pv-verse-txt" id="pvVerseTxt"></div>
+      </div>
+      <div class="pv-bio" id="pvBio"></div>
+    </div>
+  </div>
+</div>
+
+<div class="av-modal" id="avModal">
+  <div class="av-box">
+    <div class="av-title">✨ Elige tu personaje bíblico</div>
+    <div class="av-grid" id="avGrid"></div>
+    <button class="av-close" onclick="document.getElementById('avModal').classList.remove('open')">Cerrar</button>
+  </div>
+</div>
+
+<!-- PÁGINA PERFIL -->
+<div class="pg" id="pg-perfil">
+  <div class="pg-perfil">
+    <!-- SELECTOR DE NOMBRE -->
+    <div id="perfilSelector">
+      <div class="perfil-card" style="gap:.8rem">
+        <div style="font-size:2.5rem">👤</div>
+        <div class="perfil-nm" style="font-size:1.1rem">¿Quién eres?</div>
+        <div style="position:relative;width:100%">
+          <input id="perfilSelectorInput" placeholder="Escribe tu nombre..." autocomplete="off"
+            oninput="filtrarNombresPerfil(this.value)"
+            style="width:100%;padding:.7rem 1rem;background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;color:var(--white);font-family:var(--f-b);font-size:.95rem">
+          <div id="perfilDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--ink2);border:1px solid var(--ink4);border-radius:10px;z-index:10;margin-top:.3rem;max-height:200px;overflow-y:auto"></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center" id="perfilNombreChips"></div>
+      </div>
+    </div>
+    <!-- PERFIL COMPLETO -->
+    <div id="perfilCompleto" style="display:none">
+      <div class="perfil-card">
+        <!-- Banner de guardado -->
+        <div class="perfil-saved-banner" id="perfilSavedBanner">
+          <div class="sb-emoji">✨</div>
+          <div class="sb-txt">¡Perfil guardado!</div>
+          <div class="sb-sub" id="perfilSavedSub">Tu identidad en Éfeso Jóvenes</div>
+        </div>
+        <!-- Header con avatar -->
+        <div class="perfil-header-band">
+          <div class="perfil-avatar-big" onclick="openAvModal()" title="Toca para cambiar tu avatar">
+            <div id="perfilAvatarBig"></div>
+            <div class="perfil-av-badge">✏️</div>
+          </div>
+          <div class="perfil-nm" id="perfilNombre">—</div>
+          <div class="perfil-nivel" id="perfilNivel"></div>
+        </div>
+        <!-- Stats flotantes -->
+        <div class="perfil-stats">
+          <div class="perfil-stat">
+            <div class="perfil-stat-n" id="perfilDias">0</div>
+            <div class="perfil-stat-l">🔥 Racha</div>
+          </div>
+          <div class="perfil-stat">
+            <div class="perfil-stat-n" id="perfilMonedas">0</div>
+            <div class="perfil-stat-l">🪙 Monedas</div>
+          </div>
+          <div class="perfil-stat">
+            <div class="perfil-stat-n" id="perfilEscudos">0</div>
+            <div class="perfil-stat-l">❄️ Escudos</div>
+          </div>
+        </div>
+        <!-- Formulario -->
+        <div class="perfil-form" style="margin-top:1.4rem">
+          <div>
+            <div class="perfil-field-label">✝️ Versículo favorito</div>
+            <div class="perfil-field-wrap">
+              <span class="perfil-field-ico">📖</span>
+              <input id="perfilVersiculo" placeholder="Ej: Juan 3:16 — Porque de tal manera...">
+            </div>
+          </div>
+          <div>
+            <div class="perfil-field-label">💬 Tu frase / bio</div>
+            <div class="perfil-field-wrap">
+              <span class="perfil-field-ico">✍️</span>
+              <input id="perfilBio" placeholder="Ej: Sirviendo a Dios con alegría">
+            </div>
+          </div>
+          <button class="perfil-save" onclick="guardarPerfil()">✨ Guardar perfil</button>
+          <button class="perfil-save-sec" onclick="cambiarUsuarioPerfil()">↩ Cambiar usuario</button>
+          <div class="perfil-hint">Toca tu avatar para cambiarlo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pg" id="pg-admin">
+  <div class="adm-lock" id="admLock">
+    <div class="adm-lock-box">
+      <div class="adm-lock-ico">🔐</div>
+      <div class="adm-lock-h">Panel Admin</div>
+      <p class="adm-lock-p">Selecciona tu perfil e ingresa tu contraseña</p>
+      <div class="adm-users" id="admUserBtns"></div>
+      <input class="adm-pw" type="password" id="admPw" placeholder="Contraseña..." onkeydown="if(event.key==='Enter')admLogin()">
+      <button class="adm-pw-btn" onclick="admLogin()">Entrar al panel →</button>
+      <div class="adm-pw-err" id="admErr"></div>
+    </div>
+  </div>
+  <div class="adm-pg" id="admContent" style="display:none">
+    <div class="adm-topbar">
+      <div>
+        <div class="adm-title">Panel <span>Admin</span></div>
+        <div style="color:var(--muted);font-size:.78rem;margin-top:.15rem">Cambios guardados automáticamente</div>
+      </div>
+      <div class="adm-topbtns">
+        <div class="adm-whoami" id="admWhoami">👤</div>
+        <button class="btn-s btn-s-dim" onclick="admExport()">📥 Exportar</button>
+        <button class="btn-s btn-s-dim" onclick="document.getElementById('importFile').click()">📤 Importar</button>
+        <button class="btn-s btn-s-red" onclick="admLogout()">🔒 Salir</button>
+      </div>
+    </div>
+    <div class="adm-extras">
+      <div class="adm-extra-card" onclick="openModal('modalCal')"><div class="adm-extra-ico">🗓️</div><div class="adm-extra-info"><strong>Calendario</strong><span>Editar turnos de todos los meses</span></div></div>
+      <div class="adm-extra-card" onclick="openModal('modalUsers')"><div class="adm-extra-ico">👥</div><div class="adm-extra-info"><strong>Usuarios de Rachas</strong><span>Quién puede marcar asistencia</span></div></div>
+      <div class="adm-extra-card" onclick="openModal('modalPromesas')"><div class="adm-extra-ico">🎁</div><div class="adm-extra-info"><strong>Promesas</strong><span>Mensajes del botón de inicio</span></div></div>
+      <div class="adm-extra-card" onclick="openModal('modalConfig')"><div class="adm-extra-ico">🔗</div><div class="adm-extra-info"><strong>Configuración</strong><span>Link de reflexión y otros ajustes</span></div></div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+      <div style="font-family:var(--f-d);font-size:1.15rem;font-weight:800;color:var(--white)">📅 Meses, Semanas y Devocionales</div>
+      <button class="btn-s btn-s-gold" onclick="addMes()">➕ Nuevo mes</button>
+    </div>
+    <div id="admMeses"></div>
+  </div>
+</div>
+
+<!-- Modales -->
+<div class="side-modal" id="modalCal">
+  <div class="side-modal-box" style="max-width:750px">
+    <div class="side-modal-hd"><div class="side-modal-title">🗓️ Editar Calendario 2026</div><div class="side-modal-x" onclick="closeModal('modalCal')">✕</div></div>
+    <div class="side-modal-body">
+      <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem" id="calEdMesTabs"></div>
+      <div id="calEdArea"></div>
+      <div class="inline-day-edit" id="calDayEdit" style="display:none">
+        <div style="font-weight:800;color:var(--gold);margin-bottom:.6rem" id="calDayEditTitle">Día</div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:flex-end">
+          <div class="fi" style="flex:1;min-width:180px"><label>Nombre del líder</label><input id="calDayLiderInput" placeholder="Ej: Hna. Emily"></div>
+          <button class="btn-s btn-s-gold" onclick="saveCalDay()">💾 Guardar</button>
+          <button class="btn-s btn-s-red" onclick="clearCalDay()">🗑️ Quitar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="side-modal" id="modalUsers">
+  <div class="side-modal-box">
+    <div class="side-modal-hd"><div class="side-modal-title">👥 Usuarios</div><div class="side-modal-x" onclick="closeModal('modalUsers')">✕</div></div>
+    <div class="side-modal-body">
+      <div class="fi-inline" style="margin-bottom:.5rem"><input id="uNombre" placeholder="Nombre del joven"><button class="btn-s btn-s-gold" onclick="addUser()">✅ Añadir</button></div>
+      <div id="usersList"></div>
+    </div>
+  </div>
+</div>
+<div class="side-modal" id="modalPromesas">
+  <div class="side-modal-box">
+    <div class="side-modal-hd"><div class="side-modal-title">🎁 Promesas</div><div class="side-modal-x" onclick="closeModal('modalPromesas')">✕</div></div>
+    <div class="side-modal-body">
+      <div class="fi-inline" style="margin-bottom:.5rem"><input id="pTexto" placeholder="Versículo con referencia — Juan 3:16"><button class="btn-s btn-s-gold" onclick="addPromesa()">✅ Añadir</button></div>
+      <div id="promesasList"></div>
+    </div>
+  </div>
+</div>
+<div class="side-modal" id="modalConfig">
+  <div class="side-modal-box">
+    <div class="side-modal-hd"><div class="side-modal-title">🔗 Configuración</div><div class="side-modal-x" onclick="closeModal('modalConfig')">✕</div></div>
+    <div class="side-modal-body">
+      <div class="fi" style="margin-bottom:1rem"><label>Link global de reflexión</label><input id="cfgReflexionUrl" placeholder="https://padlet.com/..."></div>
+      <div class="fi" style="margin-bottom:1rem"><label>Versículo del calendario</label><input id="cfgCalVerse" placeholder="Versículo..."></div>
+      <button class="btn-s btn-s-gold" onclick="saveConfig()">💾 Guardar configuración</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<input type="file" id="importFile" accept=".json" style="display:none" onchange="doImport(event)">
+
+<!-- MILO FAB -->
+<button class="cord-fab" id="cordFab" onclick="toggleCord()" title="Hablar con Milo">
+  <span style="font-size:2.2rem">🐑</span>
+  <span class="cord-notif" id="cordNotif">1</span>
+</button>
+
+<div class="cord-win" id="cordWin">
+  <div class="cord-hd">
+    <div class="cord-av" style="font-size:1.8rem;display:flex;align-items:center;justify-content:center">🐑</div>
+    <div class="cord-inf">
+      <div style="display:flex;align-items:center;gap:.5rem">
+        <div class="cord-nm">Milo</div>
+        <span class="cord-status local" id="miloStatusBadge">⚡ local</span>
+      </div>
+      <div class="cord-st"><span class="cord-dot"></span>Asistente · Éfeso Jóvenes</div>
+    </div>
+    <div class="cord-cls" onclick="toggleCord()">✕</div>
+  </div>
+  <div class="cord-msgs" id="cordMsgs"></div>
+  <div class="cord-chips" id="cordChips"></div>
+  <div class="cord-inp-row">
+    <textarea class="cord-inp" id="cordInp" placeholder="Pregúntale a Milo..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCord()}"
+      oninput="autoResizeCord(this)"></textarea>
+    <button class="cord-send" id="cordSendBtn" onclick="sendCord()">➤</button>
+  </div>
+</div>
+
+<footer style="background:var(--ink2);border-top:1px solid var(--ink4);padding:1.5rem;text-align:center;color:var(--muted);font-size:.78rem;position:relative;z-index:2">
+  ✦ Iglesia Pentecostal <span style="color:var(--gold)">Éfeso</span> · Devocionales Jóvenes · Hecho con ❤️ para la gloria de Dios
+</footer>
+
+<script>
+const WORKER_URL = 'https://winter-snowflake-6c0cmilo-proxy.j31000840.workers.dev';
+
+(()=>{
+  const c=document.getElementById('cvs'),x=c.getContext('2d');let W,H,P=[];
+  const r=()=>{W=c.width=innerWidth;H=c.height=innerHeight};r();addEventListener('resize',r);
+  class Pt{reset(){this.x=Math.random()*W;this.y=H+80;this.vx=(Math.random()-.5)*.35;this.vy=-(Math.random()*1.1+.35);this.rv=Math.random()*2+.4;this.life=1;this.d=Math.random()*.007+.003;const t=Math.random();this.h=t<.5?40:t<.8?20:0;this.s=90}update(){this.x+=this.vx;this.y+=this.vy;this.vx+=(Math.random()-.5)*.04;this.life-=this.d;if(this.life<=0||this.y<-10)this.reset()}draw(){x.save();x.globalAlpha=this.life*.55;x.beginPath();x.arc(this.x,this.y,this.rv,0,Math.PI*2);x.fillStyle=`hsl(${this.h},${this.s}%,62%)`;x.shadowBlur=8;x.shadowColor=`hsl(${this.h},100%,62%)`;x.fill();x.restore()}}
+  for(let i=0;i<90;i++){const p=new Pt();p.reset();p.y=Math.random()*H;P.push(p)}
+  const loop=()=>{x.clearRect(0,0,W,H);P.forEach(p=>{p.update();p.draw()});requestAnimationFrame(loop)};loop();
+})();
+
+// ══════════════════════════════════════════════════════════════════
+// ✅ FIX APLICADO: Una sola URL para todo (rachas + lider + leaderboard)
+// ══════════════════════════════════════════════════════════════════
+// ══ URLs DE LOS DOS SCRIPTS ══════════════════════════════
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLTzPGR0ADHUGHtF83oTEE66irG8wG_OKoarnSJ1tzkRrmUvBAlD-CfLDRqW5Mdvvm/exec';
+const PERFIL_URL  = 'https://script.google.com/macros/s/AKfycbxOwfUCtI5Ctr2f2pKD85cQzgDs2ImUZUruilj543w6tHjqPiAH8bItCDcWkmP2M5wefA/exec';
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+
+const API={
+  rachas: SCRIPT_URL,
+  lider:  SCRIPT_URL
+};
+
+const ADM_USERS=[
+  {id:'meggy',   name:'Meggy',    emoji:'🌸', pw:'meggy2026'},
+  {id:'gabriela',name:'Gabriela', emoji:'✨', pw:'gabriela2026'},
+  {id:'elkin',   name:'Elkin',    emoji:'⚡', pw:'elkin2026'},
+];
+let admSelUser=null,admOk=false,admLoggedUser=null;
+
+function buildMonthDays(year,month){
+  const total=new Date(year,month+1,0).getDate();
+  const dow=(new Date(year,month,1).getDay()+6)%7;
+  return {ini:dow, dias:Array.from({length:total},(_,i)=>[i+1,null])};
+}
+const MES_NAMES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function buildDefaultCal(){
+  const cal={};
+  for(let m=0;m<12;m++){const {ini,dias}=buildMonthDays(2026,m);cal[m]={titulo:`${MES_NAMES[m]} 2026`,ini,dias};}
+  const febData={"3":"Hna. Emily","4":"Hno. Steven","5":"Hna. Meggy","6":"Hna. Elkin","7":"Hna. Gabriela","10":"Hna. Julissa","11":"Hno. Jesús Vera","12":"Hna. Paula","13":"Hno. Thiago","14":"Hna. Ingrid","17":"Hno. Santiago","18":"Hno. Dixon","19":"Hno. Angel","20":"Hno. Pascual","21":"Hno. Pascual","24":"Hna. Solange","25":"Hno. Jhonny","26":"Hno. Yecmer","27":"Hna. Heidy","28":"Hna. Brithany"};
+  const feb=cal[1];feb.dias=feb.dias.map(([n])=>[n,febData[String(n)]||null]);
+  return cal;
+}
+
+const DEFAULT={
+  promesas:["Porque yo sé los planes que tengo para ustedes. — Jer 29:11","Todo lo puedo en Cristo que me fortalece. — Fil 4:13","El Señor es mi pastor, nada me faltará. — Sal 23:1","El amor de Dios ha sido derramado. — Rom 5:5","Sean fuertes y valientes. No teman. — Jos 1:9","En todo esto somos más que vencedores. — Rom 8:37","El que comenzó la buena obra la irá perfeccionando. — Fil 1:6","Busca primero el reino de Dios. — Mat 6:33","Encomienda al Señor tu camino. — Sal 37:5","Para el que cree, todo es posible. — Mar 9:23","Acérquense a Dios, y él se acercará. — Santiago 4:8","De tal manera amó Dios al mundo. — Juan 3:16"],
+  cal:buildDefaultCal(),
+  calVerse:"Mi corazón te ha oído decir: Ven y conversa conmigo. — Salmo 27:8",
+  reflexionUrl:'https://padlet.com',
+  users:['Elkin','Gabriela','Julissa','Heidy','Meggy','Angel','Santiago García','Pascual','Emily','Steven','Paula','Thiago','Ingrid','Dixon','Solange','Jhonny','Yecmer','Brithany','Jesús Vera'],
+  meses:[
+    {id:'enero',nm:'Enero',c:'#c62828',pr:false,sems:[{id:'s1',nm:'Semana 1',dias:[{id:'d1',t:'Una Fogata',s:'Semana 1 · Día 1',tema:'Devocional Enero',body:'<p>Nuestros sueños son encendidos por la chispa que Dios pone en nuestro corazón. Así como una fogata necesita ser alimentada cada día, nuestra fe también necesita ser cultivada con la Palabra.</p><p>¿Estás alimentando tu fe hoy? El fuego del Espíritu Santo nunca se apaga por sí solo — somos nosotros quienes a veces dejamos de echar leña.</p>',refs:['Jeremías 20:9','2 Timoteo 1:6','Hebreos 12:29'],or:'Señor, aviva el fuego de tu Espíritu en mí. Que mi corazón arda por Ti cada día. Amén.',reflexionUrl:''},{id:'d2',t:'La Luz Interior',s:'Semana 1 · Día 2',tema:'Devocional Enero',body:'<p>Jesús dijo: "Ustedes son la luz del mundo." Esta es una identidad y una misión que llevas a donde vayas.</p>',refs:['Mateo 5:14-16','Juan 8:12'],or:'Padre, que Tu luz brille a través de mí. Amén.',reflexionUrl:''}]},{id:'s2',nm:'Semana 2',dias:[{id:'d1',t:'Fe que Mueve Montañas',s:'Semana 2 · Día 1',tema:'Devocional Enero',body:'<p>La fe no es sentir que todo está bien. La fe es creer que Dios es fiel incluso cuando las circunstancias dicen lo contrario.</p>',refs:['Mateo 17:20','Hebreos 11:1'],or:'Señor, aumenta mi fe. Amén.',reflexionUrl:''}]}]},
+    {id:'febrero',nm:'Febrero',c:'#1565c0',pr:false,sems:[{id:'s1',nm:'Semana 1',dias:[{id:'d1',t:'El Espíritu Santo Iluminante',s:'Semana 1 · Día 1',tema:'Devocional Febrero',body:'<p>El Espíritu Santo es nuestra guía, nuestro consolador y nuestro maestro.</p>',refs:['Juan 14:26','Romanos 8:26-27'],or:'Espíritu Santo, te invito a guiar cada área de mi vida hoy. Amén.',reflexionUrl:''}]},{id:'s2',nm:'Semana 2',dias:[{id:'d1',t:'El Camino Angosto',s:'Semana 2 · Día 1',tema:'Devocional Febrero',body:'<p>Jesús dijo que el camino es angosto y pocos lo encuentran. Seguir a Cristo no es popular — pero es el único camino que lleva a la vida verdadera.</p>',refs:['Mateo 7:13-14','Juan 14:6'],or:'Señor, dame valentía para elegir Tu camino. Amén.',reflexionUrl:''}]},{id:'s3',nm:'Semana 3',dias:[{id:'d1',t:'La Kénosis',s:'Semana 3 · Día 1',tema:'Devocional Febrero',body:'<p>La kénosis es una palabra griega que significa anonadamiento voluntario — una renuncia a mi voluntad a favor de la de Dios. María manifestó esta actitud: "Aquí tienes a la sierva del Señor."</p>',refs:['Lucas 1:38','Romanos 12:1-2','Lucas 22:42'],or:'Dios, muéstrame cómo darte mi vida. Amén.',reflexionUrl:''},{id:'d2',t:'La Kénosis — Día 2',s:'Semana 3 · Día 2',tema:'Devocional Febrero',body:'<p>¿Qué áreas estoy aferrando y no entregando a Dios? La kénosis no es debilidad — es la mayor demostración de fortaleza espiritual.</p>',refs:['Filipenses 2:5-8','Gálatas 2:20'],or:'Padre, hoy te entrego lo que más me cuesta soltar. Amén.',reflexionUrl:''}]},{id:'s4',nm:'Semana 4',dias:[{id:'d1',t:'Perseverando',s:'Semana 4 · Día 1',tema:'Devocional Febrero',body:'<p>La perseverancia es la marca del verdadero discípulo. No se trata de nunca caer, sino de levantarse cada vez que la vida te derriba.</p>',refs:['Hebreos 12:1-3','Santiago 1:2-4'],or:'Señor, dame la fuerza de levantarme cada vez que caigo. Amén.',reflexionUrl:''}]}]},
+    {id:'marzo',nm:'Marzo',c:'#2e7d32',pr:true,sems:[]},
+    {id:'abril',nm:'Abril',c:'#6a1e55',pr:true,sems:[]},
+    {id:'mayo',nm:'Mayo',c:'#e65100',pr:true,sems:[]},
+    {id:'junio',nm:'Junio',c:'#01579b',pr:true,sems:[]},
+    {id:'julio',nm:'Julio',c:'#880e4f',pr:true,sems:[]},
+    {id:'agosto',nm:'Agosto',c:'#1b5e20',pr:true,sems:[]},
+    {id:'septiembre',nm:'Septiembre',c:'#b71c1c',pr:true,sems:[]},
+    {id:'octubre',nm:'Octubre',c:'#4e342e',pr:true,sems:[]},
+    {id:'noviembre',nm:'Noviembre',c:'#263238',pr:true,sems:[]},
+    {id:'diciembre',nm:'Diciembre',c:'#7b1fa2',pr:true,sems:[]}
+  ]
+};
+
+let DATA;
+function loadData(){
+  try{
+    const s=localStorage.getItem('efeso_v3');
+    if(s){
+      const d=JSON.parse(s);
+      if(!d.cal||!d.cal[0])d.cal=buildDefaultCal();
+      // Restore images from separate keys
+      (d.meses||[]).forEach((m,mi)=>{
+        (m.sems||[]).forEach((s2,si)=>{
+          const semImg=localStorage.getItem('efeso_img_s_'+mi+'_'+si);
+          if(semImg)s2.img=semImg;
+          (s2.dias||[]).forEach((dia,di)=>{
+            const diaImg=localStorage.getItem('efeso_img_d_'+mi+'_'+si+'_'+di);
+            if(diaImg)dia.img=diaImg;
+          });
+        });
+      });
+      return d;
+    }
+  }catch(e){console.error('Error cargando:',e);}
+  return JSON.parse(JSON.stringify(DEFAULT));
+}
+function save(){
+  try{
+    // Strip images before saving main DATA to avoid quota exceeded
+    const dataToSave=JSON.parse(JSON.stringify(DATA));
+    dataToSave.meses.forEach((m,mi)=>{
+      (m.sems||[]).forEach((s,si)=>{
+        if(s.img){
+          // Save sem image separately
+          try{localStorage.setItem('efeso_img_s_'+mi+'_'+si, s.img);}catch(e){}
+          s.img=null; // remove from main data
+        }
+        (s.dias||[]).forEach((d,di)=>{
+          if(d.img){
+            try{localStorage.setItem('efeso_img_d_'+mi+'_'+si+'_'+di, d.img);}catch(e){}
+            d.img=null;
+          }
+        });
+      });
+    });
+    localStorage.setItem('efeso_v3',JSON.stringify(dataToSave));
+  }catch(e){console.error('Error guardando:',e);}
+}
+DATA=loadData();
+
+function go(pg){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pg-'+pg).classList.add('on');
+  if(pg==='perfil')initPerfil();
+  const m={home:0,dev:1,rachas:2,cal:3,admin:4};
+  document.querySelectorAll('.nb')[m[pg]]?.classList.add('on');
+  document.getElementById('mob').classList.remove('open');
+  scrollTo(0,0);
+  if(pg==='rachas')initRachas();
+  if(pg==='cal')initCal();
+  if(pg==='dev')devShowMeses();
+  if(pg==='admin')initAdmin();
+  if(pg==='home')initMiloHome();
+}
+function tmob(){document.getElementById('mob').classList.toggle('open')}
+
+async function loadLider(){
+  const h=new Date();const f=h.toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('lDt').textContent=f.charAt(0).toUpperCase()+f.slice(1);
+  const m=h.getMonth();const d=h.getDate();
+  const calMes=DATA.cal[m];
+  const calEntry=calMes?.dias.find(([n])=>n===d);
+  const liderCal=calEntry?calEntry[1]:null;
+  // ✅ FIX: usar API.lider con ?get=lider y respuesta de texto plano
+  try{
+    const r=await fetch(`${API.lider}?get=lider`,{mode:'cors'});
+    const t=await r.text();
+    if(t&&t!=="No asignado"&&t.trim()&&!t.startsWith('Error')){
+      document.getElementById('lNm').textContent=t.trim();
+      document.getElementById('lVs').textContent='"Dios es nuestro amparo y fortaleza." — Sal 46:1';
+      return;
+    }
+  }catch(e){}
+  document.getElementById('lNm').textContent=liderCal||'Sin asignar';
+  document.getElementById('lVs').textContent=liderCal?'"El Señor es tu guardador." — Sal 121:5':'No hay devocional programado para hoy.';
+}
+function openPromesa(){const p=DATA.promesas[Math.floor(Math.random()*DATA.promesas.length)];const el=document.getElementById('promoR');el.textContent='✨ '+p;el.classList.add('show');}
+
+let devState={view:'meses',mid:null,sid:null,did:null};
+function devBc(){
+  const el=document.getElementById('devBc');
+  const m=devState.mid?DATA.meses.find(x=>x.id===devState.mid):null;
+  const s=m&&devState.sid?m.sems.find(x=>x.id===devState.sid):null;
+  const d=s&&devState.did?s.dias.find(x=>x.id===devState.did):null;
+  let h=`<span onclick="devShowMeses()">📖 Devocionales</span>`;
+  if(m){h+=`<span class="sep">›</span><span onclick="devShowSems('${m.id}')">${m.nm}</span>`;}
+  if(s){h+=`<span class="sep">›</span><span onclick="devShowDias('${m.id}','${s.id}')">${s.nm}</span>`;}
+  if(d){h+=`<span class="sep">›</span><span class="cur">${d.t}</span>`;}
+  el.innerHTML=h;
+}
+function devShowMeses(){
+  devState={view:'meses',mid:null,sid:null,did:null};devBc();
+  document.getElementById('devVista').innerHTML=`<div class="meses-hd">Devocionales</div><div class="meses-sub">Selecciona el mes para comenzar</div><div class="mes-grid">${DATA.meses.map((m,i)=>{const pr=m.pr;const stl=`animation-delay:${i*.05}s;--mc:${m.c}`;const click=pr?'':`onclick="devShowSems('${m.id}')"`;return`<div class="mc${pr?' pr':''}" style="${stl}" ${click}><div class="mc-th" style="background:${m.c}"><div class="mc-txt">${m.nm.slice(0,3).toUpperCase()}</div>${pr?`<div class="mc-ov">MUY PRONTO</div>`:''}</div><div class="mc-ft" style="background:${m.c}">${m.nm.toUpperCase()}</div></div>`;}).join('')}</div>`;
+}
+function devShowSems(mid){
+  const m=DATA.meses.find(x=>x.id===mid);if(!m||m.pr)return;
+  devState={view:'sems',mid,sid:null,did:null};devBc();
+  document.getElementById('devVista').innerHTML=`<div class="sems-hd">${m.nm}</div><div class="sems-sub">${m.sems.length} semana(s) disponibles</div><div class="sem-cards">${m.sems.map((s,i)=>`<div class="sem-card" style="animation-delay:${i*.07}s;--mc2:${m.c}" onclick="devShowDias('${mid}','${s.id}')">${s.img?`<img class="sem-card-img" src="${s.img}" alt="${s.nm}">`:`<div class="sem-card-img-ph">📆</div>`}<div class="sem-card-body"><div class="sem-card-nm">${s.nm}</div><div class="sem-card-cnt">${s.dias.length} día(s) →</div></div></div>`).join('')}</div>`;
+}
+function devShowDias(mid,sid){
+  const m=DATA.meses.find(x=>x.id===mid);const s=m.sems.find(x=>x.id===sid);
+  devState={view:'dias',mid,sid,did:null};devBc();
+  document.getElementById('devVista').innerHTML=`<div class="dias-hd">${s.nm}</div><div class="dias-sub">${m.nm} · ${s.dias.length} día(s)</div><div class="dias-list">${s.dias.map((d,i)=>`<div class="dia-row" style="animation-delay:${i*.06}s" onclick="devShowArt('${mid}','${sid}','${d.id}')"><div class="dia-row-num">${i+1}</div><div class="dia-row-info"><div class="dia-row-nm">${d.t}</div><div class="dia-row-s">${getDiaFecha(mid,sid,d.id)}</div></div><div class="dia-row-arr">→</div></div>`).join('')}</div>`;
+}
+function devShowArt(mid,sid,did){
+  const m=DATA.meses.find(x=>x.id===mid);const s=m.sems.find(x=>x.id===sid);const d=s.dias.find(x=>x.id===did);
+  devState={view:'art',mid,sid,did};devBc();
+  const rUrl=d.reflexionUrl||DATA.reflexionUrl||'https://padlet.com';
+  const dias=s.dias,idx=dias.findIndex(x=>x.id===did);
+  const pv=idx>0?dias[idx-1]:null,nx=idx<dias.length-1?dias[idx+1]:null;
+  let nav=`<button class="dn dn-bk" onclick="devShowDias('${mid}','${sid}')">← Volver</button>`;
+  if(pv)nav+=`<button class="dn dn-pv" onclick="devShowArt('${mid}','${sid}','${pv.id}')">← Anterior</button>`;
+  nav+=`<a class="dn dn-pd" href="${rUrl}" target="_blank">💬 Dejar reflexión</a>`;
+  nav+=`<button class="dn dn-fr" onclick="go('rachas')">🔥 Mi Racha</button>`;
+  if(nx)nav+=`<button class="dn dn-nx" onclick="devShowArt('${mid}','${sid}','${nx.id}')">Siguiente →</button>`;
+  document.getElementById('devVista').innerHTML=`<div class="art-wrap"><div class="dev-chip" style="background:${m.c}">${d.tema}</div><h1 class="dev-h">${d.t}</h1><div class="dev-meta">${d.fecha||getDiaFecha(mid,sid,did)}</div>${d.img?`<img src="${d.img}" style="width:100%;max-height:320px;object-fit:cover;border-radius:16px;margin-bottom:1.5rem;display:block" alt="${d.t}">`:''}<div class="dev-body">${d.body}</div>${d.refs?.length?`<div class="esbox"><div class="eslbl">📖 Sagrada Escritura</div>${d.refs.map(r=>`<div class="esref">${r}</div>`).join('')}</div>`:''} ${d.or?`<div class="orbox"><div class="orlbl">🙏 Oración</div><p class="ortxt">${d.or}</p></div>`:''}<div class="dnav">${nav}</div></div>`;
+  scrollTo(0,0);
+}
+
+let calActiveMes=new Date().getMonth();
+function initCal(){
+  document.getElementById('calMesTabs').innerHTML=MES_NAMES.map((nm,i)=>`<button class="cal-mes-tab${i===calActiveMes?' on':''}" onclick="calSetMes(${i})">${nm}</button>`).join('');
+  document.getElementById('calVerse').textContent=DATA.calVerse||'';
+  buildCalGrid();
+}
+function calSetMes(m){calActiveMes=m;document.querySelectorAll('.cal-mes-tab').forEach((b,i)=>b.classList.toggle('on',i===m));buildCalGrid();}
+function buildCalGrid(){
+  const c=DATA.cal[calActiveMes];if(!c)return;
+  const hoy=new Date();const esEste=hoy.getMonth()===calActiveMes&&hoy.getFullYear()===2026;const hn=hoy.getDate();
+  let h='';
+  for(let i=0;i<(c.ini||0);i++)h+=`<div class="cc emp"></div>`;
+  c.dias.forEach(([n,l])=>{h+=`<div class="cc${l?' hd':''}${esEste&&n===hn?' td':''}"><div class="cc-n">${n}</div>${l?`<div class="cc-l">${l}</div>`:''}</div>`;});
+  document.getElementById('calG').innerHTML=h;
+}
+
+const CK='dev_ra_v5';
+const gc=()=>{try{return JSON.parse(localStorage.getItem(CK))||{}}catch{return{}}};
+const sc_=(d)=>{try{localStorage.setItem(CK,JSON.stringify(d))}catch{}};
+const td_=()=>new Date().toLocaleDateString('en-CA');
+let rUser=null,rData=null,rInit=false;
+const HITOS={3:{emoji:'🔥',title:'¡EN LLAMAS!',msg:'¡3 días seguidos buscando a Dios!',verse:'"El que comenzó en ti la buena obra la irá perfeccionando." — Fil 1:6',color:'#ff5e1a'},7:{emoji:'⚡',title:'¡UNA SEMANA!',msg:'¡7 días seguidos! ¡Nada te detiene!',verse:'"Bienaventurado el hombre que tiene en ti sus fuerzas." — Sal 84:5',color:'#f0b429'},14:{emoji:'💎',title:'¡DOS SEMANAS!',msg:'¡14 días de constancia!',verse:'"Deleítate en el Señor." — Sal 37:4',color:'#06b6d4'},21:{emoji:'👑',title:'¡21 DÍAS!',msg:'¡Ya es un hábito!',verse:'"Transformaos por la renovación de vuestra mente." — Rom 12:2',color:'#a78bfa'},30:{emoji:'🏆',title:'¡UN MES ÉPICO!',msg:'¡30 días buscando a Dios! ¡LEYENDA!',verse:'"Los que esperan en el Señor renovarán sus fuerzas." — Is 40:31',color:'#f0b429'}};
+const ML=[3,7,14,21,30];
+function getNivel(d){if(d>=30)return'Guerrero ⚔️';if(d>=21)return'Persistente 💎';if(d>=14)return'Fiel 🌟';if(d>=7)return'Comprometido 🔥';if(d>=3)return'Iniciando 🌱';return'Novato 🌱';}
+function initRachas(){if(rInit)return;rInit=true;loadLB();}
+function onSI(){const v=document.getElementById('sI').value.trim().toLowerCase();const dd=document.getElementById('sD');if(!v){dd.style.display='none';return}const ms=DATA.users.filter(u=>u.toLowerCase().includes(v));if(!ms.length){dd.style.display='none';return}dd.innerHTML=ms.map(u=>`<div class="si" onclick="selU('${u}')">${u}</div>`).join('');dd.style.display='block';}
+function selU(u){document.getElementById('sI').value=u;document.getElementById('sD').style.display='none';localStorage.setItem('milo_nombre',u);loadU(u);}
+
+// ✅ FIX PRINCIPAL: loadU ahora usa API.rachas (que es el mismo script correcto)
+async function loadU(u){
+  rUser=u;document.getElementById('mrN').textContent=u;document.getElementById('myR').style.display='block';
+  ['mrD','mrM','mrE'].forEach(id=>document.getElementById(id).textContent='…');
+  try{
+    const r=await fetch(SCRIPT_URL,{mode:'cors'});
+    const all=await r.json();
+    console.log('📡 Usuarios en Sheet:', all.length, all.map(x=>x.Nombre));
+    const f=all.find(x=>x.Nombre.toString().trim().toLowerCase()===u.trim().toLowerCase());
+    console.log('👤 Usuario encontrado:', f);
+    // Solo actualizar del servidor si la racha del servidor es >= la local
+    // para no sobreescribir datos locales con 0 cuando hay error CORS
+    const servidorRacha = f ? (f.RachaActual||0) : null;
+    const localRacha = rData ? (rData.RachaActual||0) : 0;
+    if(servidorRacha !== null){
+      rData=f;
+      // Si el servidor dice 0 pero localmente tenemos racha > 0, es desfase
+      // Solo sonar derrota si el servidor confirma que se perdió Y había racha real
+      if(servidorRacha===0 && localRacha>0){
+        // No sonar — podría ser que el servidor aún no tiene los datos
+      }
+    } else {
+      // Usuario no existe aún en el servidor — usar datos locales
+      const c=gc();
+      rData={Nombre:u,RachaActual:0,UltimaFecha:null,Escudos:0,Monedas:0,...(c[u]||{})};
+    }
+  }
+  catch(e){
+    console.log('⚠️ Sin conexión al servidor, usando datos locales');
+    const c=gc();
+    if(!rData||rData.Nombre!==u){
+      rData={Nombre:u,RachaActual:0,UltimaFecha:null,Escudos:0,Monedas:0,...(c[u]||{})};
+    }
+  }
+  renderU();
+
+}
+
+function animCount(id,target){const el=document.getElementById(id);if(!el)return;const start=parseInt(el.textContent)||0;const t0=performance.now();const step=ts=>{const p=Math.min((ts-t0)/600,1);const e=1-Math.pow(1-p,3);el.textContent=Math.round(start+(target-start)*e);if(p<1)requestAnimationFrame(step);};requestAnimationFrame(step);}
+function playDefeatSound(){
+  try{
+    const ac=new(window.AudioContext||window.webkitAudioContext)();
+    const t=ac.currentTime;
+    const notes=[
+      {f:523,s:t,d:.18,g:.35},{f:415,s:t+.12,d:.22,g:.4},{f:330,s:t+.26,d:.28,g:.45},
+      {f:262,s:t+.44,d:.4,g:.5},{f:196,s:t+.72,d:.6,g:.55},{f:165,s:t+1.1,d:.9,g:.4},
+    ];
+    notes.forEach(n=>{
+      const o=ac.createOscillator();const g=ac.createGain();const dist=ac.createWaveShaper();
+      const curve=new Float32Array(256);
+      for(let i=0;i<256;i++){const x=i*2/256-1;curve[i]=x<0?-Math.pow(-x,.7):Math.pow(x,.7);}
+      dist.curve=curve;o.type='sawtooth';
+      o.frequency.setValueAtTime(n.f,n.s);o.frequency.exponentialRampToValueAtTime(n.f*.75,n.s+n.d);
+      g.gain.setValueAtTime(0,n.s);g.gain.linearRampToValueAtTime(n.g,n.s+.03);g.gain.exponentialRampToValueAtTime(.001,n.s+n.d+.05);
+      o.connect(dist);dist.connect(g);g.connect(ac.destination);o.start(n.s);o.stop(n.s+n.d+.1);
+    });
+    const buf=ac.createBuffer(1,ac.sampleRate*.12,ac.sampleRate);
+    const data=buf.getChannelData(0);
+    for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*Math.pow(1-i/data.length,2)*.8;
+    const src=ac.createBufferSource();const gd=ac.createGain();
+    src.buffer=buf;gd.gain.value=.6;src.connect(gd);gd.connect(ac.destination);src.start(t);
+  }catch(e){}
+}
+const MILO_VERSES=[
+  {t:'"El Señor es mi pastor; nada me faltará."',r:'Salmos 23:1'},
+  {t:'"Todo lo puedo en Cristo que me fortalece."',r:'Filipenses 4:13'},
+  {t:'"Porque yo sé los planes que tengo para vosotros, planes de bienestar."',r:'Jeremías 29:11'},
+  {t:'"Encomienda al Señor tu camino, y él actuará."',r:'Salmos 37:5'},
+  {t:'"No temas, porque yo estoy contigo."',r:'Isaías 41:10'},
+  {t:'"El que comenzó en vosotros la buena obra, la irá perfeccionando."',r:'Filipenses 1:6'},
+  {t:'"Buscad primero el reino de Dios y su justicia."',r:'Mateo 6:33'},
+  {t:'"Sean fuertes y valientes. No teman ni se asusten."',r:'Josué 1:9'},
+  {t:'"Para el que cree, todo es posible."',r:'Marcos 9:23'},
+  {t:'"En todo esto somos más que vencedores."',r:'Romanos 8:37'},
+  {t:'"Acercaos a Dios, y él se acercará a vosotros."',r:'Santiago 4:8'},
+  {t:'"De tal manera amó Dios al mundo que dio a su Hijo unigénito."',r:'Juan 3:16'},
+  {t:'"Porque en ti está la fuente de la vida."',r:'Salmos 36:9'},
+  {t:'"El amor de Dios ha sido derramado en nuestros corazones."',r:'Romanos 5:5'},
+  {t:'"El Señor te guiará siempre."',r:'Isaías 58:11'},
+];
+let miloVerseIdx=-1;
+function miloNuevoVersiculo(){
+  let idx;
+  do{idx=Math.floor(Math.random()*MILO_VERSES.length);}while(idx===miloVerseIdx&&MILO_VERSES.length>1);
+  miloVerseIdx=idx;
+  const v=MILO_VERSES[idx];
+  const vEl=document.getElementById('miloVerseText');
+  const rEl=document.getElementById('miloVerseRef');
+  if(!vEl)return;
+  vEl.style.opacity='0';vEl.style.transition='opacity .3s';
+  setTimeout(()=>{vEl.textContent=v.t;rEl.textContent='— '+v.r;vEl.style.opacity='1';},300);
+}
+function initMiloHome(){
+  miloVerseIdx=Math.floor(Math.random()*MILO_VERSES.length);
+  const v=MILO_VERSES[miloVerseIdx];
+  const vEl=document.getElementById('miloVerseText');
+  const rEl=document.getElementById('miloVerseRef');
+  if(vEl){vEl.textContent=v.t;}
+  if(rEl){rEl.textContent='— '+v.r;}
+}
+function renderU(){
+  if(!rData)return;
+  // Fusionar con localStorage — localStorage gana si tiene racha más alta
+  const c=gc();const local=rData.Nombre?c[rData.Nombre]||{}:{};
+  const diasLocal=local.racha||0;
+  const diasServidor=rData.RachaActual||0;
+  if(diasLocal>diasServidor){
+    rData.RachaActual=diasLocal;
+    if(local.ultimaFecha)rData.UltimaFecha=local.ultimaFecha;
+    if(local.monedas)rData.Monedas=local.monedas;
+    if(local.escudos)rData.Escudos=local.escudos;
+  }
+  const dias=rData.RachaActual||0,mon=rData.Monedas||0,esc=rData.Escudos||0;
+  animCount('mrD',dias);animCount('mrM',mon);animCount('mrE',esc);
+  document.getElementById('rfbNum').textContent=dias;document.getElementById('walletCoins').textContent=mon;
+  document.getElementById('mrNv').textContent=getNivel(dias);
+  document.getElementById('mrPF').style.width=(dias%7)/7*100+'%';document.getElementById('mrPT').textContent=`${dias%7}/7 días`;
+  const track=document.getElementById('milestoneTrack');
+  track.innerHTML=ML.map(ms=>{const reached=dias>=ms;const next=!reached&&ML.find(m=>m>dias)===ms;const h=HITOS[ms];return`<div class="ms-dot"><div class="ms-circle ${reached?'reached':''} ${next?'next':''}">${reached?h.emoji:ms}</div><div class="ms-lbl">${ms}d</div></div>`;}).join('');
+  const hist=(c[rUser]?.h)||[];const hoy=td_();let dh='';
+  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);if(d.getDay()===0)continue;const ds=d.toLocaleDateString('en-CA');const mk=hist.includes(ds),es=ds===hoy;dh+=`<div class="dw"><div class="dd${mk?' mk':''}${es?' td':''}">${mk?'🔥':'·'}</div><div class="dl">${['D','L','M','X','J','V','S'][d.getDay()]}</div></div>`;}
+  document.getElementById('mrDts').innerHTML=dh;
+  const btn=document.getElementById('btnMk');const uf=rData.UltimaFecha;const c2=gc();const h2=(c2[rUser]?.h)||[];const ym=(uf===hoy)||(uf&&new Date(uf).toLocaleDateString('en-CA')===hoy)||h2.includes(hoy);btn.textContent=ym?'✅ ¡Ya marcaste hoy! Vuelve mañana':'✨ Marcar asistencia hoy';btn.disabled=ym;btn.className='btn-mk'+(ym?' done':'');document.getElementById('rMsg').textContent='';
+}
+async function marcar(){
+  if(!rUser)return;
+  const hoy=td_();
+  const c=gc();const h=(c[rUser]?.h)||[];
+  if(h.includes(hoy)){showMsg('✅ Ya marcaste hoy. ¡Vuelve mañana!','ok');return}
+  const btn=document.getElementById('btnMk');
+  btn.textContent='⏳ Guardando...';btn.disabled=true;
+
+  // ── Calcular racha localmente (funciona sin internet) ──────
+  const rachaAntes=rData.RachaActual||0;
+  const ultimaLocal=rData.UltimaFecha;
+  const hoyDate=new Date();
+  // Calcular días válidos anteriores (solo salta domingo)
+  function ultimoDiaValido(desde, pasos){
+    const d=new Date(desde);
+    let count=0;
+    while(count<pasos){
+      d.setDate(d.getDate()-1);
+      const dow=d.getDay();
+      if(dow!==0)count++; // solo saltar domingo(0)
+    }
+    return d.toLocaleDateString('en-CA');
+  }
+  const diaAnteriorStr=ultimoDiaValido(hoyDate,1); // último día hábil
+  const dosAtrasStr=ultimoDiaValido(hoyDate,2);    // por si se saltó un día
+  const ayerStr=new Date(hoyDate.getTime()-86400000).toLocaleDateString('en-CA');
+  const esConsecutivo=(ultimaLocal===ayerStr||ultimaLocal===diaAnteriorStr||ultimaLocal===dosAtrasStr);
+  let nuevaRacha = (!ultimaLocal) ? 1 : esConsecutivo ? rachaAntes+1 : 1;
+
+  // Guardar en localStorage inmediatamente
+  h.push(hoy);const nc=gc();
+  nc[rUser]={...(nc[rUser]||{}),h,racha:nuevaRacha,ultimaFecha:hoy,monedas:rData.Monedas||0,escudos:rData.Escudos||0};
+  console.log('💾 Local guardado:', nc[rUser]);
+  sc_(nc);
+
+  // Actualizar rData localmente YA
+  rData.RachaActual=nuevaRacha;
+  rData.UltimaFecha=hoy;
+  try{
+    // Enviar al servidor via GET
+    const params=new URLSearchParams({accion:'marcar',nombre:rUser});
+    fetch(SCRIPT_URL+'?'+params,{mode:'cors'})
+      .then(r=>r.json())
+      .then(j=>{
+        if(j.status==='OK'){
+          rData.RachaActual=j.racha;rData.Monedas=j.monedas;rData.Escudos=j.congelados;
+          if(j.congeladoUsado)showMsg('❄️ ¡Congelamiento usado! Racha salvada','info');
+          else if(j.monedas>0&&j.racha%3===0)showMsg('🪙 +2 monedas — racha de '+j.racha+' días','ok');
+          else showMsg('🔥 ¡Racha marcada! Día '+j.racha,'ok');
+          renderU();loadLB();
+        } else if(j.status==='YA_MARCADO'){
+          showMsg('✅ Ya marcaste hoy. ¡Vuelve mañana!','ok');
+        } else if(j.status==='DOMINGO'){
+          showMsg('✝️ Los domingos descansamos — no hay rachas','info');
+        }
+      })
+      .catch(e=>console.log('⚠️ Servidor:',e));
+    showMsg('🔥 ¡Racha marcada! Día '+nuevaRacha,'ok');
+  }catch(e){
+    console.error('❌ Error fetch marcar:', e);
+    rData.RachaActual=nuevaRacha;rData.UltimaFecha=hoy;
+    showMsg('🔥 Marcado localmente — error: '+e.message,'info');
+  }
+  renderU();
+  loadLB();
+  // Animación de celebración — siempre aparece al marcar
+  const todosHitos={
+    1:{emoji:'🌱',title:'¡PRIMER DÍA!',msg:'¡Empezaste tu racha! ¡Vuelve mañana!',verse:'"El que comenzó en ti la buena obra la irá perfeccionando." — Fil 1:6',color:'#16a34a'},
+    2:{emoji:'🔥',title:'¡VAS BIEN!',msg:'¡Segundo día consecutivo!',verse:'"Fiel es el que os llama, el cual también lo hará." — 1 Tes 5:24',color:'#ff5e1a'},
+    ...HITOS
+  };
+  const hito=todosHitos[nuevaRacha]||{
+    emoji:'🔥',
+    title:'¡DÍA '+nuevaRacha+'!',
+    msg:'¡'+nuevaRacha+' días buscando a Dios! ¡Sigue así!',
+    verse:'"Los que esperan en el Señor tendrán nuevas fuerzas." — Is 40:31',
+    color:'#ff5e1a'
+  };
+  setTimeout(()=>{
+    document.getElementById('celEmoji').textContent=hito.emoji;
+    document.getElementById('celNum').textContent=nuevaRacha;
+    document.getElementById('celTitle').textContent=hito.title;
+    document.getElementById('celTitle').style.color=hito.color;
+    document.getElementById('celMsg').textContent=hito.msg;
+    document.getElementById('celVerse').textContent=hito.verse;
+    document.getElementById('celModal').style.display='flex';
+    launchConf(hito.color);
+  },700);
+}
+async function comprar(tipo){
+  if(tipo!=='escudo')return;if(!rUser){showMsg('Selecciona tu nombre primero','warn');return}
+  const mon=rData?rData.Monedas||0:0;if(mon<10){showMsg(`Necesitas 10 monedas. Tienes ${mon}.`,'warn');return}
+  const btn=document.getElementById('btnEscudo');if(btn){btn.textContent='⏳...';btn.disabled=true}
+  try{
+    const compParams=new URLSearchParams({accion:'comprar',nombre:rUser});
+    const r=await fetch(SCRIPT_URL+'?'+compParams,{mode:'cors'});
+    const t=await r.text();
+    let ok=false;
+    try{const j=JSON.parse(t);ok=(j.status==='OK');}catch{ok=(t==='OK'||t.includes('OK'));}
+    if(ok){
+      await loadU(rUser);loadLB();
+      document.getElementById('shopModalSub').textContent=`Te quedan ${rData.Monedas||0} 🪙 • ${rData.Escudos||0} ❄️`;
+      document.getElementById('shopModal').style.display='flex';
+    }else showMsg('No se pudo completar.','warn');
+  }
+  catch(e){showMsg('Error de conexión.','warn')}
+  if(btn){btn.textContent='Comprar';btn.disabled=false}
+}
+function closeShopModal(){document.getElementById('shopModal').style.display='none'}
+function showMsg(m,t){const el=document.getElementById('rMsg');el.textContent=m;el.className='rmsg '+t;setTimeout(()=>{el.textContent='';el.className='rmsg'},5000);}
+let confAF=null;
+function showCel(dias){const h=HITOS[dias];if(!h)return;document.getElementById('celEmoji').textContent=h.emoji;document.getElementById('celNum').textContent=dias;document.getElementById('celTitle').textContent=h.title;document.getElementById('celTitle').style.color=h.color;document.getElementById('celMsg').textContent=h.msg;document.getElementById('celVerse').textContent=h.verse;document.getElementById('celModal').style.display='flex';launchConf(h.color);}
+function closeCel(){document.getElementById('celModal').style.display='none';stopConf();}
+function launchConf(ac){stopConf();const canvas=document.getElementById('celCanvas');if(!canvas)return;canvas.width=window.innerWidth||340;canvas.height=window.innerHeight||600;const ctx=canvas.getContext('2d');const cols=['#f0b429','#ff5e1a','#a78bfa','#06b6d4','#16a34a',ac];const ps=[];for(let i=0;i<100;i++)ps.push({x:Math.random()*canvas.width,y:-10,w:5+Math.random()*8,h:3+Math.random()*5,color:cols[Math.floor(Math.random()*cols.length)],vx:(Math.random()-.5)*3,vy:1.5+Math.random()*3,rot:Math.random()*360,vr:(Math.random()-.5)*10,life:1,decay:.003+Math.random()*.004});function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);let any=false;ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.life-=p.decay;if(p.life<=0||p.y>canvas.height)return;any=true;ctx.save();ctx.globalAlpha=p.life*.9;ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();});if(any)confAF=requestAnimationFrame(draw);}draw();}
+function stopConf(){if(confAF){cancelAnimationFrame(confAF);confAF=null}}
+
+async function loadLB(){
+  const el=document.getElementById('lb');if(!el)return;
+  el.innerHTML='<div class="lb-load"><span class="sp"></span> Cargando...</div>';
+  
+  let allUsers=[], perfilesData=[];
+  try{
+    const [rRachas, rPerfiles]=await Promise.all([
+      fetch(SCRIPT_URL,{mode:'cors'}),
+      fetch(PERFIL_URL+'?accion=list',{mode:'cors'})
+    ]);
+    allUsers=await rRachas.json();
+    try{perfilesData=await rPerfiles.json();}catch(e2){}
+    // Enriquecer con datos de perfil
+    allUsers=allUsers.map(u=>{
+      const p=perfilesData.find(x=>x.Nombre&&x.Nombre.toLowerCase()===u.Nombre.toLowerCase());
+      return p?{...u,Avatar:p.Avatar||u.Avatar,Bio:p.Bio||u.Bio,Versiculo:p.Versiculo||u.Versiculo}:u;
+    });
+  } catch(e){
+    // Sin servidor — usar datos locales de todos los usuarios conocidos
+    console.log('LB: usando datos locales');
+    const c=gc();
+    allUsers=DATA.users
+      .map(nombre=>{
+        const local=c[nombre]||{};
+        return{Nombre:nombre,RachaActual:local.racha||0,UltimaFecha:local.ultimaFecha||null,Escudos:local.escudos||0,Monedas:local.monedas||0};
+      });
+    // Si el usuario actual tiene racha, asegurarse que está
+    if(rUser&&rData&&(rData.RachaActual||0)>0){
+      const exists=allUsers.find(x=>x.Nombre.toLowerCase()===rUser.toLowerCase());
+      if(exists)exists.RachaActual=rData.RachaActual;
+      else allUsers.push({Nombre:rUser,...rData});
+    }
+  }
+  
+  const validos=allUsers.filter(u=>u.Nombre?.trim()&&!/\d{4}|GMT|Feb|Jan|Mar|Mon|Tue|Wed|Thu/i.test(u.Nombre)&&(u.RachaActual||0)>0);
+  validos.sort((a,b)=>(b.RachaActual||0)-(a.RachaActual||0));
+  
+  if(!validos.length){
+    el.innerHTML='<div class="lb-load">🌱 ¡Sé el primero en marcar tu racha!</div>';
+    return;
+  }
+  // Guardar lista para poder abrir perfil al hacer click
+  window._lbUsers = validos;
+  el.innerHTML=validos.map((u,i)=>{
+    const isMe=rUser&&u.Nombre.toLowerCase()===rUser.toLowerCase();
+    const pf=getPerfilLocal(u.Nombre);
+    const avId=u.Avatar||pf.avatar||'david';
+    const bio=u.Bio||pf.bio||'';
+    return`<div class="lb-row ${['lb-g','lb-s','lb-b'][i]||''} ${isMe?'lb-me':''}" onclick="openPerfilView('${u.Nombre.replace(/'/g,"\'")}',${i})" style="cursor:pointer"><div class="lb-pos">${['🥇','🥈','🥉'][i]||(i+1)}</div><div class="lb-av">${getAvatarSVG(avId)}</div><div class="lb-inf"><div class="lb-nm">${u.Nombre}${isMe?'<span class="lb-me-t">(Tú)</span>':''}</div><div class="lb-bdg">${getNivel(u.RachaActual||0)}</div>${bio?`<div class="lb-bio">${bio}</div>`:''}</div><div class="lb-fire">${u.RachaActual||0} 🔥</div></div>`;
+  }).join('');
+}
+
+function initAdmin(){
+  document.getElementById('admUserBtns').innerHTML=ADM_USERS.map(u=>`<div class="adm-user-btn${admSelUser===u.id?' sel':''}" onclick="admSelU('${u.id}')"><span class="avi">${u.emoji}</span><span class="unm">${u.name}</span></div>`).join('');
+  if(admOk){document.getElementById('admLock').style.display='none';document.getElementById('admContent').style.display='block';buildAdmMeses();}
+  else{document.getElementById('admLock').style.display='flex';document.getElementById('admContent').style.display='none';}
+}
+function admSelU(id){admSelUser=id;document.querySelectorAll('.adm-user-btn').forEach(b=>b.classList.remove('sel'));event.currentTarget.classList.add('sel');document.getElementById('admPw').focus();}
+function admLogin(){
+  if(!admSelUser){document.getElementById('admErr').textContent='❌ Selecciona tu perfil primero';return}
+  const u=ADM_USERS.find(x=>x.id===admSelUser);
+  if(document.getElementById('admPw').value===u.pw){admOk=true;admLoggedUser=u;document.getElementById('admLock').style.display='none';document.getElementById('admContent').style.display='block';document.getElementById('admWhoami').textContent=`${u.emoji} ${u.name}`;buildAdmMeses();}
+  else{document.getElementById('admErr').textContent='❌ Contraseña incorrecta';document.getElementById('admPw').value='';setTimeout(()=>document.getElementById('admErr').textContent='',2500);}
+}
+function admLogout(){admOk=false;admLoggedUser=null;admSelUser=null;go('home');}
+function toast(msg,err=false){const el=document.getElementById('toast');el.textContent=msg;el.className='toast'+(err?' err':'')+' show';setTimeout(()=>el.classList.remove('show'),2800);}
+function buildAdmMeses(){document.getElementById('admMeses').innerHTML=DATA.meses.map((m,mi)=>`<div class="adm-mes" id="am-${mi}"><div class="adm-mes-hd" onclick="toggleMes(${mi})"><div class="adm-mes-dot" style="background:${m.c}"></div><div class="adm-mes-nm">${m.nm}</div><div class="adm-mes-badge ${m.pr?'badge-pr':'badge-on'}">${m.pr?'Pronto':'Activo'}</div><div class="adm-mes-arr" id="ama-${mi}">▶</div></div><div class="adm-mes-body" id="amb-${mi}"></div></div>`).join('');}
+function toggleMes(mi){const body=document.getElementById('amb-'+mi),arr=document.getElementById('ama-'+mi);if(body.classList.contains('open')){body.classList.remove('open');arr.classList.remove('open');return;}body.classList.add('open');arr.classList.add('open');if(!body.dataset.built){body.dataset.built='1';renderMesBody(mi);}}
+function renderMesBody(mi){
+  const m=DATA.meses[mi];
+  document.getElementById('amb-'+mi).innerHTML=`<div class="mes-meta-row"><div class="fi" style="min-width:110px"><label>Nombre</label><input id="mnm-${mi}" value="${escH(m.nm)}"></div><div class="fi" style="min-width:90px"><label>Color</label><input type="color" id="mc-${mi}" value="${m.c}" style="height:36px;border-radius:8px;border:none;cursor:pointer"></div><div class="fi" style="min-width:130px"><label>Estado</label><select id="mpr-${mi}"><option value="false" ${!m.pr?'selected':''}>✅ Activo</option><option value="true" ${m.pr?'selected':''}>🔒 Próximamente</option></select></div><button class="btn-s btn-s-gold" onclick="saveMesMeta(${mi})">💾 Guardar</button><button class="btn-s btn-s-red" onclick="deleteMes(${mi})">🗑️</button></div><div id="sems-${mi}">${m.sems.map((_,si)=>renderSemHTML(mi,si)).join('')}</div><button class="btn-s btn-s-green" style="margin-top:.5rem" onclick="addSem(${mi})">➕ Añadir semana</button>`;
+}
+function renderSemHTML(mi,si){const s=DATA.meses[mi].sems[si];return`<div class="adm-sem" id="asem-${mi}-${si}"><div class="adm-sem-hd" onclick="toggleSem(${mi},${si})"><div class="adm-sem-ico">📆</div><div class="adm-sem-nm">${s.nm}</div><div class="adm-sem-cnt">${s.dias.length} día(s)</div><div class="adm-sem-arr" id="asema-${mi}-${si}">▶</div></div><div class="adm-sem-body" id="asemb-${mi}-${si}"></div></div>`;}
+function toggleSem(mi,si){const body=document.getElementById('asemb-'+mi+'-'+si),arr=document.getElementById('asema-'+mi+'-'+si);if(body.classList.contains('open')){body.classList.remove('open');arr.classList.remove('open');return;}body.classList.add('open');arr.classList.add('open');renderSemBody(mi,si);}
+function renderSemBody(mi,si){
+  const s=DATA.meses[mi].sems[si];
+  document.getElementById('asemb-'+mi+'-'+si).innerHTML=`<div style="display:flex;gap:.5rem;align-items:flex-end;margin-bottom:.85rem;flex-wrap:wrap"><div class="fi" style="flex:1;min-width:160px"><label>Nombre</label><input id="snm-${mi}-${si}" value="${escH(s.nm)}"></div><button class="btn-s btn-s-gold" onclick="saveSemNm(${mi},${si})">💾</button><button class="btn-s btn-s-red" onclick="deleteSem(${mi},${si})">🗑️</button></div><div class="fi" style="margin-bottom:.9rem"><label>🖼️ Imagen de portada de la semana</label><div class="img-drop" id="simgdrop-${mi}-${si}" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropSemImg(event,${mi},${si})"><input type="file" accept="image/*" onchange="pickSemImg(event,${mi},${si})"><span class="img-drop-ico">🖼️</span><span class="img-drop-txt">Arrastra o haz clic para subir portada</span><span class="img-drop-sub">Se verá en la tarjeta de la semana</span></div><div id="simgprev-${mi}-${si}">${s.img?'<img class="img-preview" src="'+s.img+'" alt="portada"><button class="img-clear" onclick="clearSemImg('+mi+','+si+')">🗑️ Quitar</button>':''}</div></div><div id="dias-${mi}-${si}">${s.dias.map((_,di)=>renderDiaHTML(mi,si,di)).join('')}</div><button class="btn-s btn-s-blue" style="margin-top:.4rem" onclick="addDia(${mi},${si})">➕ Añadir día</button>`;
+}
+function renderDiaHTML(mi,si,di){const d=DATA.meses[mi].sems[si].dias[di];return`<div class="adm-dia" id="adia-${mi}-${si}-${di}"><div class="adm-dia-hd" onclick="toggleDia(${mi},${si},${di})"><div style="font-size:.85rem">📄</div><div class="adm-dia-n">${d.t||'(sin título)'}</div><div class="adm-dia-s">${d.fecha?'📅 '+d.fecha:d.s||''}</div><div class="adm-dia-arr" id="adiaa-${mi}-${si}-${di}">▶</div></div><div class="adm-dia-body" id="adiab-${mi}-${si}-${di}"></div></div>`;}
+function toggleDia(mi,si,di){const body=document.getElementById('adiab-'+mi+'-'+si+'-'+di),arr=document.getElementById('adiaa-'+mi+'-'+si+'-'+di);if(body.classList.contains('open')){body.classList.remove('open');arr.classList.remove('open');return;}body.classList.add('open');arr.classList.add('open');renderDiaBody(mi,si,di);}
+function renderDiaBody(mi,si,di){
+  const d=DATA.meses[mi].sems[si].dias[di];
+  const tmp=document.createElement('div');tmp.innerHTML=d.body||'';
+  const bodyTxt=[...tmp.querySelectorAll('p')].map(p=>p.textContent).join('\n\n')||'';
+  const refsHtml=(d.refs||[]).map((r,ri)=>`<div class="ref-row"><input value="${escH(r)}" placeholder="Ej: Juan 3:16" oninput="updateRef(${mi},${si},${di},${ri},this.value)"><button onclick="removeRef(${mi},${si},${di},${ri})">✕</button></div>`).join('');
+  document.getElementById('adiab-'+mi+'-'+si+'-'+di).innerHTML=`<div class="devo-form"><div class="devo-row"><div class="fi"><label>Título</label><input id="dt-${mi}-${si}-${di}" value="${escH(d.t||'')}"></div><div class="fi"><label>Subtítulo</label><input id="ds-${mi}-${si}-${di}" value="${escH(d.s||'')}"></div></div><div class="fi"><label>Tema</label><input id="dtema-${mi}-${si}-${di}" value="${escH(d.tema||'')}"></div><div class="fi"><label>✍️ Texto (párrafos separados por línea vacía)</label><textarea id="dbody-${mi}-${si}-${di}" rows="8">${escH(bodyTxt)}</textarea></div><div class="fi"><label>📖 Referencias</label><div class="refs-list" id="drefs-${mi}-${si}-${di}">${refsHtml}</div><button class="btn-s btn-s-dim" style="margin-top:.3rem;width:fit-content" onclick="addRef(${mi},${si},${di})">➕ Añadir</button></div><div class="fi"><label>🙏 Oración</label><textarea id="dor-${mi}-${si}-${di}" rows="3">${escH(d.or||'')}</textarea></div><div class="fi"><label>📅 Fecha del día (ej: 23 de mayo)</label><input id="dfecha-${mi}-${si}-${di}" value="${escH(d.fecha||'')} " placeholder="Ej: 23 de mayo"></div><div class="fi"><label>🔗 Link reflexión (vacío = global)</label><input id="drefurl-${mi}-${si}-${di}" value="${escH(d.reflexionUrl||'')}"></div><div class="devo-acts"><button class="btn-s btn-s-gold" onclick="saveDia(${mi},${si},${di})">💾 Guardar</button><button class="btn-s btn-s-red" onclick="deleteDia(${mi},${si},${di})">🗑️ Eliminar</button></div></div>`;
+}
+function pickSemImg(e,mi,si){
+  const file=e.target.files[0];if(!file)return;
+  loadSemImgFile(file,mi,si);
+}
+function dropSemImg(e,mi,si){
+  e.preventDefault();
+  document.getElementById('simgdrop-'+mi+'-'+si).classList.remove('over');
+  const file=e.dataTransfer.files[0];if(!file||!file.type.startsWith('image/'))return;
+  loadSemImgFile(file,mi,si);
+}
+function comprimirImagen(b64, maxW, quality, cb){
+  const img=new Image();
+  img.onload=()=>{
+    const canvas=document.createElement('canvas');
+    let w=img.width, h=img.height;
+    if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+    canvas.width=w;canvas.height=h;
+    canvas.getContext('2d').drawImage(img,0,0,w,h);
+    cb(canvas.toDataURL('image/jpeg',quality));
+  };
+  img.src=b64;
+}
+function loadSemImgFile(file,mi,si){
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    comprimirImagen(ev.target.result, 900, 0.72, b64=>{
+      DATA.meses[mi].sems[si].img=b64;
+      try{
+        localStorage.setItem('efeso_img_s_'+mi+'_'+si, b64);
+      }catch(e){
+        toast('⚠️ Imagen demasiado grande incluso comprimida');
+        return;
+      }
+      const prev=document.getElementById('simgprev-'+mi+'-'+si);
+      prev.innerHTML='<img class="img-preview" src="'+b64+'" alt="portada"><button class="img-clear" onclick="clearSemImg('+mi+','+si+')">🗑️ Quitar</button>';
+      toast('✅ Portada guardada y comprimida');
+    });
+  };
+  reader.readAsDataURL(file);
+}
+function clearSemImg(mi,si){
+  DATA.meses[mi].sems[si].img=null;
+  localStorage.removeItem('efeso_img_s_'+mi+'_'+si);
+  save();
+  document.getElementById('simgprev-'+mi+'-'+si).innerHTML='';
+  toast('✅ Portada eliminada');
+}
+function pickImg(e,mi,si,di){
+  const file=e.target.files[0];if(!file)return;
+  loadImgFile(file,mi,si,di);
+}
+function dropImg(e,mi,si,di){
+  e.preventDefault();
+  document.getElementById('imgdrop-'+mi+'-'+si+'-'+di).classList.remove('over');
+  const file=e.dataTransfer.files[0];if(!file||!file.type.startsWith('image/'))return;
+  loadImgFile(file,mi,si,di);
+}
+function loadImgFile(file,mi,si,di){
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const b64=ev.target.result;
+    DATA.meses[mi].sems[si].dias[di].img=b64;
+    save();
+    const prev=document.getElementById('imgprev-'+mi+'-'+si+'-'+di);
+    prev.innerHTML='<img class="img-preview" src="'+b64+'" alt="preview"><button class="img-clear" onclick="clearImg('+mi+','+si+','+di+')">🗑️ Quitar imagen</button>';
+    toast('✅ Imagen guardada');
+  };
+  reader.readAsDataURL(file);
+}
+function clearImg(mi,si,di){
+  DATA.meses[mi].sems[si].dias[di].img=null;
+  save();
+  document.getElementById('imgprev-'+mi+'-'+si+'-'+di).innerHTML='';
+  toast('✅ Imagen eliminada');
+}
+
+
+// ══════════════════════════════════════════════════════════
+// AVATARES BÍBLICOS
+// ══════════════════════════════════════════════════════════
+const AVATARES=[
+  {id:'david',nombre:'David',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#1a3a2a"/><ellipse cx="50" cy="38" rx="18" ry="20" fill="#c8956c"/><path d="M32 38 Q50 18 68 38" fill="#8B4513"/><rect x="34" y="20" width="32" height="8" rx="4" fill="#c8a000"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#2d6e4a"/><circle cx="42" cy="35" r="3" fill="#3d2000"/><circle cx="58" cy="35" r="3" fill="#3d2000"/><path d="M44 43 Q50 47 56 43" stroke="#a0522d" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#c8a000" font-family="serif">David</text></svg>`},
+  {id:'moises',nombre:'Moisés',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#1a2a3a"/><ellipse cx="50" cy="38" rx="18" ry="20" fill="#d4a574"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#6b4c9a"/><path d="M32 35 Q50 55 68 35" fill="#e8e0d0" opacity=".7"/><circle cx="42" cy="35" r="3" fill="#2d1a00"/><circle cx="58" cy="35" r="3" fill="#2d1a00"/><path d="M44 43 Q50 47 56 43" stroke="#a0522d" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#c8a000" font-family="serif">Moisés</text></svg>`},
+  {id:'maria',nombre:'María',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#1a1a3a"/><ellipse cx="50" cy="38" rx="16" ry="19" fill="#e8c4a0"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#4a6fa5"/><path d="M30 30 Q50 10 70 30 L68 45 Q50 35 32 45Z" fill="#f0f0f0" opacity=".9"/><circle cx="42" cy="36" r="2.5" fill="#3d2000"/><circle cx="58" cy="36" r="2.5" fill="#3d2000"/><path d="M45 43 Q50 46 55 43" stroke="#c08060" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#c8d0ff" font-family="serif">María</text></svg>`},
+  {id:'pablo',nombre:'Pablo',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#2a1a1a"/><ellipse cx="50" cy="37" rx="17" ry="19" fill="#c8956c"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#8b2020"/><path d="M34 28 Q50 22 66 28" stroke="#5c3d1a" stroke-width="3" fill="none"/><circle cx="42" cy="35" r="2.5" fill="#1a0a00"/><circle cx="58" cy="35" r="2.5" fill="#1a0a00"/><path d="M44 43 Q50 47 56 43" stroke="#8b4513" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#ffaaaa" font-family="serif">Pablo</text></svg>`},
+  {id:'ester',nombre:'Ester',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#1a1a2a"/><ellipse cx="50" cy="38" rx="16" ry="19" fill="#f0c8a0"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#9a4a7a"/><path d="M36 22 Q50 14 64 22 L62 30 Q50 24 38 30Z" fill="#c8a000"/><circle cx="42" cy="36" r="2.5" fill="#2d1000"/><circle cx="58" cy="36" r="2.5" fill="#2d1000"/><path d="M45 43 Q50 46 55 43" stroke="#c06080" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#ffaadd" font-family="serif">Ester</text></svg>`},
+  {id:'pedro',nombre:'Pedro',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#1a2a1a"/><ellipse cx="50" cy="37" rx="17" ry="19" fill="#c89070"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#4a7a9a"/><path d="M33 30 Q50 25 67 30 Q65 20 50 18 Q35 20 33 30Z" fill="#8b5c3a"/><circle cx="42" cy="35" r="2.5" fill="#1a0a00"/><circle cx="58" cy="35" r="2.5" fill="#1a0a00"/><path d="M44 43 Q50 47 56 43" stroke="#8b5c3a" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#aaddff" font-family="serif">Pedro</text></svg>`},
+  {id:'rut',nombre:'Rut',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#2a1a0a"/><ellipse cx="50" cy="38" rx="16" ry="19" fill="#d4a070"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#8b6020"/><path d="M30 28 Q50 15 70 28 L68 38 Q50 30 32 38Z" fill="#d4b060" opacity=".9"/><circle cx="42" cy="36" r="2.5" fill="#2d1000"/><circle cx="58" cy="36" r="2.5" fill="#2d1000"/><path d="M45 43 Q50 46 55 43" stroke="#a06030" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#ffd080" font-family="serif">Rut</text></svg>`},
+  {id:'josue',nombre:'Josué',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#1a2a1a"/><ellipse cx="50" cy="37" rx="17" ry="19" fill="#c8956c"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#5a7a3a"/><path d="M32 25 Q50 20 68 25 L66 32 Q50 28 34 32Z" fill="#c0c0c0"/><circle cx="42" cy="35" r="2.5" fill="#1a0a00"/><circle cx="58" cy="35" r="2.5" fill="#1a0a00"/><path d="M44 43 Q50 47 56 43" stroke="#8b4513" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#aaffaa" font-family="serif">Josué</text></svg>`},
+  {id:'ana',nombre:'Ana',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#1a1a2a"/><ellipse cx="50" cy="38" rx="16" ry="19" fill="#e8c090"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#7a3a6a"/><path d="M32 28 Q50 16 68 28 L66 36 Q50 26 34 36Z" fill="#4a2a6a"/><circle cx="42" cy="36" r="2.5" fill="#2d1000"/><circle cx="58" cy="36" r="2.5" fill="#2d1000"/><path d="M45 43 Q50 46 55 43" stroke="#c080a0" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#ddaaff" font-family="serif">Ana</text></svg>`},
+  {id:'daniel',nombre:'Daniel',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#1a1a1a"/><ellipse cx="50" cy="37" rx="17" ry="19" fill="#c8a078"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#3a3a8a"/><path d="M33 27 Q50 20 67 27 L65 35 Q50 28 35 35Z" fill="#1a1a4a"/><circle cx="42" cy="35" r="2.5" fill="#1a0a00"/><circle cx="58" cy="35" r="2.5" fill="#1a0a00"/><path d="M44 43 Q50 47 56 43" stroke="#8b6040" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#aaaaff" font-family="serif">Daniel</text></svg>`},
+  {id:'lidia',nombre:'Lidia',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#2a1a2a"/><ellipse cx="50" cy="38" rx="16" ry="19" fill="#e8b090"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#9a3a9a"/><path d="M30 26 Q50 12 70 26 L68 34 Q50 22 32 34Z" fill="#7a207a"/><circle cx="42" cy="36" r="2.5" fill="#2d1000"/><circle cx="58" cy="36" r="2.5" fill="#2d1000"/><path d="M45 43 Q50 46 55 43" stroke="#c06090" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#ffaaff" font-family="serif">Lidia</text></svg>`},
+  {id:'timoteo',nombre:'Timoteo',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#1a2a2a"/><ellipse cx="50" cy="37" rx="16" ry="19" fill="#d4a57a"/><ellipse cx="50" cy="72" rx="26" ry="18" fill="#2a6a5a"/><path d="M34 27 Q50 22 66 27 L64 34 Q50 30 36 34Z" fill="#5a3a1a"/><circle cx="42" cy="35" r="2.5" fill="#1a0a00"/><circle cx="58" cy="35" r="2.5" fill="#1a0a00"/><path d="M44 43 Q50 46 56 43" stroke="#8b5a30" stroke-width="1.5" fill="none"/><text x="50" y="95" text-anchor="middle" font-size="8" fill="#aaffdd" font-family="serif">Timoteo</text></svg>`},
+];
+
+let perfilActual={avatar:'david',versiculo:'',bio:''};
+
+function getAvatarSVG(id){return(AVATARES.find(a=>a.id===id)||AVATARES[0]).svg;}
+function openAvModal(){
+  const grid=document.getElementById('avGrid');
+  grid.innerHTML=AVATARES.map(av=>`<div class="av-item${perfilActual.avatar===av.id?' sel':''}" onclick="selAvatar('${av.id}')" title="${av.nombre}">${av.svg}</div>`).join('');
+  document.getElementById('avModal').classList.add('open');
+}
+function selAvatar(id){
+  perfilActual.avatar=id;
+  document.querySelectorAll('.av-item').forEach(el=>el.classList.remove('sel'));
+  event.currentTarget.classList.add('sel');
+  renderPerfilAvatar();
+}
+function renderPerfilAvatar(){document.getElementById('perfilAvatarBig').innerHTML=getAvatarSVG(perfilActual.avatar);}
+function getPerfilLocal(nombre){try{return JSON.parse(localStorage.getItem('perfil_'+nombre))||{};}catch(e){return{};}}
+
+function filtrarNombresPerfil(val){
+  const dd=document.getElementById('perfilDropdown');
+  const q=val.trim().toLowerCase();
+  const matches=DATA.users.filter(u=>u.toLowerCase().includes(q));
+  if(!q||!matches.length){dd.style.display='none';return;}
+  dd.style.display='block';
+  dd.innerHTML=matches.map(u=>`<div onclick="seleccionarNombrePerfil('${u}')" style="padding:.6rem 1rem;cursor:pointer;border-bottom:1px solid var(--ink4)" onmouseover="this.style.background='var(--ink3)'" onmouseout="this.style.background=''">${u}</div>`).join('');
+}
+function seleccionarNombrePerfil(nombre){
+  rUser=nombre;
+  localStorage.setItem('milo_nombre',nombre);
+  const c=gc();
+  rData=c[nombre]||{Nombre:nombre,RachaActual:0,UltimaFecha:null,Escudos:0,Monedas:0};
+  document.getElementById('perfilDropdown').style.display='none';
+  mostrarPerfilCompleto();
+}
+function cambiarUsuarioPerfil(){
+  rUser=null;rData=null;
+  localStorage.removeItem('milo_nombre');
+  document.getElementById('perfilCompleto').style.display='none';
+  document.getElementById('perfilSelector').style.display='block';
+  document.getElementById('perfilSelectorInput').value='';
+}
+async function mostrarPerfilCompleto(){
+  document.getElementById('perfilSelector').style.display='none';
+  document.getElementById('perfilCompleto').style.display='block';
+  try{
+    const r=await fetch(PERFIL_URL+'?accion=list',{mode:'cors'});
+    const perfiles=await r.json();
+    const p=perfiles.find(x=>x.Nombre.toLowerCase()===rUser.toLowerCase());
+    if(p)perfilActual={avatar:p.Avatar||'david',versiculo:p.Versiculo||'',bio:p.Bio||''};
+    else{const saved=localStorage.getItem('perfil_'+rUser);if(saved)perfilActual=JSON.parse(saved);}
+  }catch(e){const saved=localStorage.getItem('perfil_'+rUser);if(saved)perfilActual=JSON.parse(saved);}
+  try{
+    const r2=await fetch(SCRIPT_URL,{mode:'cors'});
+    const todos=await r2.json();
+    const found=todos.find(x=>x.Nombre.toLowerCase()===rUser.toLowerCase());
+    if(found)rData={...rData,...found};
+  }catch(e){}
+  document.getElementById('perfilNombre').textContent=rUser;
+  document.getElementById('perfilNivel').textContent=getNivel(rData?rData.RachaActual||0:0);
+  document.getElementById('perfilDias').textContent=rData?rData.RachaActual||0:0;
+  document.getElementById('perfilMonedas').textContent=rData?rData.Monedas||0:0;
+  document.getElementById('perfilEscudos').textContent=rData?rData.Escudos||0:0;
+  document.getElementById('perfilVersiculo').value=perfilActual.versiculo||'';
+  document.getElementById('perfilBio').value=perfilActual.bio||'';
+  renderPerfilAvatar();
+}
+async function initPerfil(){
+  if(!rUser){const saved=localStorage.getItem('milo_nombre');if(saved){rUser=saved;const c=gc();rData=c[saved]||{Nombre:saved,RachaActual:0,UltimaFecha:null,Escudos:0,Monedas:0};}}
+  if(rUser){await mostrarPerfilCompleto();return;}
+  document.getElementById('perfilCompleto').style.display='none';
+  document.getElementById('perfilSelector').style.display='block';
+  document.getElementById('perfilNombreChips').innerHTML=DATA.users.map(u=>`<div onclick="seleccionarNombrePerfil('${u}')" style="background:var(--ink3);border:1px solid var(--ink4);border-radius:20px;padding:.35rem .9rem;cursor:pointer;font-size:.8rem;color:var(--white);font-weight:700;transition:.2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--ink4)'">${u}</div>`).join('');
+}
+async function guardarPerfil(){
+  if(!rUser){toast('⚠️ Selecciona tu nombre primero');return;}
+  perfilActual.versiculo=document.getElementById('perfilVersiculo').value.trim();
+  perfilActual.bio=document.getElementById('perfilBio').value.trim();
+  // Guardar local siempre
+  localStorage.setItem('perfil_'+rUser,JSON.stringify(perfilActual));
+  // Guardar en Sheets
+  let guardadoEnSheets=false;
+  try{
+    // Guardar en script separado de perfiles
+    const pParams=new URLSearchParams({accion:'save',nombre:rUser,avatar:perfilActual.avatar,versiculo:perfilActual.versiculo,bio:perfilActual.bio});
+    try{
+      const pRes=await fetch(PERFIL_URL+'?'+pParams,{mode:'cors'});
+      const pJ=await pRes.json();
+      if(pJ.status==='OK')guardadoEnSheets=true;
+    }catch(pe){console.log('perfil error:',pe);}
+  }catch(e){}
+  // Actualizar la vista del perfil inmediatamente
+  renderPerfilAvatar();
+  document.getElementById('perfilNivel').textContent=getNivel(rData?rData.RachaActual||0:0);
+  document.getElementById('perfilDias').textContent=rData?rData.RachaActual||0:0;
+  document.getElementById('perfilMonedas').textContent=rData?rData.Monedas||0:0;
+  document.getElementById('perfilEscudos').textContent=rData?rData.Escudos||0:0;
+  // Mostrar banner de guardado épico
+  const banner=document.getElementById('perfilSavedBanner');
+  const sub=document.getElementById('perfilSavedSub');
+  if(banner){
+    sub.textContent=guardadoEnSheets?'¡Tu perfil brilla en Éfeso Jóvenes! 🌟':'¡Guardado localmente en tu dispositivo 💾';
+    banner.classList.add('show');
+    setTimeout(()=>banner.classList.remove('show'),3000);
+  }
+  // Actualizar ranking con nuevo avatar/bio
+  loadLB();
+}
+
+function openPerfilView(nombre, idx){
+  const users = window._lbUsers || [];
+  const u = users[idx] || users.find(x=>x.Nombre===nombre) || {Nombre:nombre,RachaActual:0,Monedas:0,Escudos:0};
+  const pf = getPerfilLocal(u.Nombre);
+  const avId = u.Avatar || pf.avatar || 'david';
+  const bio = u.Bio || pf.bio || '';
+  const versiculo = u.Versiculo || pf.versiculo || '';
+  document.getElementById('pvAvatar').innerHTML = getAvatarSVG(avId);
+  document.getElementById('pvNombre').textContent = u.Nombre;
+  document.getElementById('pvNivel').textContent = getNivel(u.RachaActual||0);
+  document.getElementById('pvDias').textContent = u.RachaActual||0;
+  document.getElementById('pvMonedas').textContent = u.Monedas||0;
+  document.getElementById('pvEscudos').textContent = u.Escudos||0;
+  const verseBox = document.getElementById('pvVerseBox');
+  const verseTxt = document.getElementById('pvVerseTxt');
+  if(versiculo){
+    verseTxt.textContent = versiculo;
+    verseBox.style.display = 'block';
+  } else {
+    verseBox.style.display = 'none';
+  }
+  document.getElementById('pvBio').textContent = bio;
+  document.getElementById('perfilViewModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePerfilView(){
+  document.getElementById('perfilViewModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function updateRef(mi,si,di,ri,v){DATA.meses[mi].sems[si].dias[di].refs[ri]=v;save();}
+function addRef(mi,si,di){const d=DATA.meses[mi].sems[si].dias[di];if(!d.refs)d.refs=[];d.refs.push('');save();const refsHtml=d.refs.map((r,ri)=>`<div class="ref-row"><input value="${escH(r)}" placeholder="Ej: Juan 3:16" oninput="updateRef(${mi},${si},${di},${ri},this.value)"><button onclick="removeRef(${mi},${si},${di},${ri})">✕</button></div>`).join('');document.getElementById('drefs-'+mi+'-'+si+'-'+di).innerHTML=refsHtml;}
+function removeRef(mi,si,di,ri){DATA.meses[mi].sems[si].dias[di].refs.splice(ri,1);save();const d=DATA.meses[mi].sems[si].dias[di];document.getElementById('drefs-'+mi+'-'+si+'-'+di).innerHTML=d.refs.map((r,ri)=>`<div class="ref-row"><input value="${escH(r)}" oninput="updateRef(${mi},${si},${di},${ri},this.value)"><button onclick="removeRef(${mi},${si},${di},${ri})">✕</button></div>`).join('');}
+function saveDia(mi,si,di){const d=DATA.meses[mi].sems[si].dias[di];d.t=document.getElementById('dt-'+mi+'-'+si+'-'+di).value.trim();d.s=document.getElementById('ds-'+mi+'-'+si+'-'+di).value.trim();d.tema=document.getElementById('dtema-'+mi+'-'+si+'-'+di).value.trim();const bodyTxt=document.getElementById('dbody-'+mi+'-'+si+'-'+di).value.trim();d.body=bodyTxt?bodyTxt.split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join(''):'';d.or=document.getElementById('dor-'+mi+'-'+si+'-'+di).value.trim();d.reflexionUrl=document.getElementById('drefurl-'+mi+'-'+si+'-'+di).value.trim();d.fecha=document.getElementById('dfecha-'+mi+'-'+si+'-'+di).value.trim();const refInputs=document.getElementById('drefs-'+mi+'-'+si+'-'+di).querySelectorAll('input');d.refs=[...refInputs].map(i=>i.value.trim()).filter(Boolean);save();const hd=document.querySelector(`#adia-${mi}-${si}-${di} .adm-dia-n`);if(hd)hd.textContent=d.t||'(sin título)';toast('✅ Devocional guardado');}
+function deleteDia(mi,si,di){if(!confirm('¿Eliminar este devocional?'))return;DATA.meses[mi].sems[si].dias.splice(di,1);save();renderSemBody(mi,si);toast('✅ Día eliminado');}
+function addDia(mi,si){DATA.meses[mi].sems[si].dias.push({id:'d'+Date.now(),t:'',s:'',tema:'',body:'',refs:[],or:'',reflexionUrl:''});save();renderSemBody(mi,si);toast('✅ Día añadido');}
+function saveSemNm(mi,si){DATA.meses[mi].sems[si].nm=document.getElementById('snm-'+mi+'-'+si).value.trim();save();document.querySelector('#asem-'+mi+'-'+si+' .adm-sem-nm').textContent=DATA.meses[mi].sems[si].nm;toast('✅ Guardado');}
+function deleteSem(mi,si){if(!confirm('¿Eliminar esta semana?'))return;DATA.meses[mi].sems.splice(si,1);save();renderMesBody(mi);toast('✅ Semana eliminada');}
+function addSem(mi){DATA.meses[mi].sems.push({id:'s'+Date.now(),nm:'Nueva Semana',dias:[]});save();renderMesBody(mi);toast('✅ Semana añadida');}
+function saveMesMeta(mi){DATA.meses[mi].nm=document.getElementById('mnm-'+mi).value.trim();DATA.meses[mi].c=document.getElementById('mc-'+mi).value;DATA.meses[mi].pr=document.getElementById('mpr-'+mi).value==='true';save();buildAdmMeses();toast('✅ Mes guardado');}
+function deleteMes(mi){if(!confirm(`¿Eliminar "${DATA.meses[mi].nm}"?`))return;DATA.meses.splice(mi,1);save();buildAdmMeses();toast('✅ Mes eliminado');}
+function addMes(){const nm=prompt('Nombre del nuevo mes:','Nuevo Mes');if(!nm)return;DATA.meses.push({id:'m'+Date.now(),nm,c:'#7b1fa2',pr:true,sems:[]});save();buildAdmMeses();toast('✅ Mes creado');}
+
+let calEdMesActivo=new Date().getMonth(),calDayEditing=null;
+function openModal(id){document.getElementById(id).classList.add('open');if(id==='modalCal')initCalEditor();if(id==='modalUsers')renderUsers();if(id==='modalPromesas')renderPromesas();if(id==='modalConfig'){document.getElementById('cfgReflexionUrl').value=DATA.reflexionUrl||'';document.getElementById('cfgCalVerse').value=DATA.calVerse||'';}}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.getElementById('calDayEdit').style.display='none';}
+function initCalEditor(){document.getElementById('calEdMesTabs').innerHTML=MES_NAMES.map((nm,i)=>`<button class="cal-mes-tab${i===calEdMesActivo?' on':''}" onclick="calEdSetMes(${i})" style="font-size:.72rem;padding:.4rem .8rem">${nm}</button>`).join('');buildCalEdGrid();}
+function calEdSetMes(m){calEdMesActivo=m;document.querySelectorAll('#calEdMesTabs .cal-mes-tab').forEach((b,i)=>b.classList.toggle('on',i===m));document.getElementById('calDayEdit').style.display='none';buildCalEdGrid();}
+function buildCalEdGrid(){
+  const c=DATA.cal[calEdMesActivo];if(!c)return;
+  let h=`<div style="font-family:var(--f-d);font-weight:800;color:var(--white);margin-bottom:.5rem">${MES_NAMES[calEdMesActivo]} 2026</div>`;
+  h+=`<div style="display:grid;grid-template-columns:repeat(7,1fr);background:var(--gold);border-radius:6px 6px 0 0">`;
+  ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].forEach(d=>h+=`<div style="text-align:center;padding:.35rem;font-weight:900;font-size:.65rem;color:var(--ink)">${d}</div>`);
+  h+=`</div><div class="cal-edit-grid" id="calEdGrid">`;
+  for(let i=0;i<(c.ini||0);i++)h+=`<div class="cal-edit-cell emp"><div class="cal-edit-n" style="color:var(--dim)">–</div></div>`;
+  c.dias.forEach(([n,l])=>{h+=`<div class="cal-edit-cell${l?' hasl':''}" onclick="admCalDay(${n})"><div class="cal-edit-n">${n}</div>${l?`<div class="cal-edit-l">${l}</div>`:''}</div>`;});
+  h+=`</div>`;document.getElementById('calEdArea').innerHTML=h;
+}
+function admCalDay(n){calDayEditing=n;const e=DATA.cal[calEdMesActivo].dias.find(([d])=>d===n);document.getElementById('calDayEditTitle').textContent=`${MES_NAMES[calEdMesActivo]} — Día ${n}`;document.getElementById('calDayLiderInput').value=e?e[1]||'':'';document.getElementById('calDayEdit').style.display='block';document.getElementById('calDayEdit').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function saveCalDay(){const l=document.getElementById('calDayLiderInput').value.trim()||null;const idx=DATA.cal[calEdMesActivo].dias.findIndex(([d])=>d===calDayEditing);if(idx>=0)DATA.cal[calEdMesActivo].dias[idx][1]=l;else DATA.cal[calEdMesActivo].dias.push([calDayEditing,l]);save();buildCalEdGrid();buildCalGrid();loadLider();document.getElementById('calDayEdit').style.display='none';toast('✅ Día guardado');}
+function clearCalDay(){const idx=DATA.cal[calEdMesActivo].dias.findIndex(([d])=>d===calDayEditing);if(idx>=0)DATA.cal[calEdMesActivo].dias[idx][1]=null;save();buildCalEdGrid();buildCalGrid();loadLider();document.getElementById('calDayEdit').style.display='none';toast('✅ Líder quitado');}
+function renderUsers(){document.getElementById('usersList').innerHTML=DATA.users.map((u,i)=>`<div class="slist-item"><div class="slist-nm">${u}</div><button class="btn-s btn-s-red" onclick="deleteUser(${i})">🗑️</button></div>`).join('');}
+function addUser(){const n=document.getElementById('uNombre').value.trim();if(!n)return;if(DATA.users.includes(n)){toast('❌ Ya existe',true);return}DATA.users.push(n);save();renderUsers();document.getElementById('uNombre').value='';toast('✅ Añadido');}
+function deleteUser(i){DATA.users.splice(i,1);save();renderUsers();toast('✅ Eliminado');}
+function renderPromesas(){document.getElementById('promesasList').innerHTML=DATA.promesas.map((p,i)=>`<div class="slist-item"><div class="slist-nm" style="font-size:.8rem">${p}</div><button class="btn-s btn-s-red" onclick="deletePromesa(${i})">🗑️</button></div>`).join('');}
+function addPromesa(){const t=document.getElementById('pTexto').value.trim();if(!t)return;DATA.promesas.push(t);save();renderPromesas();document.getElementById('pTexto').value='';toast('✅ Añadida');}
+function deletePromesa(i){DATA.promesas.splice(i,1);save();renderPromesas();toast('✅ Eliminada');}
+function saveConfig(){DATA.reflexionUrl=document.getElementById('cfgReflexionUrl').value.trim()||'https://padlet.com';DATA.calVerse=document.getElementById('cfgCalVerse').value.trim();save();document.getElementById('calVerse').textContent=DATA.calVerse;toast('✅ Configuración guardada');closeModal('modalConfig');}
+function admExport(){const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='efeso_backup_'+new Date().toLocaleDateString('en-CA')+'.json';a.click();toast('✅ Exportado');}
+function doImport(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(!d.meses||!d.users){toast('❌ Archivo inválido',true);return}if(!d.cal)d.cal=buildDefaultCal();Object.assign(DATA,d);save();buildAdmMeses();initCal();toast('✅ Datos importados');}catch{toast('❌ Error al leer el archivo',true);}};r.readAsText(f);e.target.value='';}
+
+function getDiaFecha(mid,sid,did){
+  const mi=DATA.meses.findIndex(m=>m.id===mid);const m=DATA.meses[mi];const si=m.sems.findIndex(s=>s.id===sid);const di=m.sems[si].dias.findIndex(d=>d.id===did);const numDiaEnSemana=di+1;const calMesIdx=MES_NAMES.findIndex(n=>n.toLowerCase()===m.nm.toLowerCase());const calMes=calMesIdx>=0?DATA.cal[calMesIdx]:null;if(!calMes)return`${m.nm} · Semana ${si+1} · Día ${numDiaEnSemana}`;let idxAbsoluto=0;for(let s2=0;s2<si;s2++)idxAbsoluto+=m.sems[s2].dias.length;idxAbsoluto+=di;const diasConLider=calMes.dias.filter(([_n,l])=>l&&l.trim()!=='').sort((a,b)=>a[0]-b[0]);if(diasConLider.length>0&&idxAbsoluto<diasConLider.length){const[nDia]=diasConLider[idxAbsoluto];return`Día ${numDiaEnSemana} · ${nDia} de ${MES_NAMES[calMesIdx]}`;}if(calMes.dias.length>idxAbsoluto){const[nDia]=calMes.dias[idxAbsoluto];return`Día ${numDiaEnSemana} · ${nDia} de ${MES_NAMES[calMesIdx]}`;}return`${MES_NAMES[calMesIdx]} · Semana ${si+1} · Día ${numDiaEnSemana}`;
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  MILO — Asistente IA
+// ══════════════════════════════════════════════════════════════════
+const MILO_SYSTEM = `Eres Milo 🐑, el asistente espiritual oficial de "Devocionales Jóvenes · Éfeso" de la Iglesia Pentecostal Éfeso en Guayaquil, Ecuador.
+
+PERSONALIDAD:
+- Hablas en español ecuatoriano informal y cálido (tuteo, natural, sin ser forzado)
+- Eres como un amigo mayor sabio: escuchas, entiendes y orientas con amor genuino
+- Tienes sentido del humor sutil y apropiado — no eres un robot
+- Usas emojis con naturalidad, solo cuando añaden valor
+- Cuando alguien sufre o tiene dudas de fe, eres profundo, empático y presente
+- Tienes memoria de la conversación — referencias lo que el usuario dijo antes
+- Puedes interpretar preguntas ambiguas y responder con inteligencia
+
+QUIÉN ERES:
+- Eres Milo, creado especialmente para Éfeso Jóvenes. No eres ChatGPT ni otro AI.
+- Conoces la Biblia muy bien y puedes citar versículos con su contexto
+- Conoces la plataforma perfectamente y puedes guiar a cualquiera paso a paso
+- Si alguien te pregunta algo que no sabes, lo admites con honestidad
+
+CAPACIDADES:
+✅ Guiar en la plataforma paso a paso
+✅ Compartir y explicar versículos bíblicos con profundidad
+✅ Dar reflexiones espirituales breves y poderosas
+✅ Orar con el usuario (escribir oraciones personalizadas)
+✅ Escuchar y acompañar en momentos difíciles
+✅ Motivar a mantener la racha y el hábito devocional
+✅ Responder preguntas sobre fe, vida cristiana, dudas espirituales
+✅ Hablar de temas cotidianos con perspectiva cristiana
+
+REGLAS IMPORTANTES:
+1. Responde SIEMPRE en español
+2. NUNCA guíes a un joven al panel Admin — solo Meggy, Gabriela y Elkin son admins
+3. Sé conciso pero completo — no escribas párrafos infinitos
+4. Para consejería pastoral seria, anima a hablar con sus líderes en persona
+5. Si alguien menciona algo grave (depresión, violencia, peligro), oriéntalo a buscar ayuda real
+
+PLATAFORMA (guía exacta):
+📖 DEVOCIONALES: Menú → "Devocionales" → elige mes → semana → día → leer y reflexionar
+💬 REFLEXIÓN EN PADLET: Al final del devocional → botón "Dejar reflexión" (horario 8pm-10pm)
+🔥 RACHAS: Menú → "Rachas" → escribe tu nombre → "Marcar asistencia hoy"
+   • Cada 3 días consecutivos = 2 monedas 🪙
+   • 10 monedas = escudo ❄️ (protege tu racha un día si fallas)
+   • Hitos de celebración: 1, 3, 7, 14, 21, 30 días
+📅 CALENDARIO: Menú → "Calendario" → selecciona mes → días en verde tienen líder
+🎁 PROMESA DEL DÍA: Inicio → botón naranja "Mi promesa" → versículo especial
+
+EJEMPLOS DE CÓMO RESPONDER:
+- Si preguntan "¿cómo estás?": responde brevemente y pregunta cómo están ellos
+- Si preguntan un versículo: cítalo, explica su contexto y aplícalo a la vida real  
+- Si están tristes: escucha primero, valida sus sentimientos, luego ofrece perspectiva
+- Si preguntan por su racha: usa el contexto en tiempo real que tienes`;
+
+const MILO_CHIPS_INIT = [
+  {label:'📖 ¿Cómo leo el devocional?', q:'¿Cómo leo el devocional del día?'},
+  {label:'🔥 ¿Cómo marco mi racha?',    q:'¿Cómo marco mi racha?'},
+  {label:'📅 ¿Quién lidera hoy?',        q:'¿Quién lidera el devocional hoy?'},
+  {label:'💬 ¿Cómo dejo mi reflexión?', q:'¿Cómo dejo mi reflexión en el Padlet?'},
+  {label:'🙏 Necesito aliento',           q:'Necesito una palabra de aliento hoy'},
+];
+
+let cordOpen=false, cordHistory=[], cordGreeted=false, miloUsingAI=false, miloEsperandoNombre=false;
+
+function miloSetStatus(ai){
+  miloUsingAI=ai;
+  const b=document.getElementById('miloStatusBadge');if(!b)return;
+  b.className='cord-status '+(ai?'ai':'local');
+  b.textContent=ai?'✨ IA activa':'⚡ local';
+}
+
+function toggleCord(){
+  cordOpen=!cordOpen;
+  document.getElementById('cordWin').classList.toggle('open',cordOpen);
+  document.getElementById('cordNotif').style.display='none';
+  if(cordOpen&&!cordGreeted){
+    cordGreeted=true;
+    // Check localStorage for saved name
+    if(!rUser){
+      const saved=localStorage.getItem('milo_nombre');
+      if(saved){rUser=saved;const c=gc();rData=c[saved]||{Nombre:saved,RachaActual:0,UltimaFecha:null,Escudos:0,Monedas:0};}
+    }
+    if(rUser){
+      // Already know who this is — personalized greeting
+      const racha=rData?rData.RachaActual||0:0;
+      const hora=new Date().getHours();
+      const saludo=hora<12?'¡Buenos días':'¡Hola';
+      const rachaMsg=racha>0?`\n\n🔥 Llevas **${racha} día${racha>1?'s':''} de racha** — ¡sigue así!`:'\n\n¿Ya marcaste tu racha hoy? 😊';
+      setTimeout(()=>cordAddMsg('bot',`${saludo}, **${rUser}**! 🐑✨${rachaMsg}\n\n¿En qué te puedo ayudar hoy?`),400);
+      renderChips([
+        {label:'🔥 Mi racha hoy',q:'¿Cómo va mi racha?'},
+        {label:'📖 Devocional del día',q:'¿Cuál es el devocional de hoy?'},
+        {label:'✝️ Dame un versículo',q:'Dame un versículo de aliento'},
+        {label:'🙏 Quiero orar',q:'Ayúdame con una oración para hoy'},
+      ]);
+    } else {
+      // Don't know who this is — ask for name in a friendly way
+      miloEsperandoNombre=true;
+      setTimeout(()=>cordAddMsg('bot','¡Hola! 🐑 Soy **Milo**, tu asistente en Éfeso Jóvenes.\n\n¿Cómo te llamas? Así puedo ayudarte mejor y ver tu racha 😊'),400);
+      // Show all users as scrollable chips
+      const allChips=DATA.users.map(u=>({label:u,q:u}));
+      renderChips(allChips);
+    }
+  }
+  if(cordOpen)setTimeout(()=>document.getElementById('cordInp').focus(),300);
+}
+
+function renderChips(chips){
+  const container=document.getElementById('cordChips');
+  container.innerHTML='';
+  chips.forEach(c=>{
+    const btn=document.createElement('div');
+    btn.className='cord-chip';
+    btn.textContent=c.label;
+    btn.addEventListener('click',function(){
+      container.innerHTML='';
+      document.getElementById('cordInp').value=c.q;
+      sendCord();
+    });
+    container.appendChild(btn);
+  });
+}
+
+function cordAddMsg(role,text){
+  const msgs=document.getElementById('cordMsgs');
+  const div=document.createElement('div');div.className=`cord-msg ${role}`;
+  const html=text
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g,'<em>$1</em>')
+    .replace(/`(.*?)`/g,'<code>$1</code>')
+    .replace(/^• (.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>.*<\/li>)+/g,s=>`<ul>${s}</ul>`)
+    .replace(/\n/g,'<br>');
+  div.innerHTML=`<div class="cord-bubble">${html}</div>`;
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function cordShowTyping(){const msgs=document.getElementById('cordMsgs');const el=document.createElement('div');el.className='cord-typing';el.id='cordTyping';el.innerHTML='<span></span><span></span><span></span>';msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;}
+function cordHideTyping(){document.getElementById('cordTyping')?.remove();}
+
+async function sendCord(){
+  const inp=document.getElementById('cordInp');
+  const txt=inp.value.trim();if(!txt)return;
+  inp.value='';inp.style.height='auto';
+  
+  // ── Si Milo está esperando el nombre, procesar primero ──
+  if(miloEsperandoNombre){
+    // Check if user typed a name from the list or a chip was clicked
+    const nombreMatch=DATA.users.find(u=>u.toLowerCase()===txt.trim().toLowerCase());
+    const nombreUsado=nombreMatch||txt.trim();
+    miloEsperandoNombre=false;
+    rUser=nombreUsado;
+    localStorage.setItem('milo_nombre',nombreUsado);
+    const c=gc();
+    rData=c[nombreUsado]||{Nombre:nombreUsado,RachaActual:0,UltimaFecha:null,Escudos:0,Monedas:0};
+    const racha=rData.RachaActual||0;
+    cordAddMsg('usr',txt);
+    cordHideTyping();
+    const rachaFrase=racha>0?'Llevas **'+racha+' día'+(racha>1?'s':'')+' de racha** 🔥 ¡Excelente!':'¡Aún no tienes racha — ve a marcarla hoy!';
+    const bienvenida=nombreMatch?('¡'+nombreUsado+'! 🎉 '+rachaFrase):('Mucho gusto, **'+nombreUsado+'**! 🐑✨ Aunque no estás en la lista oficial, puedo ayudarte igual.');
+    setTimeout(()=>{
+      cordAddMsg('bot',bienvenida+'\n\n¿En qué te ayudo hoy?');
+
+      renderChips([
+        {label:'🔥 Ver mi racha',q:'¿Cómo veo mi racha?'},
+        {label:'📖 Devocional del día',q:'¿Cuál es el devocional de hoy?'},
+        {label:'✝️ Dame un versículo',q:'Dame un versículo de aliento'},
+        {label:'🙏 Quiero orar',q:'Ayúdame con una oración para hoy'},
+      ]);
+    },300);
+    document.getElementById('cordSendBtn').disabled=false;
+    return;
+  }
+
+  cordAddMsg('usr',txt);
+  cordHistory.push({role:'user',content:txt});
+  const btn=document.getElementById('cordSendBtn');btn.disabled=true;
+  cordShowTyping();
+
+  const hoy=new Date();
+  const diaHoy=hoy.getDate(),mesHoy=hoy.getMonth();
+  const calMes=DATA.cal[mesHoy];
+  const entradaHoy=calMes?.dias.find(([n])=>n===diaHoy);
+  const liderHoy=entradaHoy?.[1]||'No asignado';
+  const fechaStr=hoy.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const usuarioActual=rUser||'(no identificado)';
+  const rachaActual=rData?rData.RachaActual||0:0;
+
+  const systemFull=MILO_SYSTEM+`
+
+CONTEXTO EN TIEMPO REAL (${fechaStr}):
+• Líder de hoy: ${liderHoy}
+• Mes actual: ${MES_NAMES[mesHoy]}
+• Usuario hablando con Milo: ${usuarioActual}
+• Racha actual del usuario: ${rachaActual} días 🔥
+• Usuarios registrados: ${DATA.users.join(', ')}
+• Meses activos: ${DATA.meses.filter(m=>!m.pr).map(m=>m.nm).join(', ')}
+• Próximos meses: ${DATA.meses.filter(m=>m.pr).map(m=>m.nm).slice(0,4).join(', ')}`;
+
+  const recent=cordHistory.slice(-20);
+
+  // Intentar con el Worker primero, luego directo a Anthropic
+  let reply=null;
+
+  // Intento 1: Worker
+  try{
+    const res=await fetch(WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({max_tokens:900,system:systemFull,messages:recent.map(m=>({role:m.role,content:m.content}))})
+    });
+    if(res.ok){
+      const data=await res.json();
+      if(!data.error){
+        reply=(data.content||[]).map(b=>b.type==='text'?b.text:'').join('').trim();
+      }
+    }
+  }catch(e1){console.log('Worker falló, intentando directo...');}
+
+  // Intento 2: API Anthropic directa
+  if(!reply){
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'anthropic-version':'2023-06-01',
+          'anthropic-dangerous-direct-browser-access':'true'
+        },
+        body:JSON.stringify({
+          model:'claude-haiku-4-5-20251001',
+          max_tokens:900,
+          system:systemFull,
+          messages:recent.map(m=>({role:m.role,content:m.content}))
+        })
+      });
+      if(res.ok){
+        const data=await res.json();
+        reply=(data.content||[]).map(b=>b.type==='text'?b.text:'').join('').trim();
+        if(reply)miloSetStatus(true);
+      }
+    }catch(e2){console.log('Directo también falló');}
+  }else{
+    miloSetStatus(true);
+  }
+
+  cordHideTyping();
+
+  if(reply){
+    cordAddMsg('bot',reply);
+    cordHistory.push({role:'assistant',content:reply});
+  }else{
+    // Fallback inteligente local
+    const resp=miloFallback(txt);
+    cordAddMsg('bot',resp);
+    cordHistory.push({role:'assistant',content:resp});
+    miloSetStatus(false);
+  }
+
+  btn.disabled=false;
+  setTimeout(()=>renderChips([
+    {label:'🔥 Mi racha hoy',q:'¿Cómo va mi racha?'},
+    {label:'📖 Devocional del día',q:'¿Cuál es el devocional de hoy?'},
+    {label:'✝️ Dame un versículo',q:'Dame un versículo de aliento para hoy'},
+    {label:'🙏 Necesito orar',q:'Ayúdame con una oración corta para hoy'},
+  ]),200);
+}
+
+function miloFallback(txt){
+  const q=txt.toLowerCase().replace(/[^a-z0-9áéíóúüñ ]/g,' ');
+  const tiene=(...ws)=>ws.some(w=>q.includes(w));
+  const nombre=rUser||'amig@';
+  const racha=rData?rData.RachaActual||0:0;
+
+  // Preguntas sobre la racha del usuario
+  if(tiene('mi racha','cuantos dias','cuántos días','como voy','cómo voy','dias tengo')){
+    if(racha>0)return`¡Vas súper ${nombre}! 🔥 Llevas **${racha} día${racha>1?'s':''} consecutivos**. ${racha>=7?'¡Una semana de constancia! 💎':racha>=3?'¡Ya ganaste monedas! 🪙':'¡Sigue así! Mañana son 2 días 💪'}`;
+    return`Aún no has marcado ninguna racha. ¡Ve a **Rachas** → escribe tu nombre → "Marcar asistencia hoy"! 🔥`;
+  }
+
+  // Devocional
+  if(tiene('devocional','devo','reflexion','reflexión','leer','ver','acceder','donde')){
+    return`Para el devocional de hoy 📖
+
+**1.** Menú → **"Devocionales"**
+**2.** Elige el mes → la semana
+**3.** Selecciona el día y léelo
+
+💬 Al final puedes dejar tu reflexión en el Padlet (8pm–10pm). ¡Dios te habla a través de Su Palabra! 🙏`;
+  }
+
+  // Racha / asistencia
+  if(tiene('racha','asistencia','marcar','dias seguidos','días seguidos','olvide','olvidé')){
+    return`Para marcar tu racha 🔥
+
+**1.** Menú → **"Rachas"**
+**2.** Escribe tu nombre
+**3.** Toca ✨ **"Marcar asistencia hoy"**
+
+🪙 Cada **3 días** = **2 monedas**
+❄️ **10 monedas** = Escudo protector
+
+¡No rompas la racha ${nombre}! 💪`;
+  }
+
+  // Monedas / tienda
+  if(tiene('moneda','escudo','tienda','comprar','coins')){
+    return`Sistema de recompensas 🎮
+
+🪙 **Monedas:** ganas 2 por cada 3 días seguidos
+❄️ **Escudo:** cuesta 10 monedas — protege tu racha si fallas un día
+
+Para comprar: **Rachas** → **Tienda** 😊
+
+Actualmente tienes **${rData?rData.Monedas||0:0} 🪙** y **${rData?rData.Escudos||0:0} ❄️**`;
+  }
+
+  // Calendario / líder
+  if(tiene('calendario','turno','lider','líder','lidera','quien','quién hoy')){
+    const d=new Date(),m=d.getMonth(),n=d.getDate();
+    const l=DATA.cal[m]?.dias.find(([x])=>x===n)?.[1];
+    return`Calendario 📅
+
+**Menú → "Calendario"** → elige el mes. Los días en verde tienen líder asignado.${l?`
+
+✨ **Hoy lidera: ${l}** — ¡mucho ánimo para ${l.includes('Hna')?'ella':'él'}!`:`
+
+🔍 Hoy no hay líder programado.`}
+
+Para ver todos los turnos del mes, ve al Calendario.`;
+  }
+
+  // Padlet / reflexión
+  if(tiene('padlet','reflexion','reflexión','comentario','compartir','donde dejo','link')){
+    return`Para dejar tu reflexión 💬
+
+**1.** Abre el devocional del día
+**2.** Al final toca **"Dejar reflexión"**
+**3.** Se abre el Padlet — escribe lo que Dios puso en tu corazón
+
+⏰ Horario: **8pm – 10pm** cada día
+
+¡Tu reflexión anima a otros ${nombre}! 🌟`;
+  }
+
+  // Versículo
+  if(tiene('versiculo','versículo','verso','biblia','dame','palabra de dios','cita')){
+    const vs=[
+      {t:'"Porque yo sé los planes que tengo para vosotros, planes de bienestar y no de calamidad."',r:'Jeremías 29:11'},
+      {t:'"Todo lo puedo en Cristo que me fortalece."',r:'Filipenses 4:13'},
+      {t:'"No temas, porque yo estoy contigo; no te angusties, porque yo soy tu Dios."',r:'Isaías 41:10'},
+      {t:'"El Señor es mi pastor; nada me faltará."',r:'Salmos 23:1'},
+      {t:'"Para el que cree, todo es posible."',r:'Marcos 9:23'},
+      {t:'"El Señor te guiará siempre; te saciará en tierras resecas."',r:'Isaías 58:11'},
+      {t:'"Los que esperan en el Señor tendrán nuevas fuerzas."',r:'Isaías 40:31'},
+      {t:'"Sean fuertes y valientes. No teman ni se asusten."',r:'Josué 1:9'},
+    ];
+    const v=vs[Math.floor(Math.random()*vs.length)];
+    return`Aquí va uno especial para ti ${nombre} 🌟
+
+*${v.t}*
+**— ${v.r}**
+
+¿Quieres que profundicemos en este versículo o prefieres otro? 📖`;
+  }
+
+  // Oración
+  if(tiene('ora','oración','orar','ayuda a orar','ayúdame a orar','no sé orar')){
+    return`Una oración para ti hoy ${nombre} 🙏
+
+*"Padre celestial, gracias por este día y por el privilegio de venir a Ti. Guía mis pasos, renueva mi mente y llena mi corazón de Tu paz. Que Tu voluntad sea hecha en mi vida. En el nombre de Jesús, Amén."*
+
+Recuerda: no necesitas palabras perfectas — Dios escucha el corazón. 💙`;
+  }
+
+  // Aliento / tristeza
+  if(tiene('triste','solo','sola','mal','ansiedad','cansado','cansada','difícil','dificil','ayuda','necesito')){
+    return`Oye ${nombre}, aquí estoy 🐑💙
+
+No tienes que cargar eso solo/a. Dios te ve exactamente donde estás — en tu cansancio, en tu lucha, en tu duda.
+
+*"Vengan a mí todos los que están cargados y agotados, y yo les daré descanso."* — Mateo 11:28
+
+¿Quieres contarme qué está pasando? 🤍`;
+  }
+
+  // Promesa
+  if(tiene('promesa','regalo','sorpresa')){
+    return`En **Inicio** → botón naranja **"Mi promesa"** 🎁
+
+Cada vez que lo tocas aparece un versículo especial. ¡Es como una cartita de Dios para tu día! ✨`;
+  }
+
+  // Saludo
+  if(tiene('hola','buenas','hey','saludos','qué tal','que tal','como estas','cómo estás')){
+    const hora=new Date().getHours();
+    const saludo=hora<12?'¡Buenos días':hora<19?'¡Buenas tardes':'¡Buenas noches';
+    return`${saludo} ${nombre}! 🐑 ${racha>0?`Vi que llevas **${racha} días** de racha — ¡vas excelente! 🔥`:'¿Listo/a para marcar tu racha hoy?'}
+
+¿En qué te puedo ayudar?`;
+  }
+
+  // Gracias
+  if(tiene('gracias','thank','perfecto','genial','ok','listo','excelente')){
+    return`¡Con gusto ${nombre}! 🐑✨ Que Dios te bendiga hoy. ¿Hay algo más en lo que pueda ayudarte?`;
+  }
+
+  // Quién es Milo
+  if(tiene('quien eres','quién eres','que eres','qué eres','como te llamas','cómo te llamas')){
+    return`¡Soy Milo! 🐑 El asistente oficial de **Éfeso Jóvenes**.
+
+Estoy aquí para ayudarte con la plataforma, compartir versículos, orar contigo o simplemente conversar.
+
+¿Qué necesitas hoy ${nombre}? 😊`;
+  }
+
+  // Default inteligente
+  return`Hmm, déjame pensar 🐑...
+
+Puedo ayudarte con:
+• 📖 Devocionales del día
+• 🔥 Tu racha (llevas ${racha} días)
+• ✝️ Versículos y reflexiones
+• 🙏 Oraciones personalizadas
+• 📅 Ver quién lidera hoy
+• 💬 Hablar de lo que necesites
+
+¿Qué te trae por aquí hoy, ${nombre}?`;
+}
+function autoResizeCord(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,90)+'px';}
+
+addEventListener('DOMContentLoaded',()=>{
+  loadLider();
+  devShowMeses();
+  initCal();
+  miloSetStatus(false);
+  initMiloHome();
+  console.log('✅ Rachas conectadas a:', SCRIPT_URL);
+});
+</script>
+</body>
+</html>
