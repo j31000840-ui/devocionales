@@ -1085,6 +1085,14 @@ async function syncDevToSheets(){
     DATA.meses.forEach(m=>(m.sems||[]).forEach(s=>(s.dias||[]).forEach((d,di)=>diasData.push({id:d.id,sem_id:s.id,mes_id:m.id,t:d.t||'',s:d.s||'',tema:d.tema||'',body:d.body||'',or_text:d.or||'',reflexion_url:d.reflexionUrl||'',fecha:d.fecha||'',refs:JSON.stringify(d.refs||[]),orden:di}))));
     if(diasData.length>0) await fetch(SB_URL+'/rest/v1/dias',{method:'POST',headers:{...headers,'Prefer':'resolution=merge-duplicates'},body:JSON.stringify(diasData)});
 
+    // Guardar usuarios
+    const usersData=(DATA.users||[]).map((nm,i)=>({nombre:nm,orden:i}));
+    await fetch(SB_URL+'/rest/v1/usuarios_lista',{method:'POST',headers:{...headers,'Prefer':'resolution=merge-duplicates'},body:JSON.stringify(usersData)});
+    // Borrar usuarios eliminados
+    if(usersData.length>0){
+      const nms=usersData.map(u=>`"${u.nombre}"`).join(',');
+      await fetch(SB_URL+'/rest/v1/usuarios_lista?nombre=not.in.('+nms+')',{method:'DELETE',headers});
+    }
     // Borrar elementos eliminados
     await syncDeletedItems();
     console.log('✅ Devocionales sincronizados con Supabase');
@@ -1149,8 +1157,19 @@ async function loadDevFromSheets(){
     meses.forEach(m=>m.sems.forEach(s=>s.dias.sort((a,b)=>a.orden-b.orden)));
     
     DATA.meses=meses;
+
+    // Cargar usuarios
+    try{
+      const rU=await fetch(SB_URL+'/rest/v1/usuarios_lista?select=*&order=orden.asc',{headers}).then(r=>r.json());
+      if(Array.isArray(rU)&&rU.length>0){
+        DATA.users=[...new Set(rU.map(u=>u.nombre))];
+        const siEl=document.getElementById('sI');
+        if(siEl&&siEl.value.trim()) onSI();
+      }
+    }catch(e){}
+
     // Guardar en localStorage como cache
-    try{const lc=JSON.parse(localStorage.getItem('efeso_v3')||'{}');lc.meses=meses;localStorage.setItem('efeso_v3',JSON.stringify(lc));}catch(e){}
+    try{const lc=JSON.parse(localStorage.getItem('efeso_v3')||'{}');lc.meses=meses;lc.users=DATA.users;localStorage.setItem('efeso_v3',JSON.stringify(lc));}catch(e){}
     if(typeof devBc==='function') devBc();
     if(typeof buildAdmMeses==='function'&&document.getElementById('admMeses')) buildAdmMeses();
     console.log('✅ Devocionales cargados desde Supabase');
@@ -1288,7 +1307,22 @@ const HITOS={3:{emoji:'🔥',title:'¡EN LLAMAS!',msg:'¡3 días seguidos buscan
 const ML=[3,7,14,21,30];
 function getNivel(d){if(d>=30)return'Guerrero ⚔️';if(d>=21)return'Persistente 💎';if(d>=14)return'Fiel 🌟';if(d>=7)return'Comprometido 🔥';if(d>=3)return'Iniciando 🌱';return'Novato 🌱';}
 function initRachas(){if(rInit)return;rInit=true;loadLB();}
-function onSI(){const v=document.getElementById('sI').value.trim().toLowerCase();const dd=document.getElementById('sD');if(!v){dd.style.display='none';return}const ms=DATA.users.filter(u=>u.toLowerCase().includes(v));if(!ms.length){dd.style.display='none';return}dd.innerHTML=ms.map(u=>`<div class="si" onclick="selU('${u}')">${u}</div>`).join('');dd.style.display='block';}
+function onSI(){
+  const v=document.getElementById('sI').value.trim().toLowerCase();
+  const dd=document.getElementById('sD');
+  if(!v){dd.style.display='none';return;}
+  // Buscar en DATA.users primero, si está vacío cargar desde Sheets
+  let lista=DATA.users;
+  if(!lista||lista.length===0){
+    // Intentar cargar usuarios si aún no están
+    loadLB();
+    dd.style.display='none';return;
+  }
+  const ms=lista.filter(u=>u.toLowerCase().includes(v));
+  if(!ms.length){dd.style.display='none';return;}
+  dd.innerHTML=ms.map(u=>`<div class="si" onclick="selU('${u}')">${u}</div>`).join('');
+  dd.style.display='block';
+}
 function selU(u){document.getElementById('sI').value=u;document.getElementById('sD').style.display='none';localStorage.setItem('milo_nombre',u);loadU(u);}
 
 // ✅ FIX PRINCIPAL: loadU ahora usa API.rachas (que es el mismo script correcto)
@@ -1567,7 +1601,12 @@ async function loadLB(){
   
   const todos=allUsers.filter(u=>u.Nombre?.trim()&&!/\d{4}|GMT|Feb|Jan|Mar|Mon|Tue|Wed|Thu/i.test(u.Nombre));
   // Poblar DATA.users con todos los registrados para el dropdown
-  if(todos.length>0) DATA.users=[...new Set([...DATA.users,...todos.map(u=>u.Nombre)])];
+  if(todos.length>0){
+    DATA.users=[...new Set([...DATA.users,...todos.map(u=>u.Nombre)])];
+    // Si el usuario ya estaba escribiendo su nombre, refrescar el dropdown
+    const siEl=document.getElementById('sI');
+    if(siEl&&siEl.value.trim()) onSI();
+  }
   const validos=todos.filter(u=>(u.RachaActual||0)>0);
   validos.sort((a,b)=>(b.RachaActual||0)-(a.RachaActual||0));
   
