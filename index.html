@@ -1069,7 +1069,7 @@ function loadData(){
 // ── SYNC DEVOCIONALES CON SHEETS ─────────────────────────
 async function syncDevToSheets(){
   try{
-    const headers={'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Prefer':'resolution=merge-duplicates'};
+    const headers={'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
     
     // Upsert meses
     const mesesData=DATA.meses.map((m,mi)=>({id:m.id,nm:m.nm,c:m.c,pr:m.pr||false,orden:mi}));
@@ -1129,13 +1129,17 @@ async function syncDeletedItems(){
 
 async function loadDevFromSheets(){
   try{
-    const headers={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+    const headers={
+      'apikey':SB_KEY,
+      'Authorization':'Bearer '+SB_KEY,
+      'Content-Type':'application/json'
+    };
     
     // Cargar meses, semanas y días en paralelo
     const [rM,rS,rD]=await Promise.all([
-      fetch(SB_URL+'/rest/v1/meses?select=*&order=orden.asc',{headers}).then(r=>r.json()),
-      fetch(SB_URL+'/rest/v1/semanas?select=*&order=orden.asc',{headers}).then(r=>r.json()),
-      fetch(SB_URL+'/rest/v1/dias?select=*&order=orden.asc',{headers}).then(r=>r.json())
+      fetch(SB_URL+'/rest/v1/meses?select=*&order=orden.asc',{headers,mode:'cors'}).then(r=>r.json()),
+      fetch(SB_URL+'/rest/v1/semanas?select=*&order=orden.asc',{headers,mode:'cors'}).then(r=>r.json()),
+      fetch(SB_URL+'/rest/v1/dias?select=*&order=orden.asc',{headers,mode:'cors'}).then(r=>r.json())
     ]);
     
     if(!Array.isArray(rM)||rM.length===0) return;
