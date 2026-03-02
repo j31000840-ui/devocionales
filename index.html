@@ -1565,7 +1565,10 @@ async function loadLB(){
     }
   }
   
-  const validos=allUsers.filter(u=>u.Nombre?.trim()&&!/\d{4}|GMT|Feb|Jan|Mar|Mon|Tue|Wed|Thu/i.test(u.Nombre)&&(u.RachaActual||0)>0);
+  const todos=allUsers.filter(u=>u.Nombre?.trim()&&!/\d{4}|GMT|Feb|Jan|Mar|Mon|Tue|Wed|Thu/i.test(u.Nombre));
+  // Poblar DATA.users con todos los registrados para el dropdown
+  if(todos.length>0) DATA.users=[...new Set([...DATA.users,...todos.map(u=>u.Nombre)])];
+  const validos=todos.filter(u=>(u.RachaActual||0)>0);
   validos.sort((a,b)=>(b.RachaActual||0)-(a.RachaActual||0));
   
   if(!validos.length){
@@ -2095,50 +2098,30 @@ CONTEXTO EN TIEMPO REAL (${fechaStr}):
 
   const recent=cordHistory.slice(-20);
 
-  // Intentar con el Worker primero, luego directo a Anthropic
   let reply=null;
 
-  // Intento 1: Worker
+  // Llamar a Anthropic directamente
   try{
-    const res=await fetch(WORKER_URL,{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({max_tokens:900,system:systemFull,messages:recent.map(m=>({role:m.role,content:m.content}))})
+      headers:{
+        'Content-Type':'application/json',
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:900,
+        system:systemFull,
+        messages:recent.map(m=>({role:m.role,content:m.content}))
+      })
     });
     if(res.ok){
       const data=await res.json();
-      if(!data.error){
-        reply=(data.content||[]).map(b=>b.type==='text'?b.text:'').join('').trim();
-      }
+      reply=(data.content||[]).map(b=>b.type==='text'?b.text:'').join('').trim();
+      if(reply)miloSetStatus(true);
     }
-  }catch(e1){console.log('Worker falló, intentando directo...');}
-
-  // Intento 2: API Anthropic directa
-  if(!reply){
-    try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'anthropic-version':'2023-06-01',
-          'anthropic-dangerous-direct-browser-access':'true'
-        },
-        body:JSON.stringify({
-          model:'claude-haiku-4-5-20251001',
-          max_tokens:900,
-          system:systemFull,
-          messages:recent.map(m=>({role:m.role,content:m.content}))
-        })
-      });
-      if(res.ok){
-        const data=await res.json();
-        reply=(data.content||[]).map(b=>b.type==='text'?b.text:'').join('').trim();
-        if(reply)miloSetStatus(true);
-      }
-    }catch(e2){console.log('Directo también falló');}
-  }else{
-    miloSetStatus(true);
-  }
+  }catch(e){console.log('Milo API error:',e);}
 
   cordHideTyping();
 
@@ -2326,11 +2309,14 @@ Puedo ayudarte con:
 function autoResizeCord(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,90)+'px';}
 
 addEventListener('DOMContentLoaded',()=>{
+  DATA=loadData();
   loadLider();
   devShowMeses();
   initCal();
   miloSetStatus(false);
   initMiloHome();
+  // Cargar usuarios del ranking para el dropdown de nombres
+  loadLB();
   console.log('✅ Rachas conectadas a:', SCRIPT_URL);
 });
 
