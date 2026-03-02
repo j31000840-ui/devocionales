@@ -991,6 +991,8 @@ const WORKER_URL = 'https://winter-snowflake-6c0cmilo-proxy.j31000840.workers.de
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLTzPGR0ADHUGHtF83oTEE66irG8wG_OKoarnSJ1tzkRrmUvBAlD-CfLDRqW5Mdvvm/exec';
 const PERFIL_URL  = 'https://script.google.com/macros/s/AKfycbxOwfUCtI5Ctr2f2pKD85cQzgDs2ImUZUruilj543w6tHjqPiAH8bItCDcWkmP2M5wefA/exec';
 const DEV_URL     = 'https://script.google.com/macros/s/AKfycbyFFAYRwnLrgTy9sjj6kR_qyjSRrjuPAjiJ_ip6tXWNC3nbzoYu71XkLerPMAOjBH3c/exec';
+const SB_URL      = 'https://warlqfpahxtvumamssvd.supabase.co';
+const SB_KEY      = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhcmxxZnBhaHh0dnVtYW1zc3ZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MDgyNzIsImV4cCI6MjA4Nzk4NDI3Mn0.Rj2D3tzKOFB0p21KuXF0Hg0flPgcQu701ThkCD-6mfM';
 // ══════════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════════
 
@@ -1067,62 +1069,94 @@ function loadData(){
 // ── SYNC DEVOCIONALES CON SHEETS ─────────────────────────
 async function syncDevToSheets(){
   try{
-    const datos={meses:DATA.meses.map(m=>({
-      id:m.id, nm:m.nm, c:m.c, pr:m.pr,
-      sems:(m.sems||[]).map(s=>({
-        id:s.id, nm:s.nm,
-        dias:(s.dias||[]).map(d=>({
-          id:d.id, t:d.t, s:d.s, tema:d.tema,
-          body:d.body, or:d.or, reflexionUrl:d.reflexionUrl,
-          fecha:d.fecha, refs:d.refs||[]
-        }))
-      }))
-    }))};
-    const r=await fetch(DEV_URL, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify({accion:'guardar', meses:datos.meses})
-    });
-    console.log('✅ Devocionales enviados a Sheets');
-  }catch(err){console.log('⚠️ No se pudo sincronizar con Sheets:',err);}
+    const headers={'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Prefer':'resolution=merge-duplicates'};
+    
+    // Upsert meses
+    const mesesData=DATA.meses.map((m,mi)=>({id:m.id,nm:m.nm,c:m.c,pr:m.pr||false,orden:mi}));
+    await fetch(SB_URL+'/rest/v1/meses',{method:'POST',headers:{...headers,'Prefer':'resolution=merge-duplicates'},body:JSON.stringify(mesesData)});
+    
+    // Upsert semanas
+    const semanasData=[];
+    DATA.meses.forEach(m=>(m.sems||[]).forEach((s,si)=>semanasData.push({id:s.id,mes_id:m.id,nm:s.nm,orden:si})));
+    if(semanasData.length>0) await fetch(SB_URL+'/rest/v1/semanas',{method:'POST',headers:{...headers,'Prefer':'resolution=merge-duplicates'},body:JSON.stringify(semanasData)});
+    
+    // Upsert dias
+    const diasData=[];
+    DATA.meses.forEach(m=>(m.sems||[]).forEach(s=>(s.dias||[]).forEach((d,di)=>diasData.push({id:d.id,sem_id:s.id,mes_id:m.id,t:d.t||'',s:d.s||'',tema:d.tema||'',body:d.body||'',or_text:d.or||'',reflexion_url:d.reflexionUrl||'',fecha:d.fecha||'',refs:JSON.stringify(d.refs||[]),orden:di}))));
+    if(diasData.length>0) await fetch(SB_URL+'/rest/v1/dias',{method:'POST',headers:{...headers,'Prefer':'resolution=merge-duplicates'},body:JSON.stringify(diasData)});
+
+    // Borrar elementos eliminados
+    await syncDeletedItems();
+    console.log('✅ Devocionales sincronizados con Supabase');
+  }catch(err){console.log('⚠️ Error sync Supabase:',err);}
 }
 
-function loadDevFromSheets(){
-  return new Promise((resolve)=>{
-    const cbName='_devCb'+Date.now();
-    const script=document.createElement('script');
-    let done=false;
-    window[cbName]=function(j){
-      if(done)return; done=true;
-      try{
-        if(j.status==='OK'&&j.meses&&j.meses.length>0){
-          // Guardar en localStorage para que esté disponible offline
-          const dataLocal=JSON.parse(localStorage.getItem('efeso_v3')||'{}');
-          dataLocal.meses=j.meses;
-          try{localStorage.setItem('efeso_v3',JSON.stringify(dataLocal));}catch(e){}
-          DATA.meses=j.meses;
-          if(typeof devBc==='function') devBc();
-          if(typeof buildAdmMeses==='function'&&document.getElementById('admMeses')) buildAdmMeses();
-        }
-      }catch(e){console.log('Error procesando devocionales:',e);}
-      delete window[cbName];
-      try{document.head.removeChild(script);}catch(e){}
-      resolve();
-    };
-    script.onerror=()=>{
-      if(done)return; done=true;
-      delete window[cbName];
-      try{document.head.removeChild(script);}catch(e){}
-      resolve();
-    };
-    script.src=DEV_URL+'?accion=leer&callback='+cbName;
-    document.head.appendChild(script);
-    // Timeout de 10 segundos
-    setTimeout(()=>{
-      if(!done){done=true; if(window[cbName])delete window[cbName]; resolve();}
-    },10000);
-  });
+async function syncDeletedItems(){
+  try{
+    const headers={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+    
+    // IDs actuales
+    const mesIds=DATA.meses.map(m=>m.id);
+    const semIds=DATA.meses.flatMap(m=>(m.sems||[]).map(s=>s.id));
+    const diaIds=DATA.meses.flatMap(m=>(m.sems||[]).flatMap(s=>(s.dias||[]).map(d=>d.id)));
+    
+    // Borrar meses que ya no existen
+    if(mesIds.length>0){
+      await fetch(SB_URL+'/rest/v1/meses?id=not.in.('+mesIds.map(id=>`"${id}"`).join(',')+')',{method:'DELETE',headers});
+    }
+    // Borrar semanas que ya no existen
+    if(semIds.length>0){
+      await fetch(SB_URL+'/rest/v1/semanas?id=not.in.('+semIds.map(id=>`"${id}"`).join(',')+')',{method:'DELETE',headers});
+    } else {
+      await fetch(SB_URL+'/rest/v1/semanas',{method:'DELETE',headers:{...headers,'Prefer':'return=minimal'}});
+    }
+    // Borrar dias que ya no existen
+    if(diaIds.length>0){
+      await fetch(SB_URL+'/rest/v1/dias?id=not.in.('+diaIds.map(id=>`"${id}"`).join(',')+')',{method:'DELETE',headers});
+    } else {
+      await fetch(SB_URL+'/rest/v1/dias',{method:'DELETE',headers:{...headers,'Prefer':'return=minimal'}});
+    }
+  }catch(e){console.log('⚠️ Error borrando items:',e);}
+}
+
+async function loadDevFromSheets(){
+  try{
+    const headers={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+    
+    // Cargar meses, semanas y días en paralelo
+    const [rM,rS,rD]=await Promise.all([
+      fetch(SB_URL+'/rest/v1/meses?select=*&order=orden.asc',{headers}).then(r=>r.json()),
+      fetch(SB_URL+'/rest/v1/semanas?select=*&order=orden.asc',{headers}).then(r=>r.json()),
+      fetch(SB_URL+'/rest/v1/dias?select=*&order=orden.asc',{headers}).then(r=>r.json())
+    ]);
+    
+    if(!Array.isArray(rM)||rM.length===0) return;
+    
+    // Construir estructura
+    const meses=rM.map(m=>({id:m.id,nm:m.nm,c:m.c,pr:m.pr,sems:[]}));
+    rS.forEach(s=>{
+      const mes=meses.find(m=>m.id===s.mes_id);
+      if(mes) mes.sems.push({id:s.id,nm:s.nm,orden:s.orden,dias:[]});
+    });
+    meses.forEach(m=>m.sems.sort((a,b)=>a.orden-b.orden));
+    rD.forEach(d=>{
+      const dia={id:d.id,sem_id:d.sem_id,t:d.t,s:d.s,tema:d.tema,body:d.body,or:d.or_text,reflexionUrl:d.reflexion_url,fecha:d.fecha,refs:JSON.parse(d.refs||'[]'),orden:d.orden};
+      for(const mes of meses){
+        const sem=mes.sems.find(s=>s.id===d.sem_id);
+        if(sem){sem.dias.push(dia);break;}
+      }
+    });
+    meses.forEach(m=>m.sems.forEach(s=>s.dias.sort((a,b)=>a.orden-b.orden)));
+    
+    DATA.meses=meses;
+    // Guardar en localStorage como cache
+    try{const lc=JSON.parse(localStorage.getItem('efeso_v3')||'{}');lc.meses=meses;localStorage.setItem('efeso_v3',JSON.stringify(lc));}catch(e){}
+    if(typeof devBc==='function') devBc();
+    if(typeof buildAdmMeses==='function'&&document.getElementById('admMeses')) buildAdmMeses();
+    console.log('✅ Devocionales cargados desde Supabase');
+  }catch(err){
+    console.log('⚠️ Error cargando desde Supabase, usando local:',err);
+  }
 }
 
 function save(){
