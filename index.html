@@ -990,7 +990,7 @@ const WORKER_URL = 'https://winter-snowflake-6c0cmilo-proxy.j31000840.workers.de
 // ══ URLs DE LOS DOS SCRIPTS ══════════════════════════════
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLTzPGR0ADHUGHtF83oTEE66irG8wG_OKoarnSJ1tzkRrmUvBAlD-CfLDRqW5Mdvvm/exec';
 const PERFIL_URL  = 'https://script.google.com/macros/s/AKfycbxOwfUCtI5Ctr2f2pKD85cQzgDs2ImUZUruilj543w6tHjqPiAH8bItCDcWkmP2M5wefA/exec';
-const DEV_URL     = 'https://script.google.com/macros/s/AKfycbzNZakIMYMDrjckQrGfmiSP86SQm8j8ym8TixaAQq1jW-Q0Ut155TBIt7V9gP_22Fti/exec';
+const DEV_URL     = 'https://script.google.com/macros/s/AKfycbwCq_ktArEGc_67HJVLENU8cnwVW59nMXphzoTtSgMomIVcR8z_yd6BB1XBcf12-Zsr/exec';
 // ══════════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════════
 
@@ -1046,7 +1046,7 @@ const DEFAULT={
 let DATA;
 function loadData(){
   try{
-    // Intentar cargar desde Sheets primero
+    // Cargar desde Sheets (async) - actualiza la vista cuando lleguen los datos
     loadDevFromSheets();
     const s=localStorage.getItem('efeso_v3');
     if(s){
@@ -1092,23 +1092,36 @@ function loadDevFromSheets(){
   return new Promise((resolve)=>{
     const cbName='_devCb'+Date.now();
     const script=document.createElement('script');
+    let done=false;
     window[cbName]=function(j){
+      if(done)return; done=true;
       try{
         if(j.status==='OK'&&j.meses&&j.meses.length>0){
+          // Guardar en localStorage para que esté disponible offline
+          const dataLocal=JSON.parse(localStorage.getItem('efeso_v3')||'{}');
+          dataLocal.meses=j.meses;
+          try{localStorage.setItem('efeso_v3',JSON.stringify(dataLocal));}catch(e){}
           DATA.meses=j.meses;
-          save();
           if(typeof devBc==='function') devBc();
           if(typeof buildAdmMeses==='function'&&document.getElementById('admMeses')) buildAdmMeses();
         }
-      }catch(e){}
+      }catch(e){console.log('Error procesando devocionales:',e);}
       delete window[cbName];
-      document.head.removeChild(script);
+      try{document.head.removeChild(script);}catch(e){}
       resolve();
     };
-    script.onerror=()=>{ delete window[cbName]; try{document.head.removeChild(script);}catch(e){} resolve(); };
+    script.onerror=()=>{
+      if(done)return; done=true;
+      delete window[cbName];
+      try{document.head.removeChild(script);}catch(e){}
+      resolve();
+    };
     script.src=DEV_URL+'?accion=leer&callback='+cbName;
     document.head.appendChild(script);
-    setTimeout(()=>{ if(window[cbName]){ delete window[cbName]; resolve(); } }, 8000);
+    // Timeout de 10 segundos
+    setTimeout(()=>{
+      if(!done){done=true; if(window[cbName])delete window[cbName]; resolve();}
+    },10000);
   });
 }
 
